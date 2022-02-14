@@ -6,11 +6,11 @@ import ast.Statement;
 
 import java.util.List;
 
-public class Read extends AbstractASTNode implements Statement {
+public class Write extends AbstractASTNode implements Statement {
 
     private final List<Expression> innerExpressions;
 
-    public Read(List<Expression> innerExpressions, int column, int line) {
+    public Write(List<Expression> innerExpressions, int column, int line) {
         super(column, line);
         this.innerExpressions = innerExpressions;
     }

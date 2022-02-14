@@ -20,5 +20,4 @@ public class Struct extends AbstractASTNode implements Type {
     public String getName() { return name; }
     public List<RecordField> getRecordFields() { return new ArrayList<>(recordFields); }
 
-    }
 }
