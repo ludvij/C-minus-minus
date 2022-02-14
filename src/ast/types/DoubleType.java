@@ -1,6 +1,7 @@
 package ast.types;
 
 import ast.AbstractASTNode;
+import ast.Type;
 
 public class DoubleType extends AbstractASTNode implements Type {
 
