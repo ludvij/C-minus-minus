@@ -6,25 +6,32 @@ program
     ;
 
 
+
+// Some weird shenanigans here, if I write '(' ')' in the production
+// then void main() {} it is not valid
+// But if I write '()' then void main( ) is not valid
+// I don't understand
+// So I did this fix to be able to have the two of them
+// in procedure is the same
 main
-    : 'void' 'main' '(' ')' '{' variable_def* statement* '}'
+    : 'void' 'main' ('(' ')' | '()' ) '{' variable_def* statement* '}'
     ;
 expression
-    : '(' expression ')'                                            // Parenthesis
-    | expression '[' expression ']'                                 // Indexing
-    | expression '.' ID                                             // Record accessor
-    | '(' builtin_type ')' expression                                       // Cast
-    | '-' expression                                                // Unary minus
-    | '!' expression                                                // Negation
-    | expression ( '*' | '/' | '%' ) expression                     // Multiplication division and modulus
-    | expression ( '+' | '-' ) expression                           // Addition and sbustraction
-    | expression ('<' | '>' | '>=' | '<=' | '==' | '!=') expression // Comparison
-    | expression ('&&' | '||') expression                           // Logic operations
-    | ID '(' expression  (',' expression)* ')'                      // Function
-    | ID                                                            // ID
-    | INT_CONSTANT                                                  // Constants
-    | CHAR_CONSTANT
-    | REAL_CONSTANT
+    : '(' expression ')'                                            // 1  - Parenthesis
+    | expression '[' expression ']'                                 // 2  - Indexing
+    | expression '.' ID                                             // 3  - Record accessor
+    | '(' builtin_type ')' expression                               // 4  - Cast
+    | '-' expression                                                // 5  - Unary minus
+    | '!' expression                                                // 6  - Negation
+    | expression ( '*' | '/' | '%' ) expression                     // 7  - Multiplication division and modulus
+    | expression ( '+' | '-' ) expression                           // 8  - Addition and sbustraction
+    | expression ('<' | '>' | '>=' | '<=' | '==' | '!=') expression // 9  - Comparison
+    | expression ('&&' | '||') expression                           // 10 - Logic operations
+    | ID '(' expression  (',' expression)* ')'                      // 11 - Function
+    | ID                                                            // 12 - ID
+    | INT_CONSTANT                                                  // 13 - Constants
+    | CHAR_CONSTANT                                                 // 14
+    | REAL_CONSTANT                                                 // 15
     ;
 
 definition
@@ -37,14 +44,15 @@ variable_def
     ;
 
 statement
-    : ('read' | 'write') expression (',' expression)* ';'       // Read and write
-    | 'while' '(' expression ')' code_block                     // While
-    | 'if' '(' expression ')' code_block                        // If
-    | 'if' '(' expression ')' code_block 'else' code_block      // If Else
-    | expression '=' expression ';'                             // Assignment
-    | 'return' expression                                       // Return
-    | ID '(' ID (',' ID)* ')' ';'                               // Function Invocation
-    | ID '()' ';'                                               // Procedure invocation
+    : 'read' expression (',' expression)* ';'                   // 1 - Read
+    | 'write' expression (',' expression)* ';'                  // 2 - Write
+    | 'while' '(' expression ')' code_block                     // 3 - While
+    | 'if' '(' expression ')' code_block                        // 4 - If
+    | 'if' '(' expression ')' code_block 'else' code_block      // 5 - If Else
+    | expression '=' expression ';'                             // 6 - Assignment
+    | 'return' expression                                       // 7 - Return
+    | ID '(' ID (',' ID)* ')' ';'                               // 8 - Function Invocation
+    | ID ('()' | '(' ')') ';'                                   // 9 - Procedure invocation
     ;
 
 code_block
@@ -54,20 +62,20 @@ code_block
 
 
 type
-    : return_type
-    | type '[' INT_CONSTANT ']'
-    | 'struct' '{' (type ID ';')+ '}'
+    : return_type                       // 1 - return types
+    | type '[' INT_CONSTANT ']'         // 2 - array type
+    | 'struct' '{' (type ID ';')+ '}'   // 3 - struct type
     ;
 
 return_type
-    : 'void'
-    | builtin_type
+    : 'void'        // 1 - void type
+    | builtin_type  // 2 - builtin types
     ;
 
 builtin_type
-    : 'int'
-    | 'char'
-    | 'double'
+    : 'int'     // 1 - int type
+    | 'char'    // 2 - char type
+    | 'double'  // 3 - double type
     ;
 
 // lab 3
