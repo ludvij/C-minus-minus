@@ -2,14 +2,13 @@ import parser.*;
 
 import org.antlr.v4.runtime.*;
 
-public class Main {
+public class MainLexical {
 
 	public static void main(String... args) throws Exception {
 		if (args.length < 1) {
 			System.err.println("Please, pass me the input file name.");
 			return;
 		}
-
 		// creates a lexer that feeds off of input CharStream
 		CharStream input = CharStreams.fromFileName(args[0]);
 
