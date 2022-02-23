@@ -35,8 +35,8 @@ expression
     ;
 
 definition
-    : variable_def
-    | return_type ID '(' (type ID (',' type ID)*)? ')' '{' variable_def* statement*'}'
+    : return_type ID ('(' type ID (',' type ID)* ')' | '()' | '(' ')' ) '{' variable_def* statement*'}'
+    | variable_def
     ;
 
 variable_def
@@ -50,14 +50,14 @@ statement
     | 'if' '(' expression ')' code_block                        // 4 - If
     | 'if' '(' expression ')' code_block 'else' code_block      // 5 - If Else
     | expression '=' expression ';'                             // 6 - Assignment
-    | 'return' expression                                       // 7 - Return
-    | ID '(' ID (',' ID)* ')' ';'                               // 8 - Function Invocation
+    | 'return' expression ';'                                   // 7 - Return
+    | ID '(' expression (',' expression)* ')' ';'               // 8 - Function Invocation
     | ID ('()' | '(' ')') ';'                                   // 9 - Procedure invocation
     ;
 
 code_block
-    : expression
-    | '{' expression* '}'
+    : statement
+    | '{' statement* '}'
     ;
 
 
