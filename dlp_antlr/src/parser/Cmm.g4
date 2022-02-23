@@ -35,7 +35,7 @@ expression
     ;
 
 definition
-    : return_type ID ('(' type ID (',' type ID)* ')' | '()' | '(' ')' ) '{' variable_def* statement*'}'
+    : return_type ID (('(' type ID (',' type ID)*)? ')' | '()' ) '{' variable_def* statement*'}'
     | variable_def
     ;
 
