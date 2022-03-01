@@ -1,13 +1,13 @@
-package ast.expressions;
+﻿package ast.expressions;
 
 import ast.AbstractASTNode;
 import ast.Expression;
 
 public class ComparisonOperation extends AbstractASTNode implements Expression {
 
-    private final String operator;
-    private final Expression expressionLeft;
-    private final Expression expressionRight;
+    private String operator;
+    private Expression expressionLeft;
+    private Expression expressionRight;
 
     public ComparisonOperation(int column, int line, String operator, Expression expressionLeft, Expression expressionRight) {
         super(column, line);

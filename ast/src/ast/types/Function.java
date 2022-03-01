@@ -1,17 +1,16 @@
-package ast.types;
+﻿package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;
+import ast.definitions.VariableDefinition;
 
-import java.time.temporal.ValueRange;
 import java.util.List;
-import java.util.function.DoubleUnaryOperator;
 
 public class Function extends AbstractASTNode implements Type {
 
-    private final String name;
-    private final Type type;
-    private final List<VariableDefinition> parameters;
+    private String name;
+    private Type type;
+    private List<VariableDefinition> parameters;
 
     public Function(String name, Type type, List<VariableDefinition> parameters, int column, int line) {
         super(column, line);

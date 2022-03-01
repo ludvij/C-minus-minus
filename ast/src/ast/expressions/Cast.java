@@ -1,4 +1,4 @@
-package ast.expressions;
+﻿package ast.expressions;
 
 import ast.AbstractASTNode;
 import ast.Expression;
@@ -6,8 +6,8 @@ import ast.Type;
 
 public class Cast extends AbstractASTNode implements Expression {
 
-    private final Type type;
-    private final Expression expression;
+    private Type type;
+    private Expression expression;
 
     public Cast(Type type, Expression expression, int column, int line) {
         super(column, line);

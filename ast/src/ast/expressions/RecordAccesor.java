@@ -1,12 +1,12 @@
-package ast.expressions;
+﻿package ast.expressions;
 
 import ast.AbstractASTNode;
 import ast.Expression;
 
 public class RecordAccesor extends AbstractASTNode implements Expression {
 
-    private final Expression struct;
-    private final String record;
+    private Expression struct;
+    private String record;
 
     public RecordAccesor(Expression struct, String record, int column, int line) {
         super(column, line);

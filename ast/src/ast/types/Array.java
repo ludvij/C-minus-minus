@@ -1,12 +1,12 @@
-package ast.types;
+﻿package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;
 
 public class Array extends AbstractASTNode implements Type {
 
-    private final int size;
-    private final Type type;
+    private int size;
+    private Type type;
 
     public Array(int size, Type type, int column, int line) {
         super(column, line);

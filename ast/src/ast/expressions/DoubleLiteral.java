@@ -1,11 +1,11 @@
-package ast.expressions;
+﻿package ast.expressions;
 
 import ast.AbstractASTNode;
 import ast.Expression;
 
 public class DoubleLiteral extends AbstractASTNode implements Expression {
 
-    private final double value;
+    private double value;
 
     public DoubleLiteral(double value, int column, int line) {
         super(column, line);

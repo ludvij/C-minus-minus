@@ -1,4 +1,4 @@
-package ast.statements;
+﻿package ast.statements;
 
 import ast.AbstractASTNode;
 import ast.Expression;
@@ -8,17 +8,22 @@ import java.util.List;
 
 public class If extends AbstractASTNode implements Statement {
 
-    private final List<Statement> ifBody;
-    private final List<Statement> elseBody;
-    private final Expression expression;
+    private Expression expression;
+    private List<Statement> ifBody;
+    private List<Statement> elseBody;
 
-    public If(Expression expression, List<Statement> ifBody, List<Statement> elseBody, int column, int line) {
+    public If(Expression expression, List<Statement> ifBody, int column, int line)
+    {
         super(column, line);
-
         this.expression = expression;
         this.ifBody = ifBody;
+    }
+
+    public If(Expression expression, List<Statement> ifBody, List<Statement> elseBody, int column, int line) {
+        this(expression, ifBody, column, line);
         this.elseBody = elseBody;
     }
+
 
     public Expression getExpression() {
         return expression;

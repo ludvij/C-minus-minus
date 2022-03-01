@@ -1,4 +1,4 @@
-package ast.statements;
+﻿package ast.statements;
 
 import ast.AbstractASTNode;
 import ast.Expression;
@@ -8,12 +8,12 @@ import java.util.List;
 
 public class Write extends AbstractASTNode implements Statement {
 
-    private final List<Expression> innerExpressions;
+    private List<Expression> expressions;
 
     public Write(List<Expression> innerExpressions, int column, int line) {
         super(column, line);
-        this.innerExpressions = innerExpressions;
+        this.expressions = innerExpressions;
     }
 
-    public List<Expression> getInnerExpressions() { return innerExpressions; }
+    public List<Expression> getExpressions() { return expressions; }
 }

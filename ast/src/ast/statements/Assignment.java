@@ -1,4 +1,4 @@
-package ast.statements;
+﻿package ast.statements;
 
 import ast.AbstractASTNode;
 import ast.Expression;
@@ -6,8 +6,8 @@ import ast.Statement;
 
 public class Assignment extends AbstractASTNode implements Statement {
 
-    private final Expression rightExpression;
-    private final Expression leftExpression;
+    private Expression rightExpression;
+    private Expression leftExpression;
 
     public Assignment(Expression rightExpression, Expression leftExpression, int column, int line) {
         super(column, line);

@@ -1,4 +1,4 @@
-package ast.statements;
+﻿package ast.statements;
 
 import ast.AbstractASTNode;
 import ast.Expression;
@@ -8,17 +8,17 @@ import java.util.List;
 
 public class While extends AbstractASTNode implements Statement {
 
-    private final Expression innerExpression;
-    private final List<Statement> body;
+    private Expression expression;
+    private List<Statement> body;
 
     public While(Expression innerExpression, List<Statement> body, int column, int line) {
         super(column, line);
-        this.innerExpression = innerExpression;
+        this.expression = innerExpression;
         this.body = body;
     }
 
-    public Expression getInnerExpression() {
-         return innerExpression; 
+    public Expression getExpression() {
+         return expression;
     }
     
     public List<Statement> getBody() {

@@ -1,4 +1,4 @@
-package ast.invocation;
+﻿package ast.invocation;
 
 import ast.AbstractASTNode;
 import ast.Expression;
@@ -8,8 +8,8 @@ import java.util.List;
 
 public class ProcedureInvocation extends AbstractASTNode implements Statement, Expression {
 
-    private final String name;
-    private final List<Expression> parameters;
+    private String name;
+    private List<Expression> parameters;
 
     public ProcedureInvocation(String name, List<Expression> parameters, int column, int line) {
         super(column, line);

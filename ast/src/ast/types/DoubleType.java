@@ -1,4 +1,4 @@
-package ast.types;
+﻿package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;

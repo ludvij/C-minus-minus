@@ -1,11 +1,11 @@
-package ast.expressions;
+﻿package ast.expressions;
 
 import ast.AbstractASTNode;
 import ast.Expression;
 
 class Parenthesis extends AbstractASTNode implements Expression {
 
-    private final Expression expression;
+    private Expression expression;
 
     public Parenthesis(Expression expression, int column, int line) {
         super(column, line);
