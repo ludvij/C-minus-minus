@@ -35,6 +35,5 @@ public class LexerHelper {
 		}
 		else return value.charAt(0);
 	}
-	// TODO: Implement the lexemeToChar and lexemeToReal methods
 	
 }

@@ -12,24 +12,19 @@ grammar Cmm;
 
 // lab 4
 program returns [Program ast]
-    : d=definition mf=main
+    : d=definitions mf=main
         { $ast = new Program($d.ast, $mf.ast, 0, 0); }
     ;
 
-definition returns [List<Definition> ast]
-    : { $ast = new ArrayList<Definition>(); } (fd=function_definition { $ast.add($fd.ast); })*
-    | { $ast = new ArrayList<Definition>(); } (vd=variable_definition { $ast.addAll($vd.ast); })*
+definitions returns [List<Definition> ast]
+    : { $ast = new ArrayList<Definition>(); }
+    ( fd=function_definition { $ast.add($fd.ast); }
+    | pd=procedure_definition { $ast.add($pd.ast); }
+    | vd=variable_definition { $ast.addAll($vd.ast); })*
     ;
 
-
-// Some weird shenanigans here, if I write '(' ')' in the production
-// then void main() {} it is not valid
-// But if I write '()' then void main( ) is not valid
-// I don't understand
-// So I did this fix to be able to have the two of them
-// in procedure is the same
 main returns [FunctionDefinition ast]
-    : vt=void_type 'main' ('(' ')' | '()' ) '{' fb=function_body '}'
+    : vt=void_type 'main' '()' '{' fb=function_body '}'
         { $ast = new FunctionDefinition(
             "main",
             new FunctionType($vt.ast, new ArrayList<VariableDefinition>(), $vt.ast.getColumn(), $vt.ast.getLine()),
@@ -39,9 +34,19 @@ main returns [FunctionDefinition ast]
         ); }
     ;
 
+// necessary, else is only valid if type ID( )
+procedure_definition returns [Definition ast]
+    : rt=return_type ID '()' '{' fb=function_body '}'
+         { $ast = new FunctionDefinition(
+             $ID.text,
+             new FunctionType($rt.ast, new ArrayList<VariableDefinition>(), $rt.ast.getColumn(), $rt.ast.getLine()),
+             $fb.ast,
+             $rt.ast.getColumn(), $rt.ast.getLine()
+         ); }
+    ;
 
 function_definition returns [Definition ast]
-    : rt=return_type ID '(' tp=parameters ')' '{' fb=function_body'}'
+    : rt=return_type ID '(' tp=parameters ')' '{' fb=function_body '}'
          { $ast = new FunctionDefinition(
              $ID.text,
              new FunctionType($rt.ast, $tp.ast, $rt.ast.getColumn(), $rt.ast.getLine()),
