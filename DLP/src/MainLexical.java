@@ -19,20 +19,12 @@ public class MainLexical {
 		Token token;
 		while ((token = lexer.nextToken()).getType() != CmmLexer.EOF) {
 			// We get the semantic value of the token
-			Object semanticValue = null;
-			switch (token.getType()) {			
-			case CmmLexer.CHAR_CONSTANT:
-				semanticValue = LexerHelper.lexemeToChar(token.getText());
-				break;
-			case CmmLexer.REAL_CONSTANT:
-				semanticValue = LexerHelper.lexemeToReal(token.getText());
-				break;
-			case CmmLexer.INT_CONSTANT:
-				semanticValue = LexerHelper.lexemeToInt(token.getText());
-				break;
-			default:
-				semanticValue = token.getText();
-			}
+			Object semanticValue = switch (token.getType()) {
+				case CmmLexer.CHAR_CONSTANT -> LexerHelper.lexemeToChar(token.getText());
+				case CmmLexer.REAL_CONSTANT -> LexerHelper.lexemeToReal(token.getText());
+				case CmmLexer.INT_CONSTANT -> LexerHelper.lexemeToInt(token.getText());
+				default -> token.getText();
+			};
 			// We show the token information
 			System.out.printf("Line: %d, column: %d, lexeme: '%s', token: %s, semantic value: %s.\n",
 							token.getLine(), token.getCharPositionInLine() + 1,

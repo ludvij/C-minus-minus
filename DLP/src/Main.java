@@ -1,7 +1,3 @@
-import ast.Definition;
-import ast.Expression;
-import ast.Statement;
-import ast.Type;
 import ast.program.Program;
 import errorHandler.ErrorHandler;
 import introspector.model.IntrospectorModel;

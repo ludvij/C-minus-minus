@@ -1,4 +1,4 @@
-// Generated from C:/Users/luisv/Desktop/clase/DLP/DLP-2122/DLP/src/parser\Cmm.g4 by ANTLR 4.9.2
+// Generated from E:/clase/TERCERO/DLP/DLP-2122/DLP/src/parser\Cmm.g4 by ANTLR 4.9.2
 package parser;
 
     import ast.*;
@@ -590,7 +590,7 @@ public class CmmParser extends Parser {
 			setState(116);
 			((Typed_paramContext)_localctx).ID = match(ID);
 			 ((Typed_paramContext)_localctx).ast =  new VariableDefinition(
-			            new Variable((((Typed_paramContext)_localctx).ID!=null?((Typed_paramContext)_localctx).ID.getText():null), ((Typed_paramContext)_localctx).ID.getCharPositionInLine()-1, ((Typed_paramContext)_localctx).ID.getLine()),
+			            new Variable((((Typed_paramContext)_localctx).ID!=null?((Typed_paramContext)_localctx).ID.getText():null), ((Typed_paramContext)_localctx).ID.getCharPositionInLine()+1, ((Typed_paramContext)_localctx).ID.getLine()),
 			            ((Typed_paramContext)_localctx).t.ast, ((Typed_paramContext)_localctx).t.ast.getColumn(),
 			            ((Typed_paramContext)_localctx).t.ast.getLine());
 			        
@@ -1316,6 +1316,7 @@ public class CmmParser extends Parser {
 		public Type ast;
 		public TypeContext t;
 		public Return_typeContext rt;
+		public Token s;
 		public Record_fieldsContext rf;
 		public Token il;
 		public Return_typeContext return_type() {
@@ -1365,14 +1366,14 @@ public class CmmParser extends Parser {
 			case T__31:
 				{
 				setState(290);
-				match(T__31);
+				((TypeContext)_localctx).s = match(T__31);
 				setState(291);
 				match(T__3);
 				setState(292);
 				((TypeContext)_localctx).rf = record_fields();
 				setState(293);
 				match(T__4);
-				 ((TypeContext)_localctx).ast =  new StructType(((TypeContext)_localctx).rf.ast, ((TypeContext)_localctx).rf.ast.get(0).getColumn(), ((TypeContext)_localctx).rf.ast.get(0).getLine()); 
+				 ((TypeContext)_localctx).ast =  new StructType(((TypeContext)_localctx).rf.ast, ((TypeContext)_localctx).s.getCharPositionInLine()+1, ((TypeContext)_localctx).s.getLine()); 
 				}
 				break;
 			default:
@@ -1500,7 +1501,11 @@ public class CmmParser extends Parser {
 			((Record_fieldContext)_localctx).t = type(0);
 			setState(316);
 			((Record_fieldContext)_localctx).i1 = match(ID);
-			 _localctx.ast.add(new RecordField((((Record_fieldContext)_localctx).i1!=null?((Record_fieldContext)_localctx).i1.getText():null), ((Record_fieldContext)_localctx).t.ast, ((Record_fieldContext)_localctx).t.ast.getColumn(), ((Record_fieldContext)_localctx).t.ast.getLine())); 
+			 _localctx.ast.add(new RecordField(
+			            new Variable((((Record_fieldContext)_localctx).i1!=null?((Record_fieldContext)_localctx).i1.getText():null), ((Record_fieldContext)_localctx).i1.getCharPositionInLine(), ((Record_fieldContext)_localctx).i1.getLine()),
+			            ((Record_fieldContext)_localctx).t.ast,
+			            ((Record_fieldContext)_localctx).t.ast.getColumn(), ((Record_fieldContext)_localctx).t.ast.getLine()));
+			        
 			setState(323);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -1511,7 +1516,11 @@ public class CmmParser extends Parser {
 				match(T__5);
 				setState(319);
 				((Record_fieldContext)_localctx).i2 = match(ID);
-				 _localctx.ast.add( new RecordField((((Record_fieldContext)_localctx).i2!=null?((Record_fieldContext)_localctx).i2.getText():null), ((Record_fieldContext)_localctx).t.ast, ((Record_fieldContext)_localctx).t.ast.getColumn(), ((Record_fieldContext)_localctx).t.ast.getLine())); 
+				 _localctx.ast.add(new RecordField(
+				            new Variable((((Record_fieldContext)_localctx).i2!=null?((Record_fieldContext)_localctx).i2.getText():null), ((Record_fieldContext)_localctx).i2.getCharPositionInLine(), ((Record_fieldContext)_localctx).i2.getLine()),
+				            ((Record_fieldContext)_localctx).t.ast,
+				            ((Record_fieldContext)_localctx).t.ast.getColumn(), ((Record_fieldContext)_localctx).t.ast.getLine()));
+				        
 				}
 				}
 				setState(325);

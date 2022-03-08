@@ -1,10 +1,8 @@
 package ast.definitions;
 
-import ast.AbstractASTNode;
 import ast.Statement;
 import ast.Type;
 import ast.expressions.Variable;
-import ast.types.FunctionType;
 
 import java.util.List;
 

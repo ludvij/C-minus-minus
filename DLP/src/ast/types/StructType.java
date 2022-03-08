@@ -3,8 +3,8 @@ package ast.types;
 import ast.AbstractASTNode;
 import ast.Type;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class StructType extends AbstractASTNode implements Type {
 
@@ -12,16 +12,25 @@ public class StructType extends AbstractASTNode implements Type {
 
     public StructType(List<RecordField> recordFields, int column, int line) {
         super(column, line);
+        checkDuplicates(recordFields);
         this.recordFields = recordFields;
     }
 
-    public List<RecordField> getRecordFields() { return new ArrayList<>(recordFields); }
+    public void checkDuplicates(List<RecordField> fields) {
+        if (fields.stream().map(x -> x.getName().getName()).collect(Collectors.toSet()).size() != fields.size()) {
+            new ErrorType("Duplicate record name in struct", getColumn(), getLine());
+        }
+    }
+
+    public List<RecordField> getRecordFields() {
+        return recordFields;
+    }
 
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder("struct {\n");
         for (RecordField r : recordFields) {
-            res.append("    ").append(r).append("\n");
+            res.append(r).append("\n");
         }
         return res.append("}").toString();
     }

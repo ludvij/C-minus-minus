@@ -17,7 +17,7 @@ public class ErrorType extends AbstractASTNode implements Type {
 
     @Override
     public String toString() {
-        return message + " at ["+getLine()+"," +getColumn()+"]";
+        return "["+getLine()+"," +getColumn()+"]: " + message;
     }
 
 

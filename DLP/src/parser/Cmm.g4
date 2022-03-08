@@ -28,7 +28,7 @@ definitions returns [List<Definition> ast = new ArrayList<>()]
 main returns [FunctionDefinition ast]
     : vt=void_type m='main' '(' ')' '{' fb=function_body '}'
         { $ast = new FunctionDefinition(
-            new Variable($m.text, $m.getCharPositionInLine(), $m.getLine()),
+            new Variable($m.text, $m.getCharPositioninLine()+1,, $m.getLine()),
             new FunctionType($vt.ast, new ArrayList<VariableDefinition>(), $vt.ast.getColumn(), $vt.ast.getLine()),
             $fb.ast,
             $vt.ast.getColumn(),
@@ -39,7 +39,7 @@ main returns [FunctionDefinition ast]
 function_definition returns [Definition ast]
     : rt=return_type ID '(' tp=parameters ')' '{' fb=function_body '}'
          { $ast = new FunctionDefinition(
-             new Variable($ID.text, $ID.getCharPositionInLine(), $ID.getLine()),
+             new Variable($ID.text, $ID.getCharPositioninLine()+1, $ID.getLine()),
              new FunctionType($rt.ast, $tp.ast, $rt.ast.getColumn(), $rt.ast.getLine()),
              $fb.ast,
              $rt.ast.getColumn(), $rt.ast.getLine()
@@ -54,12 +54,12 @@ function_body returns [List<Statement> ast = new ArrayList<>()]
 variable_definition returns [List<VariableDefinition> ast = new ArrayList<>()]
     : t=type i1=ID
         { $ast.add(new VariableDefinition(
-            new Variable($i1.text, $i1.getCharPositionInLine(), $i1.getLine()),
+            new Variable($i1.text, $i1.getCharPositioninLine()+1, $i1.getLine()),
             $t.ast,
             $t.ast.getColumn(), $t.ast.getLine())); }
       (',' i2=ID
         { $ast.add(new VariableDefinition(
-            new Variable($i2.text, $i2.getCharPositionInLine(), $i2.getLine()),
+            new Variable($i2.text, $i2.getCharPositioninLine()+1, $i2.getLine()),
             $t.ast,
             $t.ast.getColumn(), $t.ast.getLine())); }
       )* ';'
@@ -73,7 +73,7 @@ parameters returns [List<VariableDefinition> ast = new ArrayList<>()]
 typed_param returns [VariableDefinition ast]
     : t=type ID
         { $ast = new VariableDefinition(
-            new Variable($ID.text, $ID.getCharPositionInLine()-1, $ID.getLine()),
+            new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()),
             $t.ast, $t.ast.getColumn(),
             $t.ast.getLine());
         }
@@ -160,8 +160,8 @@ type returns [Type ast]
         { $ast = $rt.ast; }
     | t=type '[' il=INT_CONSTANT ']'                    // 2 - array type
         { $ast = new ArrayType($t.ast, LexerHelper.lexemeToInt($il.text), $t.ast.getColumn(), $t.ast.getLine());}
-    | 'struct' '{' rf=record_fields '}'                 // 3 - struct type
-        { $ast = new StructType($rf.ast, $rf.ast.get(0).getColumn(), $rf.ast.get(0).getLine()); }
+    | s='struct' '{' rf=record_fields '}'                 // 3 - struct type
+        { $ast = new StructType($rf.ast, $s.getCharPositionInLine()+1, $s.getLine()); }
     ;
 
 record_fields returns [List<RecordField> ast = new ArrayList<RecordField>()]
@@ -169,8 +169,18 @@ record_fields returns [List<RecordField> ast = new ArrayList<RecordField>()]
     ;
 
 record_field returns [List<RecordField> ast = new ArrayList<RecordField>()]
-    : t=type i1=ID { $ast.add(new RecordField($i1.text, $t.ast, $t.ast.getColumn(), $t.ast.getLine())); }
-      (',' i2=ID { $ast.add( new RecordField($i2.text, $t.ast, $t.ast.getColumn(), $t.ast.getLine())); })* ';'
+    : t=type i1=ID
+        { $ast.add(new RecordField(
+            new Variable($i1.text, $i1.getCharPositionInLine()+1, $i1.getLine()),
+            $t.ast,
+            $t.ast.getColumn(), $t.ast.getLine()));
+        }
+      (',' i2=ID
+        { $ast.add(new RecordField(
+            new Variable($i2.text, $i2.getCharPositionInLine()+1, $i2.getLine()),
+            $t.ast,
+            $t.ast.getColumn(), $t.ast.getLine()));
+        })* ';'
     ;
 
 return_type returns [Type ast]

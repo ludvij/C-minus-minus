@@ -2,7 +2,6 @@ package ast.program;
 
 import ast.AbstractASTNode;
 import ast.Definition;
-import ast.definitions.FunctionDefinition;
 
 import java.util.List;
 

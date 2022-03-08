@@ -2,19 +2,20 @@ package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;
+import ast.expressions.Variable;
 
 public class RecordField extends AbstractASTNode {
 
-    private String name;
+    private Variable name;
     private Type type;
 
-    public RecordField(String name, Type type, int column, int line) {
+    public RecordField(Variable name, Type type, int column, int line) {
         super(column, line);
         this.name = name;
         this.type = type;
     }
 
-    public String getName() { return name; }
+    public Variable getName() { return name; }
     public Type getType() { return type; }
 
     @Override
