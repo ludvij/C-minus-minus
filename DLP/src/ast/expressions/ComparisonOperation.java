@@ -28,4 +28,9 @@ public class ComparisonOperation extends AbstractASTNode implements Expression {
         return expressionRight;
     }
 
+    @Override
+    public String toString() {
+        return expressionLeft + " " + operator + " " + expressionRight;
+    }
+
 }

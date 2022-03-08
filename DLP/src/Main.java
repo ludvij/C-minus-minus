@@ -3,6 +3,7 @@ import ast.Expression;
 import ast.Statement;
 import ast.Type;
 import ast.program.Program;
+import errorHandler.ErrorHandler;
 import introspector.model.IntrospectorModel;
 import introspector.view.IntrospectorTree;
 import parser.*;
@@ -26,8 +27,13 @@ public class Main {
 		CmmParser parser = new CmmParser(tokens);	
 //		parser.program();
 		Program ast = parser.program().ast;
-		IntrospectorModel model=new IntrospectorModel("Program", ast);
-		new IntrospectorTree("Introspector", model);
+
+		if (ErrorHandler.get().anyErrors()) {
+			ErrorHandler.get().showErrors(System.err);
+		} else {
+			IntrospectorModel model=new IntrospectorModel("Program", ast);
+			new IntrospectorTree("Introspector", model);
+		}
 	}
 	
 

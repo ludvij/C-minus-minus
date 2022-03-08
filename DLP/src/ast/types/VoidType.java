@@ -8,4 +8,9 @@ public class VoidType extends AbstractASTNode implements Type {
     public VoidType(int column, int line) {
         super(column, line);
     }
+
+    @Override
+    public String toString() {
+        return "void";
+    }
 }

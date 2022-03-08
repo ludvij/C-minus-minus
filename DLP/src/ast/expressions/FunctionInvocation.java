@@ -8,15 +8,26 @@ import java.util.List;
 
 public class FunctionInvocation extends AbstractASTNode implements Statement, Expression {
 
-    private String name;
+    private Variable name;
     private List<Expression> parameters;
 
-    public FunctionInvocation(String name, List<Expression> parameters, int column, int line) {
+    public FunctionInvocation(Variable name, List<Expression> parameters, int column, int line) {
         super(column, line);
         this.name = name;
         this.parameters = parameters;
     }
 
-    public String getName() { return name; }
+    public Variable getName() { return name; }
     public List<Expression> getParameters() { return parameters; }
+
+    @Override
+    public String toString() {
+        StringBuilder params = new StringBuilder();
+        for (Expression p : parameters) {
+            params.append(p).append(", ");
+        }
+        if (!parameters.isEmpty())
+            params.setLength(params.length() - 1);
+        return name + "(" + params + ")";
+    }
 }

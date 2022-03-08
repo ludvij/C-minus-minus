@@ -13,20 +13,22 @@ grammar Cmm;
 // lab 4
 program returns [Program ast]
     : d=definitions mf=main
-        { $ast = new Program($d.ast, $mf.ast, 0, 0); }
+        {
+            $d.ast.add($mf.ast);
+            $ast = new Program($d.ast, 0, 0);
+        }
     ;
 
-definitions returns [List<Definition> ast]
-    : { $ast = new ArrayList<Definition>(); }
-    ( fd=function_definition { $ast.add($fd.ast); }
-    | pd=procedure_definition { $ast.add($pd.ast); }
-    | vd=variable_definition { $ast.addAll($vd.ast); })*
+definitions returns [List<Definition> ast = new ArrayList<>()]
+    : ( fd=function_definition { $ast.add($fd.ast); }
+      | vd=variable_definition { $ast.addAll($vd.ast); }
+      )*
     ;
 
 main returns [FunctionDefinition ast]
-    : vt=void_type 'main' '()' '{' fb=function_body '}'
+    : vt=void_type m='main' '(' ')' '{' fb=function_body '}'
         { $ast = new FunctionDefinition(
-            "main",
+            new Variable($m.text, $m.getCharPositionInLine(), $m.getLine()),
             new FunctionType($vt.ast, new ArrayList<VariableDefinition>(), $vt.ast.getColumn(), $vt.ast.getLine()),
             $fb.ast,
             $vt.ast.getColumn(),
@@ -34,47 +36,47 @@ main returns [FunctionDefinition ast]
         ); }
     ;
 
-// necessary, else is only valid if type ID( )
-procedure_definition returns [Definition ast]
-    : rt=return_type ID '()' '{' fb=function_body '}'
-         { $ast = new FunctionDefinition(
-             $ID.text,
-             new FunctionType($rt.ast, new ArrayList<VariableDefinition>(), $rt.ast.getColumn(), $rt.ast.getLine()),
-             $fb.ast,
-             $rt.ast.getColumn(), $rt.ast.getLine()
-         ); }
-    ;
-
 function_definition returns [Definition ast]
     : rt=return_type ID '(' tp=parameters ')' '{' fb=function_body '}'
          { $ast = new FunctionDefinition(
-             $ID.text,
+             new Variable($ID.text, $ID.getCharPositionInLine(), $ID.getLine()),
              new FunctionType($rt.ast, $tp.ast, $rt.ast.getColumn(), $rt.ast.getLine()),
              $fb.ast,
              $rt.ast.getColumn(), $rt.ast.getLine()
          ); }
     ;
 
-function_body returns [List<Statement> ast]
-    : { $ast = new ArrayList<Statement>(); }
-        (vd=variable_definition { $ast.addAll($vd.ast); })*
-        (s=statement { $ast.add($s.ast); })*
+function_body returns [List<Statement> ast = new ArrayList<>()]
+    : (vd=variable_definition { $ast.addAll($vd.ast); })*
+      (s=statement { $ast.add($s.ast); })*
     ;
 
-variable_definition returns [List<VariableDefinition> ast]
-    : { $ast = new ArrayList<VariableDefinition>(); }
-        t=type i1=ID { $ast.add(new VariableDefinition($i1.text, $t.ast, $t.ast.getColumn(), $t.ast.getLine())); }
-        (',' i2=ID { $ast.add( new VariableDefinition($i2.text, $t.ast, $t.ast.getColumn(), $t.ast.getLine())); })* ';'
+variable_definition returns [List<VariableDefinition> ast = new ArrayList<>()]
+    : t=type i1=ID
+        { $ast.add(new VariableDefinition(
+            new Variable($i1.text, $i1.getCharPositionInLine(), $i1.getLine()),
+            $t.ast,
+            $t.ast.getColumn(), $t.ast.getLine())); }
+      (',' i2=ID
+        { $ast.add(new VariableDefinition(
+            new Variable($i2.text, $i2.getCharPositionInLine(), $i2.getLine()),
+            $t.ast,
+            $t.ast.getColumn(), $t.ast.getLine())); }
+      )* ';'
     ;
 
-parameters returns [List<VariableDefinition> ast]
-    : tp1=typed_param { $ast = new ArrayList<VariableDefinition>(); $ast.add($tp1.ast);} (',' tp2=typed_param {$ast.add($tp2.ast); })*
-    | { $ast = new ArrayList<VariableDefinition>(); }
+parameters returns [List<VariableDefinition> ast = new ArrayList<>()]
+    : tp1=typed_param {$ast.add($tp1.ast);} (',' tp2=typed_param {$ast.add($tp2.ast); })*
+    |
     ;
 
 typed_param returns [VariableDefinition ast]
     : t=type ID
-        { $ast = new VariableDefinition($ID.text, $t.ast, $t.ast.getColumn(), $t.ast.getLine()); }
+        { $ast = new VariableDefinition(
+            new Variable($ID.text, $ID.getCharPositionInLine()-1, $ID.getLine()),
+            $t.ast, $t.ast.getColumn(),
+            $t.ast.getLine());
+        }
     ;
 
 expression returns [Expression ast]
@@ -99,7 +101,11 @@ expression returns [Expression ast]
     | e1=expression op=('&&' | '||') e2=expression                  // 10 - Logic operations
         { $ast = new LogicalOperation($op.text,  $e1.ast, $e2.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
     | ID '(' a=arguments ')'                                        // 11 - Function
-        { $ast = new FunctionInvocation($ID.text, $a.ast, $ID.getCharPositionInLine()+1, $ID.getLine()); }
+        { $ast = new FunctionInvocation(
+            new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()),
+            $a.ast,
+            $ID.getCharPositionInLine()+1, $ID.getLine());
+        }
     | ID                                                            // 12 - ID
         { $ast = new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine());}
     | il=INT_CONSTANT                                               // 13 - Constants
@@ -110,9 +116,9 @@ expression returns [Expression ast]
         { $ast = new DoubleLiteral(LexerHelper.lexemeToReal($dl.text), $dl.getCharPositionInLine()+1, $dl.getLine());}
     ;
 
-arguments returns [List<Expression> ast]
-    : e1=expression {$ast = new ArrayList<Expression>(); $ast.add($e1.ast);} (',' e2=expression { $ast.add($e2.ast);})*
-    | { $ast = new ArrayList<Expression>(); }
+arguments returns [List<Expression> ast = new ArrayList<Expression>()]
+    : e1=expression { $ast.add($e1.ast);} (',' e2=expression { $ast.add($e2.ast);})*
+    |
     ;
 
 statement returns [Statement ast]
@@ -131,34 +137,40 @@ statement returns [Statement ast]
     | 'return' e1=expression ';'                                // 7 - Return
         { $ast = new ReturnStatement($e1.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
     | ID '(' el=expression_list ')' ';'                         // 8 - Function Invocation
-        { $ast = new FunctionInvocation($ID.text, $el.ast, $ID.getCharPositionInLine()+1, $ID.getLine());}
-    | ID ('()' | '(' ')') ';'                                   // 9 - Procedure invocation
-        { $ast = new ProcedureInvocation($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()); }
+        { $ast = new FunctionInvocation(
+            new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()),
+            $el.ast,
+            $ID.getCharPositionInLine()+1, $ID.getLine());
+        }
     ;
 
-expression_list returns [List<Expression> ast]
-    : { $ast = new ArrayList(); }
-        e1=expression { $ast.add($e1.ast); } (',' e2=expression { $ast.add( $e2.ast); })*
+expression_list returns [List<Expression> ast = new ArrayList<>()]
+    :  e1=expression { $ast.add($e1.ast); } (',' e2=expression { $ast.add( $e2.ast); })*
+    |
     ;
 
-code_block returns [List<Statement> ast]
-    : { $ast = new ArrayList<Statement>(); } e1=statement {$ast.add($e1.ast); }
-    | { $ast = new ArrayList<Statement>(); }'{' (e1=statement { $ast.add($e1.ast); })* '}'
+code_block returns [List<Statement> ast = new ArrayList<Statement>()]
+    : e1=statement {$ast.add($e1.ast); }
+    |'{' (e1=statement { $ast.add($e1.ast); })* '}'
     ;
 
 
 type returns [Type ast]
-    : rt=return_type                    // 1 - return types
+    : rt=return_type                                    // 1 - return types
         { $ast = $rt.ast; }
-    | t=type '[' il=INT_CONSTANT ']'    // 2 - array type
+    | t=type '[' il=INT_CONSTANT ']'                    // 2 - array type
         { $ast = new ArrayType($t.ast, LexerHelper.lexemeToInt($il.text), $t.ast.getColumn(), $t.ast.getLine());}
-    | 'struct' '{' rf=record_fields '}' // 3 - struct type
+    | 'struct' '{' rf=record_fields '}'                 // 3 - struct type
         { $ast = new StructType($rf.ast, $rf.ast.get(0).getColumn(), $rf.ast.get(0).getLine()); }
     ;
 
-record_fields returns [List<RecordField> ast]
-    : { $ast = new ArrayList<RecordField>(); }
-    (t=type ID ';' { $ast.add(new RecordField($t.ast, $ID.text, $t.ast.getColumn(), $t.ast.getLine())); })+
+record_fields returns [List<RecordField> ast = new ArrayList<RecordField>()]
+    : (t=record_field { $ast.addAll($t.ast); })+
+    ;
+
+record_field returns [List<RecordField> ast = new ArrayList<RecordField>()]
+    : t=type i1=ID { $ast.add(new RecordField($i1.text, $t.ast, $t.ast.getColumn(), $t.ast.getLine())); }
+      (',' i2=ID { $ast.add( new RecordField($i2.text, $t.ast, $t.ast.getColumn(), $t.ast.getLine())); })* ';'
     ;
 
 return_type returns [Type ast]

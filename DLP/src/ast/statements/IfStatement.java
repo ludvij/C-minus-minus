@@ -36,4 +36,20 @@ public class IfStatement extends AbstractASTNode implements Statement {
     public List<Statement> getElseBody() {
         return elseBody;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder ifStr = new StringBuilder("if(" + expression + ") {\n");
+        for (Statement s : ifBody) {
+            ifStr.append(s).append("\n");
+        }
+        if (!elseBody.isEmpty()) {
+            ifStr.append("} else {\n");
+            for (Statement s : elseBody) {
+                ifStr.append(s).append("\n");
+            }
+        }
+        ifStr.append("}");
+        return  ifStr.toString();
+    }
 }

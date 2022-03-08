@@ -1,7 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ff0c3629-4f3a-4b76-8467-41ad89790174" name="Changes" comment="" />
+    <list default="true" id="ff0c3629-4f3a-4b76-8467-41ad89790174" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/DLP/src/ast/types/ErrorType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/DLP/src/errorHandler/ErrorHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DLP/description.txt" beforeDir="false" afterPath="$PROJECT_DIR$/DLP/description.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DLP/small_input.txt" beforeDir="false" afterPath="$PROJECT_DIR$/DLP/small_input.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DLP/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/DLP/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DLP/src/ast/types/RecordField.java" beforeDir="false" afterPath="$PROJECT_DIR$/DLP/src/ast/types/RecordField.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DLP/src/parser/Cmm.g4" beforeDir="false" afterPath="$PROJECT_DIR$/DLP/src/parser/Cmm.g4" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DLP/src/parser/Cmm.interp" beforeDir="false" afterPath="$PROJECT_DIR$/DLP/src/parser/Cmm.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DLP/src/parser/CmmLexer.interp" beforeDir="false" afterPath="$PROJECT_DIR$/DLP/src/parser/CmmLexer.interp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DLP/src/parser/CmmLexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/DLP/src/parser/CmmLexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DLP/src/parser/CmmParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/DLP/src/parser/CmmParser.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -30,23 +42,8 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$USER_HOME$/IdeaProjects/SDI-2122-1014-spring" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/DLP" />
     <property name="nodejs_package_manager_path" value="npm" />
-  </component>
-  <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="DLP_lab2" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="DLP_lab2" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -60,6 +57,7 @@
       <workItem from="1645033570846" duration="420000" />
       <workItem from="1645480157658" duration="4000" />
       <workItem from="1645561920925" duration="50000" />
+      <workItem from="1646744677200" duration="4000" />
     </task>
     <servers />
   </component>

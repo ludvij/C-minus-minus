@@ -17,6 +17,7 @@ and fields are declared as var definitions between { and }. Type definition (i.e
 
 The syntax of a write statement is the "write" keyword followed by a non-empty comma-separated list
 of expressions. The read statement is similar, but using the "read" keyword.
+
 Assignments are built with two expressions separated by the "=" operator.
 If / else and while statements follow the C syntax. The return <expression> statement is also supported
 (the expression is mandatory).

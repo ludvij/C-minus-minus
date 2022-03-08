@@ -8,4 +8,9 @@ public class DoubleType extends AbstractASTNode implements Type {
     public DoubleType(int column, int line) {
         super(column, line);
     }
+
+    @Override
+    public String toString() {
+        return "double";
+    }
 }

@@ -17,4 +17,9 @@ public class AssignmentStatement extends AbstractASTNode implements Statement {
 
     public Expression getRightExpression() { return rightExpression; }
     public Expression getLeftExpression() { return leftExpression; }
+
+    @Override
+    public String toString() {
+        return rightExpression + " = " + leftExpression + ";";
+    }
 }

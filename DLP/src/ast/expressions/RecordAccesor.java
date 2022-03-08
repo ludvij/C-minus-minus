@@ -21,4 +21,9 @@ public class RecordAccesor extends AbstractASTNode implements Expression {
     public Expression getStruct() {
         return struct;
     }
+
+    @Override
+    public String toString() {
+        return struct + "." + record;
+    }
 }

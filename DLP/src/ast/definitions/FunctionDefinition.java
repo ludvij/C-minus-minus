@@ -3,6 +3,8 @@ package ast.definitions;
 import ast.AbstractASTNode;
 import ast.Statement;
 import ast.Type;
+import ast.expressions.Variable;
+import ast.types.FunctionType;
 
 import java.util.List;
 
@@ -10,12 +12,21 @@ public class FunctionDefinition extends AbstractDefinition {
 
     private List<Statement> body;
 
-    public FunctionDefinition(String name, Type type, List<Statement> body, int column, int line) {
+    public FunctionDefinition(Variable name, Type type, List<Statement> body, int column, int line) {
         super(name, type, column, line);
         this.body = body;
     }
 
     public List<Statement> getBody() {
         return body;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder(String.format(getType().toString(), getName()) + "{\n");
+        for (Statement s : body) {
+            res.append(s).append("\n");
+        }
+        return  res.append("}").toString();
     }
 }

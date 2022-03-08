@@ -6,12 +6,12 @@ import ast.Type;
 
 public class Cast extends AbstractASTNode implements Expression {
 
-    private Type type;
+    private Type castType;
     private Expression expression;
 
-    public Cast(Type type, Expression expression, int column, int line) {
+    public Cast(Type castType, Expression expression, int column, int line) {
         super(column, line);
-        this.type = type;
+        this.castType = castType;
         this.expression = expression;
     }
 
@@ -19,7 +19,12 @@ public class Cast extends AbstractASTNode implements Expression {
         return expression;
     }
 
-    public Type getType() {
-        return type;
+    public Type getCastType() {
+        return castType;
+    }
+
+    @Override
+    public String toString() {
+        return "("+castType+")" + expression +  " " +"["+getLine()+","+getColumn()+"]";
     }
 }

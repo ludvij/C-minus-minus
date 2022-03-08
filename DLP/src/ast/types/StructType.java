@@ -17,4 +17,13 @@ public class StructType extends AbstractASTNode implements Type {
 
     public List<RecordField> getRecordFields() { return new ArrayList<>(recordFields); }
 
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder("struct {\n");
+        for (RecordField r : recordFields) {
+            res.append("    ").append(r).append("\n");
+        }
+        return res.append("}").toString();
+    }
+
 }

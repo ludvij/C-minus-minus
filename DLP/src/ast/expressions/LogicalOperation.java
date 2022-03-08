@@ -27,4 +27,9 @@ public class LogicalOperation extends AbstractASTNode implements Expression {
     public Expression getExpressionLeft() {
         return expressionLeft;
     }
+
+    @Override
+    public String toString() {
+        return expressionLeft + " " + operator + " " + expressionRight;
+    }
 }

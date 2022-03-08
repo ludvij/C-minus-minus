@@ -25,4 +25,14 @@ public class WhileStatement extends AbstractASTNode implements Statement {
         return body;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder res = new StringBuilder("while (" + expression + ") {\n");
+
+        for (Statement s : body) {
+            res.append(s).append("\n");
+        }
+        return res.append("}").toString();
+    }
+
 }

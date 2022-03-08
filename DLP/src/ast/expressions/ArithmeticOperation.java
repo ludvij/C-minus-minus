@@ -27,4 +27,9 @@ public class ArithmeticOperation extends AbstractASTNode implements Expression {
     public Expression getExpressionRight() {
         return expressionRight;
     }
+
+    @Override
+    public String toString() {
+        return expressionLeft + " " + operator + " " + expressionRight;
+    }
 }
