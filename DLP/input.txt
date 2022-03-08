@@ -1,7 +1,10 @@
 struct {
  int a, b;
  int c, d;
- char[20][10] e, a;
+ char[20][10] e;
 } a;
 
-void main() {}
+void main() {
+ read a + c, b[5], (int)c;
+ write 'a', 'b', 'c';
+}

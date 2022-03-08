@@ -28,7 +28,7 @@ definitions returns [List<Definition> ast = new ArrayList<>()]
 main returns [FunctionDefinition ast]
     : vt=void_type m='main' '(' ')' '{' fb=function_body '}'
         { $ast = new FunctionDefinition(
-            new Variable($m.text, $m.getCharPositioninLine()+1,, $m.getLine()),
+            new Variable($m.text, $m.getCharPositionInLine()+1, $m.getLine()),
             new FunctionType($vt.ast, new ArrayList<VariableDefinition>(), $vt.ast.getColumn(), $vt.ast.getLine()),
             $fb.ast,
             $vt.ast.getColumn(),
@@ -39,7 +39,7 @@ main returns [FunctionDefinition ast]
 function_definition returns [Definition ast]
     : rt=return_type ID '(' tp=parameters ')' '{' fb=function_body '}'
          { $ast = new FunctionDefinition(
-             new Variable($ID.text, $ID.getCharPositioninLine()+1, $ID.getLine()),
+             new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()),
              new FunctionType($rt.ast, $tp.ast, $rt.ast.getColumn(), $rt.ast.getLine()),
              $fb.ast,
              $rt.ast.getColumn(), $rt.ast.getLine()
@@ -48,18 +48,18 @@ function_definition returns [Definition ast]
 
 function_body returns [List<Statement> ast = new ArrayList<>()]
     : (vd=variable_definition { $ast.addAll($vd.ast); })*
-      (s=statement { $ast.add($s.ast); })*
+      (s=statement { $ast.addAll($s.ast); })*
     ;
 
 variable_definition returns [List<VariableDefinition> ast = new ArrayList<>()]
     : t=type i1=ID
         { $ast.add(new VariableDefinition(
-            new Variable($i1.text, $i1.getCharPositioninLine()+1, $i1.getLine()),
+            new Variable($i1.text, $i1.getCharPositionInLine()+1, $i1.getLine()),
             $t.ast,
             $t.ast.getColumn(), $t.ast.getLine())); }
       (',' i2=ID
         { $ast.add(new VariableDefinition(
-            new Variable($i2.text, $i2.getCharPositioninLine()+1, $i2.getLine()),
+            new Variable($i2.text, $i2.getCharPositionInLine()+1, $i2.getLine()),
             $t.ast,
             $t.ast.getColumn(), $t.ast.getLine())); }
       )* ';'
@@ -121,26 +121,36 @@ arguments returns [List<Expression> ast = new ArrayList<Expression>()]
     |
     ;
 
-statement returns [Statement ast]
-    : 'read' el=expression_list ';'                             // 1 - Read
-        { $ast = new ReadStatement($el.ast, $el.ast.get(0).getColumn(), $el.ast.get(0).getLine()); }
-    | 'write' el=expression_list ';'                            // 2 - Write
-        { $ast = new WriteStatement($el.ast, $el.ast.get(0).getColumn(), $el.ast.get(0).getLine()); }
+statement returns [List<Statement> ast = new ArrayList<>()]
+    : r='read' el=expression_list ';'                             // 1 - Read
+        {
+            for (Expression i : $el.ast) {
+                $ast.add(new ReadStatement(i, $r.getCharPositionInLine()+1, $r.getLine()));
+            }
+        }
+    | w='write' el=expression_list ';'                            // 2 - Write
+        {
+            for (Expression i : $el.ast) {
+                $ast.add(new WriteStatement(i, $w.getCharPositionInLine()+1, $w.getLine()));
+            }
+        }
     | 'while' '(' e1=expression ')' cb=code_block               // 3 - While
-        { $ast = new WhileStatement($e1.ast, $cb.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast.add(new WhileStatement($e1.ast, $cb.ast, $e1.ast.getColumn(), $e1.ast.getLine())); }
     | 'if' '(' e1=expression ')' cb=code_block                  // 4 - If
-        { $ast = new IfStatement($e1.ast, $cb.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast.add(new IfStatement($e1.ast, $cb.ast, $e1.ast.getColumn(), $e1.ast.getLine())); }
     | 'if' '(' e1=expression ')' cb1=code_block 'else' cb2=code_block      // 5 - If Else
-        { $ast = new IfStatement($e1.ast, $cb1.ast, $cb2.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast.add(new IfStatement($e1.ast, $cb1.ast, $cb2.ast, $e1.ast.getColumn(), $e1.ast.getLine())); }
     | e1=expression '=' e2=expression ';'                       // 6 - Assignment
-        { $ast = new AssignmentStatement($e1.ast, $e2.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast.add(new AssignmentStatement($e1.ast, $e2.ast, $e1.ast.getColumn(), $e1.ast.getLine())); }
     | 'return' e1=expression ';'                                // 7 - Return
-        { $ast = new ReturnStatement($e1.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast.add(new ReturnStatement($e1.ast, $e1.ast.getColumn(), $e1.ast.getLine())); }
     | ID '(' el=expression_list ')' ';'                         // 8 - Function Invocation
-        { $ast = new FunctionInvocation(
-            new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()),
-            $el.ast,
-            $ID.getCharPositionInLine()+1, $ID.getLine());
+        {
+            $ast.add(new FunctionInvocation(
+                new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()),
+                $el.ast,
+                $ID.getCharPositionInLine()+1, $ID.getLine())
+            );
         }
     ;
 
@@ -150,8 +160,8 @@ expression_list returns [List<Expression> ast = new ArrayList<>()]
     ;
 
 code_block returns [List<Statement> ast = new ArrayList<Statement>()]
-    : e1=statement {$ast.add($e1.ast); }
-    |'{' (e1=statement { $ast.add($e1.ast); })* '}'
+    : e1=statement {$ast.addAll($e1.ast); }
+    |'{' (e1=statement { $ast.addAll($e1.ast); })* '}'
     ;
 
 
