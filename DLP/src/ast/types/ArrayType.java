@@ -3,6 +3,8 @@ package ast.types;
 import ast.AbstractASTNode;
 import ast.Type;
 
+import java.lang.reflect.Array;
+
 public class ArrayType extends AbstractASTNode implements Type {
 
     private int size;
@@ -19,8 +21,37 @@ public class ArrayType extends AbstractASTNode implements Type {
     public Type getType() { return type; }
     public int getSize() { return size; }
 
+    public void setType(Type type) {
+        this.type = type;
+    }
+
     @Override
     public String toString() {
         return type + "[" + size + "]";
+    }
+
+    public static class Factory {
+
+
+        public static ArrayType create(Type type, int size, int column, int line) {
+            if (type instanceof ArrayType) {
+                return arrayOfArray(type, size, column, line);
+            } else {
+                return normalArray(type, size, column, line);
+            }
+        }
+
+        private static ArrayType normalArray(Type type, int size, int column, int line) {
+            return new ArrayType(type, size, column, line);
+        }
+
+        private static ArrayType arrayOfArray(Type type, int size, int column, int line) {
+
+            // we have to swap the arrayTypes
+            Type swap = ((ArrayType)type).getType();
+            ((ArrayType) type).setType(create(swap, size, column, line));
+
+            return (ArrayType) type;
+        }
     }
 }

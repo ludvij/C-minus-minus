@@ -1,4 +1,4 @@
-// Generated from E:/clase/TERCERO/DLP/DLP-2122/DLP/src/parser\Cmm.g4 by ANTLR 4.9.2
+// Generated from C:/Users/luisv/Desktop/clase/DLP/DLP-2122/DLP/src/parser\Cmm.g4 by ANTLR 4.9.2
 package parser;
 
     import ast.*;
@@ -1031,7 +1031,8 @@ public class CmmParser extends Parser {
 				((StatementContext)_localctx).el = expression_list();
 				setState(206);
 				match(T__6);
-				 for (Expression i : ((StatementContext)_localctx).el.ast) {
+
+				            for (Expression i : ((StatementContext)_localctx).el.ast) {
 				                _localctx.ast.add(new ReadStatement(i, ((StatementContext)_localctx).r.getCharPositionInLine()+1, ((StatementContext)_localctx).r.getLine()));
 				            }
 				        
@@ -1046,10 +1047,11 @@ public class CmmParser extends Parser {
 				((StatementContext)_localctx).el = expression_list();
 				setState(211);
 				match(T__6);
-				 for (Expression i : ((StatementContext)_localctx).el.ast) {
-				               _localctx.ast.add(new WriteStatement(i, ((StatementContext)_localctx).w.getCharPositionInLine()+1, ((StatementContext)_localctx).w.getLine()));
-				           }
-				       
+
+				            for (Expression i : ((StatementContext)_localctx).el.ast) {
+				                _localctx.ast.add(new WriteStatement(i, ((StatementContext)_localctx).w.getCharPositionInLine()+1, ((StatementContext)_localctx).w.getLine()));
+				            }
+				        
 				}
 				break;
 			case 3:
@@ -1143,7 +1145,8 @@ public class CmmParser extends Parser {
 				match(T__2);
 				setState(252);
 				match(T__6);
-				 _localctx.ast.add(new FunctionInvocation(
+
+				            _localctx.ast.add(new FunctionInvocation(
 				                new Variable((((StatementContext)_localctx).ID!=null?((StatementContext)_localctx).ID.getText():null), ((StatementContext)_localctx).ID.getCharPositionInLine()+1, ((StatementContext)_localctx).ID.getLine()),
 				                ((StatementContext)_localctx).el.ast,
 				                ((StatementContext)_localctx).ID.getCharPositionInLine()+1, ((StatementContext)_localctx).ID.getLine())
@@ -1410,7 +1413,7 @@ public class CmmParser extends Parser {
 					((TypeContext)_localctx).il = match(INT_CONSTANT);
 					setState(301);
 					match(T__8);
-					 ((TypeContext)_localctx).ast =  new ArrayType(((TypeContext)_localctx).t.ast, LexerHelper.lexemeToInt((((TypeContext)_localctx).il!=null?((TypeContext)_localctx).il.getText():null)), ((TypeContext)_localctx).t.ast.getColumn(), ((TypeContext)_localctx).t.ast.getLine());
+					 ((TypeContext)_localctx).ast =  ArrayType.Factory.create(((TypeContext)_localctx).t.ast, LexerHelper.lexemeToInt((((TypeContext)_localctx).il!=null?((TypeContext)_localctx).il.getText():null)), ((TypeContext)_localctx).t.ast.getColumn(), ((TypeContext)_localctx).t.ast.getLine());
 					}
 					} 
 				}

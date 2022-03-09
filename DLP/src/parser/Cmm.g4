@@ -169,7 +169,7 @@ type returns [Type ast]
     : rt=return_type                                    // 1 - return types
         { $ast = $rt.ast; }
     | t=type '[' il=INT_CONSTANT ']'                    // 2 - array type
-        { $ast = new ArrayType($t.ast, LexerHelper.lexemeToInt($il.text), $t.ast.getColumn(), $t.ast.getLine());}
+        { $ast = ArrayType.Factory.create($t.ast, LexerHelper.lexemeToInt($il.text), $t.ast.getColumn(), $t.ast.getLine());}
     | s='struct' '{' rf=record_fields '}'                 // 3 - struct type
         { $ast = new StructType($rf.ast, $s.getCharPositionInLine()+1, $s.getLine()); }
     ;
