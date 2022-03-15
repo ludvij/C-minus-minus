@@ -12,7 +12,7 @@ public class ErrorHandler {
 
     private static ErrorHandler instance;
 
-    private List<ErrorType> errors = new LinkedList<>();
+    private final List<ErrorType> errors = new LinkedList<>();
 
     public static ErrorHandler get() {
         if (instance == null) {

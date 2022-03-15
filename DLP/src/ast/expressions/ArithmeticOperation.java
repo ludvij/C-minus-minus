@@ -9,6 +9,8 @@ public class ArithmeticOperation extends AbstractASTNode implements Expression {
     private Expression expressionLeft;
     private Expression expressionRight;
 
+    private boolean lValue;
+
     public ArithmeticOperation(String operator, Expression expressionLeft, Expression expressionRight, int column, int line) {
         super(column, line);
         this.expressionLeft = expressionLeft;
@@ -31,5 +33,15 @@ public class ArithmeticOperation extends AbstractASTNode implements Expression {
     @Override
     public String toString() {
         return expressionLeft + " " + operator + " " + expressionRight;
+    }
+
+    @Override
+    public boolean getLvalue() {
+        return lValue;
+    }
+
+    @Override
+    public void setLvalue(boolean lValue) {
+        this.lValue = lValue;
     }
 }
