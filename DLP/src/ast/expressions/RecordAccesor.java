@@ -5,13 +5,13 @@ import visitor.Visitor;
 
 public class RecordAccesor extends AbstractExpression {
 
-    private Expression struct;
+    private Expression expression;
     private String record;
 
 
-    public RecordAccesor(Expression struct, String record, int column, int line) {
+    public RecordAccesor(Expression expression, String record, int column, int line) {
         super(column, line);
-        this.struct = struct;
+        this.expression = expression;
         this.record = record;
     }
 
@@ -24,12 +24,12 @@ public class RecordAccesor extends AbstractExpression {
         return record;
     }
 
-    public Expression getStruct() {
-        return struct;
+    public Expression getExpression() {
+        return expression;
     }
 
     @Override
     public String toString() {
-        return struct + "." + record;
+        return expression + "." + record;
     }
 }

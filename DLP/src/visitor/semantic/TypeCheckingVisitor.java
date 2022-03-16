@@ -1,6 +1,7 @@
 package visitor.semantic;
 
 import ast.Definition;
+import ast.Expression;
 import ast.Statement;
 import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
@@ -50,6 +51,9 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
     public Void visit(FunctionInvocation e, Void param) {
         e.setLvalue(false);
         e.getName().accept(this, null);
+        for (Expression expr : e.getParameters()) {
+            expr.accept(this, null);
+        }
         return null;
     }
 
@@ -70,7 +74,7 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
     @Override
     public Void visit(RecordAccesor e, Void param) {
         e.setLvalue(true);
-        e.getStruct().accept(this, null);
+        e.getExpression().accept(this, null);
         return null;
     }
 
