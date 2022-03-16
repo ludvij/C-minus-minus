@@ -1,15 +1,15 @@
 package visitor.semantic;
 
+import visitor.Visitor;
+
 import ast.Definition;
 import ast.Expression;
 import ast.Statement;
-import ast.definitions.FunctionDefinition;
-import ast.definitions.VariableDefinition;
+import ast.definitions.*;
 import ast.expressions.*;
-import ast.program.Program;
+import ast.program.*;
 import ast.statements.*;
 import ast.types.*;
-import visitor.Visitor;
 
 public class TypeCheckingVisitor implements Visitor<Void, Void> {
 
