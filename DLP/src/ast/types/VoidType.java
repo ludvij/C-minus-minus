@@ -2,7 +2,7 @@ package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;
-import semantic.Visitor;
+import visitor.Visitor;
 
 public class VoidType extends AbstractASTNode implements Type {
 

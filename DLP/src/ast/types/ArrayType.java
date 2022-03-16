@@ -2,9 +2,7 @@ package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;
-import semantic.Visitor;
-
-import java.lang.reflect.Array;
+import visitor.Visitor;
 
 public class ArrayType extends AbstractASTNode implements Type {
 

@@ -2,7 +2,7 @@ package ast.program;
 
 import ast.AbstractASTNode;
 import ast.Definition;
-import semantic.Visitor;
+import visitor.Visitor;
 
 import java.util.List;
 

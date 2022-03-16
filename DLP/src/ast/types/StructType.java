@@ -2,7 +2,7 @@ package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;
-import semantic.Visitor;
+import visitor.Visitor;
 
 import java.util.List;
 import java.util.stream.Collectors;

@@ -3,7 +3,7 @@ package ast.definitions;
 import ast.Statement;
 import ast.Type;
 import ast.expressions.Variable;
-import semantic.Visitor;
+import visitor.Visitor;
 
 import java.util.List;
 

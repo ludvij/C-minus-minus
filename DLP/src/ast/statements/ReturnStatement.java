@@ -3,7 +3,7 @@ package ast.statements;
 import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Statement;
-import semantic.Visitor;
+import visitor.Visitor;
 
 public class ReturnStatement extends AbstractASTNode implements Statement {
 

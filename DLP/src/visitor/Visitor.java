@@ -1,9 +1,5 @@
-package semantic;
+package visitor;
 
-import ast.Definition;
-import ast.Expression;
-import ast.Statement;
-import ast.Type;
 import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.expressions.*;

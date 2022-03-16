@@ -3,7 +3,7 @@ package ast.types;
 import ast.AbstractASTNode;
 import ast.Type;
 import ast.expressions.Variable;
-import semantic.Visitor;
+import visitor.Visitor;
 
 public class RecordField extends AbstractASTNode {
 

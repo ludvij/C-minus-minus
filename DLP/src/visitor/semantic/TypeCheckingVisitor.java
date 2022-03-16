@@ -1,4 +1,4 @@
-package semantic;
+package visitor.semantic;
 
 import ast.Definition;
 import ast.Statement;
@@ -8,8 +8,9 @@ import ast.expressions.*;
 import ast.program.Program;
 import ast.statements.*;
 import ast.types.*;
+import visitor.Visitor;
 
-public class TypeCheckingVisitor implements Visitor<Void, Void>{
+public class TypeCheckingVisitor implements Visitor<Void, Void> {
 
     @Override
     public Void visit(FunctionDefinition e, Void param) {
