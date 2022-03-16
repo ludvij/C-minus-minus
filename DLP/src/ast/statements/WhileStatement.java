@@ -3,6 +3,7 @@ package ast.statements;
 import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Statement;
+import semantic.Visitor;
 
 import java.util.List;
 
@@ -15,6 +16,11 @@ public class WhileStatement extends AbstractASTNode implements Statement {
         super(column, line);
         this.expression = innerExpression;
         this.body = body;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     public Expression getExpression() {

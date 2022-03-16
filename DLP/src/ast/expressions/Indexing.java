@@ -1,29 +1,36 @@
 package ast.expressions;
 
-import ast.AbstractASTNode;
 import ast.Expression;
+import semantic.Visitor;
 
-public class Indexing extends AbstractASTNode implements Expression {
+public class Indexing extends AbstractExpression {
 
-    private Expression expression;
-    private Expression index;
+    private Expression expressionLeft;
+    private Expression expressionRight;
 
-    public Indexing(Expression expression, Expression index, int column, int line) {
+
+    public Indexing(Expression expressionLeft, Expression expressionRight, int column, int line) {
         super(column, line);
-        this.expression = expression;
-        this.index = index;
+        this.expressionLeft = expressionLeft;
+        this.expressionRight = expressionRight;
     }
 
-    public Expression getExpression() {
-        return expression;
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
-    public Expression getIndex() {
-        return index;
+
+    public Expression getExpressionLeft() {
+        return expressionLeft;
+    }
+
+    public Expression getExpressionRight() {
+        return expressionRight;
     }
 
     @Override
     public String toString() {
-        return expression + "[" + index + "]";
+        return expressionLeft + "[" + expressionRight + "]";
     }
 }

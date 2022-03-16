@@ -15,6 +15,7 @@ public abstract class AbstractASTNode implements  ASTNode{
 
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        System.out.println("Not yet implemented: " + this.getClass());
         return null;
     }
 

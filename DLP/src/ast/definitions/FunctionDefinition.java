@@ -3,6 +3,7 @@ package ast.definitions;
 import ast.Statement;
 import ast.Type;
 import ast.expressions.Variable;
+import semantic.Visitor;
 
 import java.util.List;
 
@@ -13,6 +14,11 @@ public class FunctionDefinition extends AbstractDefinition {
     public FunctionDefinition(Variable name, Type type, List<Statement> body, int column, int line) {
         super(name, type, column, line);
         this.body = body;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     public List<Statement> getBody() {

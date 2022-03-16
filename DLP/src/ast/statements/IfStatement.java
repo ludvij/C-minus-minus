@@ -3,6 +3,7 @@ package ast.statements;
 import ast.AbstractASTNode;
 import ast.Expression;
 import ast.Statement;
+import semantic.Visitor;
 
 import java.util.List;
 
@@ -22,6 +23,11 @@ public class IfStatement extends AbstractASTNode implements Statement {
     public IfStatement(Expression expression, List<Statement> ifBody, List<Statement> elseBody, int column, int line) {
         this(expression, ifBody, column, line);
         this.elseBody = elseBody;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
 

@@ -1,5 +1,16 @@
-int[40][30][20][10] a;
-int[20][10] b;
+double f(int e) {
+  return (double)e;
+}
 
 
-void main() {}
+// * Main program
+void main() {
+  int i,a,j;
+  double[10] v;
+  
+  a = 0;
+  i = 0;
+  j = -i*a-2;  
+  v[ (int)(v[j]) ] = a;
+  write 'f', '(', 'i', ')', '=' ,f(i);
+}

@@ -1,14 +1,15 @@
 package semantic;
 
+import ast.Definition;
+import ast.Expression;
+import ast.Statement;
+import ast.Type;
 import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.expressions.*;
 import ast.program.Program;
 import ast.statements.*;
 import ast.types.*;
-import introspector.test.ast.Read;
-
-import java.util.ArrayList;
 
 public interface Visitor<TP, TR> {
 

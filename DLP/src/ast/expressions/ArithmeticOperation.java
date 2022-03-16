@@ -2,20 +2,25 @@ package ast.expressions;
 
 import ast.AbstractASTNode;
 import ast.Expression;
+import semantic.Visitor;
 
-public class ArithmeticOperation extends AbstractASTNode implements Expression {
+public class ArithmeticOperation extends AbstractExpression {
 
     private String operator;
     private Expression expressionLeft;
     private Expression expressionRight;
 
-    private boolean lValue;
 
     public ArithmeticOperation(String operator, Expression expressionLeft, Expression expressionRight, int column, int line) {
         super(column, line);
         this.expressionLeft = expressionLeft;
         this.expressionRight = expressionRight;
         this.operator = operator;
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     public String getOperator() {
@@ -33,15 +38,5 @@ public class ArithmeticOperation extends AbstractASTNode implements Expression {
     @Override
     public String toString() {
         return expressionLeft + " " + operator + " " + expressionRight;
-    }
-
-    @Override
-    public boolean getLvalue() {
-        return lValue;
-    }
-
-    @Override
-    public void setLvalue(boolean lValue) {
-        this.lValue = lValue;
     }
 }

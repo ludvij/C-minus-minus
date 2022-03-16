@@ -2,6 +2,7 @@ package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;
+import semantic.Visitor;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +21,11 @@ public class StructType extends AbstractASTNode implements Type {
         if (fields.stream().map(x -> x.getName().getName()).collect(Collectors.toSet()).size() != fields.size()) {
             new ErrorType("Duplicate record name in struct", getColumn(), getLine());
         }
+    }
+
+    @Override
+    public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
+        return v.visit(this, param);
     }
 
     public List<RecordField> getRecordFields() {
