@@ -8,7 +8,7 @@ import visitor.Visitor;
 public class VariableDefinition extends AbstractDefinition implements Statement {
 
 
-    public VariableDefinition(Variable name, Type type, int column, int line) {
+    public VariableDefinition(String name, Type type, int column, int line) {
         super(name, type, column, line);
     }
 

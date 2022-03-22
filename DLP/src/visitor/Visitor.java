@@ -9,8 +9,17 @@ import ast.types.*;
 
 public interface Visitor<TP, TR> {
 
+    TR visit(Program e, TP param);
+
     TR visit(FunctionDefinition e, TP param);
     TR visit(VariableDefinition e, TP param);
+
+    TR visit(AssignmentStatement e, TP param);
+    TR visit(ReturnStatement e, TP param);
+    TR visit(WhileStatement e, TP param);
+    TR visit(WriteStatement e, TP param);
+    TR visit(ReadStatement e, TP param);
+    TR visit(IfStatement e, TP param);
 
     TR visit(ArithmeticOperation e, TP param);
     TR visit(ComparisonOperation e, TP param);
@@ -26,15 +35,6 @@ public interface Visitor<TP, TR> {
     TR visit(Variable e, TP param);
     TR visit(Cast e, TP param);
 
-    TR visit(Program e, TP param);
-
-    TR visit(AssignmentStatement e, TP param);
-    TR visit(ReturnStatement e, TP param);
-    TR visit(WhileStatement e, TP param);
-    TR visit(WriteStatement e, TP param);
-    TR visit(ReadStatement e, TP param);
-    TR visit(IfStatement e, TP param);
-
     TR visit(FunctionType e, TP param);
     TR visit(RecordField e, TP param);
     TR visit(DoubleType e, TP param);
@@ -43,6 +43,5 @@ public interface Visitor<TP, TR> {
     TR visit(CharType e, TP param);
     TR visit(VoidType e, TP param);
     TR visit(IntType e, TP param);
-//    TR visit(ErrorType e, TP param);
-
+    TR visit(ErrorType e, TP param);
 }

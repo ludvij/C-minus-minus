@@ -7,22 +7,32 @@ import ast.expressions.Variable;
 
 public abstract class AbstractDefinition extends AbstractASTNode implements Definition {
 
-    private Variable name;
+    private String name;
     private Type type;
+    private int scope;
 
-    public AbstractDefinition(Variable name, Type type, int column, int line) {
+    public AbstractDefinition(String name, Type type, int column, int line) {
         super(column, line);
         this.name = name;
         this.type = type;
     }
 
     @Override
-    public Variable getName() {
+    public String getName() {
         return name;
     }
 
     @Override
     public Type getType() {
         return type;
+    }
+
+    @Override
+    public int getScope() {
+        return scope;
+    }
+
+    public void setScope(int scope) {
+        this.scope = scope;
     }
 }

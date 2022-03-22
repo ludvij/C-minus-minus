@@ -1,10 +1,12 @@
 package ast.expressions;
 
+import ast.Definition;
 import visitor.Visitor;
 
 public class Variable extends AbstractExpression {
 
     private String name;
+    private Definition definition;
 
     public Variable(String name, int column, int line) {
         super(column, line);
@@ -18,6 +20,14 @@ public class Variable extends AbstractExpression {
 
     public String getName() {
         return name;
+    }
+
+    public Definition getDefinition() {
+        return definition;
+    }
+
+    public void setDefinition(Definition definition) {
+        this.definition = definition;
     }
 
     @Override

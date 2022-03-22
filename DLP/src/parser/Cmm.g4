@@ -26,9 +26,9 @@ definitions returns [List<Definition> ast = new ArrayList<>()]
     ;
 
 main returns [FunctionDefinition ast]
-    : vt=void_type m='main' '(' ')' '{' fb=function_body '}'
+    : vt=void_type 'main' '(' ')' '{' fb=function_body '}'
         { $ast = new FunctionDefinition(
-            new Variable($m.text, $m.getCharPositionInLine()+1, $m.getLine()),
+            "main",
             new FunctionType($vt.ast, new ArrayList<VariableDefinition>(), $vt.ast.getColumn(), $vt.ast.getLine()),
             $fb.ast,
             $vt.ast.getColumn(),
@@ -39,7 +39,7 @@ main returns [FunctionDefinition ast]
 function_definition returns [Definition ast]
     : rt=return_type ID '(' tp=parameters ')' '{' fb=function_body '}'
          { $ast = new FunctionDefinition(
-             new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()),
+             $ID.text,
              new FunctionType($rt.ast, $tp.ast, $rt.ast.getColumn(), $rt.ast.getLine()),
              $fb.ast,
              $rt.ast.getColumn(), $rt.ast.getLine()
@@ -54,12 +54,12 @@ function_body returns [List<Statement> ast = new ArrayList<>()]
 variable_definition returns [List<VariableDefinition> ast = new ArrayList<>()]
     : t=type i1=ID
         { $ast.add(new VariableDefinition(
-            new Variable($i1.text, $i1.getCharPositionInLine()+1, $i1.getLine()),
+            $i1.text,
             $t.ast,
             $t.ast.getColumn(), $t.ast.getLine())); }
       (',' i2=ID
         { $ast.add(new VariableDefinition(
-            new Variable($i2.text, $i2.getCharPositionInLine()+1, $i2.getLine()),
+            $i2.text,
             $t.ast,
             $t.ast.getColumn(), $t.ast.getLine())); }
       )* ';'
@@ -73,7 +73,7 @@ parameters returns [List<VariableDefinition> ast = new ArrayList<>()]
 typed_param returns [VariableDefinition ast]
     : t=type ID
         { $ast = new VariableDefinition(
-            new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()),
+            $ID.text,
             $t.ast, $t.ast.getColumn(),
             $t.ast.getLine());
         }

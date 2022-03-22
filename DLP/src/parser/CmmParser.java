@@ -235,7 +235,6 @@ public class CmmParser extends Parser {
 	public static class MainContext extends ParserRuleContext {
 		public FunctionDefinition ast;
 		public Void_typeContext vt;
-		public Token m;
 		public Function_bodyContext fb;
 		public Void_typeContext void_type() {
 			return getRuleContext(Void_typeContext.class,0);
@@ -258,7 +257,7 @@ public class CmmParser extends Parser {
 			setState(53);
 			((MainContext)_localctx).vt = void_type();
 			setState(54);
-			((MainContext)_localctx).m = match(T__0);
+			match(T__0);
 			setState(55);
 			match(T__1);
 			setState(56);
@@ -270,7 +269,7 @@ public class CmmParser extends Parser {
 			setState(59);
 			match(T__4);
 			 ((MainContext)_localctx).ast =  new FunctionDefinition(
-			            new Variable((((MainContext)_localctx).m!=null?((MainContext)_localctx).m.getText():null), ((MainContext)_localctx).m.getCharPositionInLine()+1, ((MainContext)_localctx).m.getLine()),
+			            "main",
 			            new FunctionType(((MainContext)_localctx).vt.ast, new ArrayList<VariableDefinition>(), ((MainContext)_localctx).vt.ast.getColumn(), ((MainContext)_localctx).vt.ast.getLine()),
 			            ((MainContext)_localctx).fb.ast,
 			            ((MainContext)_localctx).vt.ast.getColumn(),
@@ -334,7 +333,7 @@ public class CmmParser extends Parser {
 			setState(69);
 			match(T__4);
 			 ((Function_definitionContext)_localctx).ast =  new FunctionDefinition(
-			             new Variable((((Function_definitionContext)_localctx).ID!=null?((Function_definitionContext)_localctx).ID.getText():null), ((Function_definitionContext)_localctx).ID.getCharPositionInLine()+1, ((Function_definitionContext)_localctx).ID.getLine()),
+			             (((Function_definitionContext)_localctx).ID!=null?((Function_definitionContext)_localctx).ID.getText():null),
 			             new FunctionType(((Function_definitionContext)_localctx).rt.ast, ((Function_definitionContext)_localctx).tp.ast, ((Function_definitionContext)_localctx).rt.ast.getColumn(), ((Function_definitionContext)_localctx).rt.ast.getLine()),
 			             ((Function_definitionContext)_localctx).fb.ast,
 			             ((Function_definitionContext)_localctx).rt.ast.getColumn(), ((Function_definitionContext)_localctx).rt.ast.getLine()
@@ -454,7 +453,7 @@ public class CmmParser extends Parser {
 			setState(89);
 			((Variable_definitionContext)_localctx).i1 = match(ID);
 			 _localctx.ast.add(new VariableDefinition(
-			            new Variable((((Variable_definitionContext)_localctx).i1!=null?((Variable_definitionContext)_localctx).i1.getText():null), ((Variable_definitionContext)_localctx).i1.getCharPositionInLine()+1, ((Variable_definitionContext)_localctx).i1.getLine()),
+			            (((Variable_definitionContext)_localctx).i1!=null?((Variable_definitionContext)_localctx).i1.getText():null),
 			            ((Variable_definitionContext)_localctx).t.ast,
 			            ((Variable_definitionContext)_localctx).t.ast.getColumn(), ((Variable_definitionContext)_localctx).t.ast.getLine())); 
 			setState(96);
@@ -468,7 +467,7 @@ public class CmmParser extends Parser {
 				setState(92);
 				((Variable_definitionContext)_localctx).i2 = match(ID);
 				 _localctx.ast.add(new VariableDefinition(
-				            new Variable((((Variable_definitionContext)_localctx).i2!=null?((Variable_definitionContext)_localctx).i2.getText():null), ((Variable_definitionContext)_localctx).i2.getCharPositionInLine()+1, ((Variable_definitionContext)_localctx).i2.getLine()),
+				            (((Variable_definitionContext)_localctx).i2!=null?((Variable_definitionContext)_localctx).i2.getText():null),
 				            ((Variable_definitionContext)_localctx).t.ast,
 				            ((Variable_definitionContext)_localctx).t.ast.getColumn(), ((Variable_definitionContext)_localctx).t.ast.getLine())); 
 				}
@@ -590,7 +589,7 @@ public class CmmParser extends Parser {
 			setState(116);
 			((Typed_paramContext)_localctx).ID = match(ID);
 			 ((Typed_paramContext)_localctx).ast =  new VariableDefinition(
-			            new Variable((((Typed_paramContext)_localctx).ID!=null?((Typed_paramContext)_localctx).ID.getText():null), ((Typed_paramContext)_localctx).ID.getCharPositionInLine()+1, ((Typed_paramContext)_localctx).ID.getLine()),
+			            (((Typed_paramContext)_localctx).ID!=null?((Typed_paramContext)_localctx).ID.getText():null),
 			            ((Typed_paramContext)_localctx).t.ast, ((Typed_paramContext)_localctx).t.ast.getColumn(),
 			            ((Typed_paramContext)_localctx).t.ast.getLine());
 			        

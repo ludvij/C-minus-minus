@@ -1,67 +1,45 @@
 package visitor.semantic;
 
-import visitor.Visitor;
+import visitor.AbstractVisitor;
 
-import ast.Definition;
 import ast.Expression;
-import ast.Statement;
-import ast.definitions.*;
 import ast.expressions.*;
-import ast.program.*;
 import ast.statements.*;
 import ast.types.*;
 
-public class TypeCheckingVisitor implements Visitor<Void, Void> {
-
-    @Override
-    public Void visit(FunctionDefinition e, Void param) {
-        e.getType().accept(this, null);
-        e.getName().accept(this, null);
-
-        for (Statement stmt : e.getBody()) {
-            stmt.accept(this, null);
-        }
-        return null;
-    }
-
-    @Override
-    public Void visit(VariableDefinition e, Void param) {
-        e.getType().accept(this, null);
-        e.getName().accept(this, null);
-        return null;
-    }
+public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
     public Void visit(ArithmeticOperation e, Void param) {
-        e.setLvalue(false);
         e.getExpressionLeft().accept(this, null);
         e.getExpressionRight().accept(this, null);
+        e.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(ComparisonOperation e, Void param) {
-        e.setLvalue(false);
         e.getExpressionLeft().accept(this, null);
         e.getExpressionRight().accept(this, null);
+        e.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(FunctionInvocation e, Void param) {
-        e.setLvalue(false);
         e.getName().accept(this, null);
         for (Expression expr : e.getParameters()) {
             expr.accept(this, null);
         }
+        e.setLvalue(false);
         return null;
     }
 
     @Override
     public Void visit(LogicalOperation e, Void param) {
-        e.setLvalue(false);
         e.getExpressionLeft().accept(this, null);
         e.getExpressionRight().accept(this, null);
+        e.setLvalue(false);
         return null;
     }
 
@@ -73,8 +51,8 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
 
     @Override
     public Void visit(RecordAccesor e, Void param) {
-        e.setLvalue(true);
         e.getExpression().accept(this, null);
+        e.setLvalue(true);
         return null;
     }
 
@@ -86,8 +64,8 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
 
     @Override
     public Void visit(UnaryMinus e, Void param) {
-        e.setLvalue(false);
         e.getExpression().accept(this, null);
+        e.setLvalue(false);
         return null;
     }
 
@@ -99,16 +77,16 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
 
     @Override
     public Void visit(Indexing e, Void param) {
-        e.setLvalue(true);
         e.getExpressionLeft().accept(this, null);
         e.getExpressionRight().accept(this, null);
+        e.setLvalue(true);
         return null;
     }
 
     @Override
     public Void visit(Negation e, Void param) {
-        e.setLvalue(false);
         e.getExpression().accept(this, null);
+        e.setLvalue(false);
         return null;
     }
 
@@ -120,19 +98,9 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
 
     @Override
     public Void visit(Cast e, Void param) {
-        e.setLvalue(false);
         e.getCastType().accept(this, null);
         e.getExpression().accept(this, null);
-        return null;
-    }
-
-
-    @Override
-    public Void visit(Program e, Void param) {
-        for (Definition def : e.getDefinitions()){
-            def.accept(this, null);
-        }
-
+        e.setLvalue(false);
         return null;
     }
 
@@ -147,90 +115,11 @@ public class TypeCheckingVisitor implements Visitor<Void, Void> {
     }
 
     @Override
-    public Void visit(ReturnStatement e, Void param) {
-        e.getExpression().accept(this, null);
-        return null;
-    }
-
-    @Override
-    public Void visit(WhileStatement e, Void param) {
-        e.getExpression().accept(this, null);
-        for (Statement stmt : e.getBody()) {
-            stmt.accept(this, null);
-        }
-        return null;
-    }
-
-    @Override
-    public Void visit(WriteStatement e, Void param) {
-        e.getExpression().accept(this, null);
-        return null;
-    }
-
-    @Override
     public Void visit(ReadStatement e, Void param) {
         e.getExpression().accept(this, null);
         if (!e.getExpression().getLvalue()) {
             new ErrorType("expression in read must have an l-value", e.getColumn(), e.getLine());
         }
-        return null;
-    }
-
-    @Override
-    public Void visit(IfStatement e, Void param) {
-        e.getExpression().accept(this, null);
-        for (Statement stmt : e.getIfBody()) {
-            stmt.accept(this, null);
-        }
-        for (Statement stmt : e.getElseBody()) {
-            stmt.accept(this, null);
-        }
-        return null;
-    }
-
-    @Override
-    public Void visit(FunctionType e, Void param) {
-        e.getType().accept(this, null);
-
-        for (VariableDefinition def : e.getParameters()) {
-            def.accept(this, null);
-        }
-
-        return null;
-    }
-
-    @Override
-    public Void visit(RecordField e, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(DoubleType e, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(StructType e, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(ArrayType e, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(CharType e, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(VoidType e, Void param) {
-        return null;
-    }
-
-    @Override
-    public Void visit(IntType e, Void param) {
         return null;
     }
 }
