@@ -1515,7 +1515,7 @@ public class CmmParser extends Parser {
 			setState(316);
 			((Record_fieldContext)_localctx).i1 = match(ID);
 			 _localctx.ast.add(new RecordField(
-			            new Variable((((Record_fieldContext)_localctx).i1!=null?((Record_fieldContext)_localctx).i1.getText():null), ((Record_fieldContext)_localctx).i1.getLine(), ((Record_fieldContext)_localctx).i1.getCharPositionInLine()+1),
+			            (((Record_fieldContext)_localctx).i1!=null?((Record_fieldContext)_localctx).i1.getText():null),
 			            ((Record_fieldContext)_localctx).t.ast,
 			            ((Record_fieldContext)_localctx).i1.getLine(), ((Record_fieldContext)_localctx).i1.getCharPositionInLine()+1));
 			        
@@ -1530,7 +1530,7 @@ public class CmmParser extends Parser {
 				setState(319);
 				((Record_fieldContext)_localctx).i2 = match(ID);
 				 _localctx.ast.add(new RecordField(
-				            new Variable((((Record_fieldContext)_localctx).i2!=null?((Record_fieldContext)_localctx).i2.getText():null), ((Record_fieldContext)_localctx).i2.getLine(), ((Record_fieldContext)_localctx).i2.getCharPositionInLine()+1),
+				            (((Record_fieldContext)_localctx).i2!=null?((Record_fieldContext)_localctx).i2.getText():null),
 				            ((Record_fieldContext)_localctx).t.ast,
 				            ((Record_fieldContext)_localctx).i2.getLine(), ((Record_fieldContext)_localctx).i2.getCharPositionInLine()+1));
 				        
@@ -1628,7 +1628,7 @@ public class CmmParser extends Parser {
 			{
 			setState(336);
 			((Void_typeContext)_localctx).t = match(T__32);
-			 ((Void_typeContext)_localctx).ast =  new VoidType(((Void_typeContext)_localctx).t.getLine(), ((Void_typeContext)_localctx).t.getCharPositionInLine()+1); 
+			 ((Void_typeContext)_localctx).ast =  VoidType.get(); 
 			}
 		}
 		catch (RecognitionException re) {
@@ -1663,7 +1663,7 @@ public class CmmParser extends Parser {
 				{
 				setState(339);
 				((Builtin_typeContext)_localctx).t = match(T__33);
-				 ((Builtin_typeContext)_localctx).ast =  new IntType(((Builtin_typeContext)_localctx).t.getLine(), ((Builtin_typeContext)_localctx).t.getCharPositionInLine()+1); 
+				 ((Builtin_typeContext)_localctx).ast =  IntType.get(); 
 				}
 				break;
 			case T__34:
@@ -1671,7 +1671,7 @@ public class CmmParser extends Parser {
 				{
 				setState(341);
 				((Builtin_typeContext)_localctx).t = match(T__34);
-				 ((Builtin_typeContext)_localctx).ast =  new CharType(((Builtin_typeContext)_localctx).t.getLine(), ((Builtin_typeContext)_localctx).t.getCharPositionInLine()+1); 
+				 ((Builtin_typeContext)_localctx).ast =  CharType.get(); 
 				}
 				break;
 			case T__35:
@@ -1679,7 +1679,7 @@ public class CmmParser extends Parser {
 				{
 				setState(343);
 				((Builtin_typeContext)_localctx).t = match(T__35);
-				 ((Builtin_typeContext)_localctx).ast =  new DoubleType(((Builtin_typeContext)_localctx).t.getLine(), ((Builtin_typeContext)_localctx).t.getCharPositionInLine()+1); 
+				 ((Builtin_typeContext)_localctx).ast =  DoubleType.get(); 
 				}
 				break;
 			default:

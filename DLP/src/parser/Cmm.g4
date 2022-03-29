@@ -182,13 +182,13 @@ record_fields returns [List<RecordField> ast = new ArrayList<RecordField>()]
 record_field returns [List<RecordField> ast = new ArrayList<RecordField>()]
     : t=type i1=ID
         { $ast.add(new RecordField(
-            new Variable($i1.text, $i1.getLine(), $i1.getCharPositionInLine()+1),
+            $i1.text,
             $t.ast,
             $i1.getLine(), $i1.getCharPositionInLine()+1));
         }
       (',' i2=ID
         { $ast.add(new RecordField(
-            new Variable($i2.text, $i2.getLine(), $i2.getCharPositionInLine()+1),
+            $i2.text,
             $t.ast,
             $i2.getLine(), $i2.getCharPositionInLine()+1));
         })* ';'
@@ -203,16 +203,16 @@ return_type returns [Type ast]
 
 void_type returns [Type ast]
     : t='void'
-        { $ast = new VoidType($t.getLine(), $t.getCharPositionInLine()+1); }
+        { $ast = VoidType.get(); }
     ;
 
 builtin_type returns [Type ast]
     : t='int'     // 1 - int type
-        { $ast = new IntType($t.getLine(), $t.getCharPositionInLine()+1); }
+        { $ast = IntType.get(); }
     | t='char'    // 2 - char type
-        { $ast = new CharType($t.getLine(), $t.getCharPositionInLine()+1); }
+        { $ast = CharType.get(); }
     | t='double'  // 3 - double type
-        { $ast = new DoubleType($t.getLine(), $t.getCharPositionInLine()+1); }
+        { $ast = DoubleType.get(); }
     ;
 
 // lab 3

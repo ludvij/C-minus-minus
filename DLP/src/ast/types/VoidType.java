@@ -4,8 +4,17 @@ import visitor.Visitor;
 
 public class VoidType extends AbstractType {
 
-    public VoidType(int line, int column) {
-        super(line, column);
+    private static VoidType instance;
+
+    private VoidType() {
+        super(0, 0);
+    }
+
+    public static VoidType get() {
+        if (instance == null) {
+            instance = new VoidType();
+        }
+        return instance;
     }
 
     @Override

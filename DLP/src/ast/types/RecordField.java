@@ -6,10 +6,10 @@ import visitor.Visitor;
 
 public class RecordField extends AbstractType {
 
-    private final Variable name;
+    private final String name;
     private final Type type;
 
-    public RecordField(Variable name, Type type, int line, int column) {
+    public RecordField(String name, Type type, int line, int column) {
         super(line, column);
         this.name = name;
         this.type = type;
@@ -20,11 +20,16 @@ public class RecordField extends AbstractType {
         return v.visit(this, param);
     }
 
-    public Variable getName() { return name; }
+    public String getName() { return name; }
     public Type getType() { return type; }
 
     @Override
+    public Type dot(String field, int line, int column) {
+        return type;
+    }
+
+    @Override
     public String toString() {
-        return type + " " + name + ";";
+        return type + "." + name;
     }
 }

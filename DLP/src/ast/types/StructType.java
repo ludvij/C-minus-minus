@@ -16,7 +16,7 @@ public class StructType extends AbstractType {
     }
 
     public void checkDuplicates(List<RecordField> fields) {
-        if (fields.stream().map(x -> x.getName().getName()).collect(Collectors.toSet()).size() != fields.size()) {
+        if (fields.stream().map(x -> x.getName()).collect(Collectors.toSet()).size() != fields.size()) {
             new ErrorType("Duplicate record name in struct", getColumn(), getLine());
         }
     }

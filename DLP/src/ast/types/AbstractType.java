@@ -12,44 +12,56 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 	}
 
 	@Override
-	public Type arithmetic(Type other) {
-		new ErrorType("Invalid arithmetic operation", getColumn(), getLine());
+	public Type arithmetic(Type other, int line, int column) {
+		new ErrorType("Invalid arithmetic operation for: " + this + " " + other, line, column);
 		return this;
 	}
 
 	@Override
-	public Type comparison(Type other) {
-		new ErrorType("Invalid comparison operation", getColumn(), getLine());
+	public Type comparison(Type other, int line, int column) {
+		new ErrorType("Invalid comparison operation for: " + this + " " + other, line, column);
 		return this;
 	}
 
 	@Override
-	public Type squareBrackets(Type other) {
-		new ErrorType("Invalid indexing operation", getColumn(), getLine());
+	public Type squareBrackets(Type other, int line, int column) {
+		new ErrorType("Invalid indexing operation for: "  + this + " " + other, line, column);
 		return this;
 	}
 
 	@Override
-	public Type parenthesis(List<Type> other) {
-		new ErrorType("Invalid function call", getColumn(), getLine());
+	public Type parenthesis(List<Type> params, int line, int column) {
+		new ErrorType("Invalid function call", line, column);
 		return this;
 	}
 
 	@Override
-	public Type dot(String field) {
-		new ErrorType("Invalid record access", getColumn(), getLine());
+	public Type dot(String field, int line, int column) {
+		new ErrorType("Invalid record access", line, column);
 		return this;
 	}
 
 	@Override
-	public Type unaryMinus() {
-		new ErrorType("Invalid minus operation", getColumn(), getLine());
+	public Type unaryMinus(int line, int column) {
+		new ErrorType("Invalid minus operation", line, column);
 		return this;
 	}
 
 	@Override
-	public Type negation() {
-		new ErrorType("Invalid negation operation", getColumn(), getLine());
+	public Type negation(int line, int column) {
+		new ErrorType("Invalid negation operation", line, column);
+		return this;
+	}
+
+	@Override
+	public Type logical(Type other, int line, int column) {
+		new ErrorType("Invalid logical operation for: " + this + " " + other, line, column);
+		return this;
+	}
+
+	@Override
+	public Type castTo(Type other, int line, int column) {
+		new ErrorType("Invalid cast for type: " + other, line, column);
 		return this;
 	}
 }

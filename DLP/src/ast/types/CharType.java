@@ -5,28 +5,44 @@ import visitor.Visitor;
 
 public class CharType extends AbstractType {
 
-    public CharType(int line, int column) {
-        super(line, column);
+    private static CharType instance;
+
+    private CharType() {
+        super(0, 0);
+    }
+
+    public static CharType get() {
+        if (instance == null) {
+            instance = new CharType();
+        }
+        return instance;
     }
 
     @Override
-    public Type arithmetic(Type other) {
-        if (this.getClass() != other.getClass()) {
-            new ErrorType("[arithmetic]: required: CharType, provided: " + other.getClass().getSimpleName(),
-                getColumn(), getLine());
+    public Type arithmetic(Type other, int line, int column) {
+        if (this != other) {
+            new ErrorType("[arithmetic]: required: CharType, provided: " + other,
+                line, column);
         }
-        return this;
+        return get();
     }
 
     @Override
-    public Type comparison(Type other) {
-        if (this.getClass() != other.getClass()) {
-            new ErrorType("[comparison]: required: CharType, provided: " + other.getClass().getSimpleName(),
-                getColumn(), getLine());
+    public Type comparison(Type other, int line, int column) {
+        if (this != other) {
+            new ErrorType("[comparison]: required: CharType, provided: " + other,
+                line, column);
         }
-        return this;
+        return get();
     }
 
+    @Override
+    public Type castTo(Type other, int line, int column) {
+        if (!(other == IntType.get() || other == CharType.get() || other == DoubleType.get())) {
+            new ErrorType("[cast]: Invalid cast: for " + this + " and " + other , line, column);
+        }
+        return other;
+    }
 
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
