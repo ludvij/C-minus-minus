@@ -6,8 +6,17 @@ import visitor.Visitor;
 
 public class DoubleType extends AbstractASTNode implements Type {
 
-    public DoubleType(int column, int line) {
-        super(column, line);
+    private static DoubleType instance;
+
+    private DoubleType() {
+        super(0, 0);
+    }
+
+    public static DoubleType get() {
+        if (instance == null) {
+            instance = new DoubleType();
+        }
+        return instance;
     }
 
     @Override

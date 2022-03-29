@@ -6,8 +6,17 @@ import visitor.Visitor;
 
 public class IntType extends AbstractASTNode implements Type {
 
-    public IntType(int column, int line) {
-        super(column, line);
+    private static IntType instance;
+
+    private IntType() {
+        super(0, 0);
+    }
+
+    public static IntType get() {
+        if (instance == null) {
+            instance = new IntType();
+        }
+        return instance;
     }
 
     @Override

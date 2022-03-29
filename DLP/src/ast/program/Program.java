@@ -10,8 +10,8 @@ public class Program extends AbstractASTNode {
 
     private final List<Definition> definitions;
 
-    public Program(List<Definition> definitions, int column, int line) {
-        super(column, line);
+    public Program(List<Definition> definitions) {
+        super(0,0 );
         this.definitions = definitions;
     }
 

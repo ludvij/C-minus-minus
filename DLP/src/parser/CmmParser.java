@@ -1,4 +1,4 @@
-// Generated from C:/Users/luisv/Desktop/clase/DLP/DLP-2122/DLP/src/parser\Cmm.g4 by ANTLR 4.9.2
+// Generated from E:/clase/TERCERO/DLP/DLP-2122/DLP/src/parser\Cmm.g4 by ANTLR 4.9.2
 package parser;
 
     import ast.*;
@@ -145,7 +145,7 @@ public class CmmParser extends Parser {
 			((ProgramContext)_localctx).mf = main();
 
 			            ((ProgramContext)_localctx).d.ast.add(((ProgramContext)_localctx).mf.ast);
-			            ((ProgramContext)_localctx).ast =  new Program(((ProgramContext)_localctx).d.ast, 0, 0);
+			            ((ProgramContext)_localctx).ast =  new Program(((ProgramContext)_localctx).d.ast);
 			        
 			}
 		}
@@ -235,6 +235,7 @@ public class CmmParser extends Parser {
 	public static class MainContext extends ParserRuleContext {
 		public FunctionDefinition ast;
 		public Void_typeContext vt;
+		public Token m;
 		public Function_bodyContext fb;
 		public Void_typeContext void_type() {
 			return getRuleContext(Void_typeContext.class,0);
@@ -257,7 +258,7 @@ public class CmmParser extends Parser {
 			setState(53);
 			((MainContext)_localctx).vt = void_type();
 			setState(54);
-			match(T__0);
+			((MainContext)_localctx).m = match(T__0);
 			setState(55);
 			match(T__1);
 			setState(56);
@@ -269,11 +270,10 @@ public class CmmParser extends Parser {
 			setState(59);
 			match(T__4);
 			 ((MainContext)_localctx).ast =  new FunctionDefinition(
-			            "main",
-			            new FunctionType(((MainContext)_localctx).vt.ast, new ArrayList<VariableDefinition>(), ((MainContext)_localctx).vt.ast.getColumn(), ((MainContext)_localctx).vt.ast.getLine()),
+			            ((MainContext)_localctx).m.getText(),
+			            new FunctionType(((MainContext)_localctx).vt.ast, new ArrayList<VariableDefinition>(), ((MainContext)_localctx).m.getCharPositionInLine()+1, ((MainContext)_localctx).m.getLine()),
 			            ((MainContext)_localctx).fb.ast,
-			            ((MainContext)_localctx).vt.ast.getColumn(),
-			            ((MainContext)_localctx).vt.ast.getLine()
+			            ((MainContext)_localctx).m.getCharPositionInLine()+1, ((MainContext)_localctx).m.getLine()
 			        ); 
 			}
 		}
@@ -291,13 +291,13 @@ public class CmmParser extends Parser {
 	public static class Function_definitionContext extends ParserRuleContext {
 		public Definition ast;
 		public Return_typeContext rt;
-		public Token ID;
+		public Token id;
 		public ParametersContext tp;
 		public Function_bodyContext fb;
-		public TerminalNode ID() { return getToken(CmmParser.ID, 0); }
 		public Return_typeContext return_type() {
 			return getRuleContext(Return_typeContext.class,0);
 		}
+		public TerminalNode ID() { return getToken(CmmParser.ID, 0); }
 		public ParametersContext parameters() {
 			return getRuleContext(ParametersContext.class,0);
 		}
@@ -319,7 +319,7 @@ public class CmmParser extends Parser {
 			setState(62);
 			((Function_definitionContext)_localctx).rt = return_type();
 			setState(63);
-			((Function_definitionContext)_localctx).ID = match(ID);
+			((Function_definitionContext)_localctx).id = match(ID);
 			setState(64);
 			match(T__1);
 			setState(65);
@@ -333,10 +333,10 @@ public class CmmParser extends Parser {
 			setState(69);
 			match(T__4);
 			 ((Function_definitionContext)_localctx).ast =  new FunctionDefinition(
-			             (((Function_definitionContext)_localctx).ID!=null?((Function_definitionContext)_localctx).ID.getText():null),
-			             new FunctionType(((Function_definitionContext)_localctx).rt.ast, ((Function_definitionContext)_localctx).tp.ast, ((Function_definitionContext)_localctx).rt.ast.getColumn(), ((Function_definitionContext)_localctx).rt.ast.getLine()),
+			             (((Function_definitionContext)_localctx).id!=null?((Function_definitionContext)_localctx).id.getText():null),
+			             new FunctionType(((Function_definitionContext)_localctx).rt.ast, ((Function_definitionContext)_localctx).tp.ast, ((Function_definitionContext)_localctx).id.getCharPositionInLine()+1, ((Function_definitionContext)_localctx).id.getLine()),
 			             ((Function_definitionContext)_localctx).fb.ast,
-			             ((Function_definitionContext)_localctx).rt.ast.getColumn(), ((Function_definitionContext)_localctx).rt.ast.getLine()
+			             ((Function_definitionContext)_localctx).id.getCharPositionInLine()+1, ((Function_definitionContext)_localctx).id.getLine()
 			         ); 
 			}
 		}
@@ -455,7 +455,7 @@ public class CmmParser extends Parser {
 			 _localctx.ast.add(new VariableDefinition(
 			            (((Variable_definitionContext)_localctx).i1!=null?((Variable_definitionContext)_localctx).i1.getText():null),
 			            ((Variable_definitionContext)_localctx).t.ast,
-			            ((Variable_definitionContext)_localctx).t.ast.getColumn(), ((Variable_definitionContext)_localctx).t.ast.getLine())); 
+			            ((Variable_definitionContext)_localctx).i1.getCharPositionInLine()+1, ((Variable_definitionContext)_localctx).i1.getLine())); 
 			setState(96);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -469,7 +469,7 @@ public class CmmParser extends Parser {
 				 _localctx.ast.add(new VariableDefinition(
 				            (((Variable_definitionContext)_localctx).i2!=null?((Variable_definitionContext)_localctx).i2.getText():null),
 				            ((Variable_definitionContext)_localctx).t.ast,
-				            ((Variable_definitionContext)_localctx).t.ast.getColumn(), ((Variable_definitionContext)_localctx).t.ast.getLine())); 
+				            ((Variable_definitionContext)_localctx).i2.getCharPositionInLine()+1, ((Variable_definitionContext)_localctx).i2.getLine())); 
 				}
 				}
 				setState(98);
@@ -592,7 +592,6 @@ public class CmmParser extends Parser {
 			            (((Typed_paramContext)_localctx).ID!=null?((Typed_paramContext)_localctx).ID.getText():null),
 			            ((Typed_paramContext)_localctx).t.ast, ((Typed_paramContext)_localctx).t.ast.getColumn(),
 			            ((Typed_paramContext)_localctx).t.ast.getLine());
-			        
 			}
 		}
 		catch (RecognitionException re) {
@@ -679,7 +678,7 @@ public class CmmParser extends Parser {
 				match(T__2);
 				setState(128);
 				((ExpressionContext)_localctx).e1 = expression(12);
-				 ((ExpressionContext)_localctx).ast =  new Cast(((ExpressionContext)_localctx).t1.ast, ((ExpressionContext)_localctx).e1.ast, ((ExpressionContext)_localctx).t1.ast.getColumn(), ((ExpressionContext)_localctx).t1.ast.getLine()); 
+				 ((ExpressionContext)_localctx).ast =  new Cast(((ExpressionContext)_localctx).t1.ast, ((ExpressionContext)_localctx).e1.ast, ((ExpressionContext)_localctx).e1.ast.getColumn(), ((ExpressionContext)_localctx).e1.ast.getLine()); 
 				}
 				break;
 			case 3:
@@ -713,8 +712,7 @@ public class CmmParser extends Parser {
 				 ((ExpressionContext)_localctx).ast =  new FunctionInvocation(
 				            new Variable((((ExpressionContext)_localctx).ID!=null?((ExpressionContext)_localctx).ID.getText():null), ((ExpressionContext)_localctx).ID.getCharPositionInLine()+1, ((ExpressionContext)_localctx).ID.getLine()),
 				            ((ExpressionContext)_localctx).a.ast,
-				            ((ExpressionContext)_localctx).ID.getCharPositionInLine()+1, ((ExpressionContext)_localctx).ID.getLine());
-				        
+				            ((ExpressionContext)_localctx).ID.getCharPositionInLine()+1, ((ExpressionContext)_localctx).ID.getLine()); 
 				}
 				break;
 			case 6:
@@ -1412,7 +1410,12 @@ public class CmmParser extends Parser {
 					((TypeContext)_localctx).il = match(INT_CONSTANT);
 					setState(301);
 					match(T__8);
-					 ((TypeContext)_localctx).ast =  ArrayType.Factory.create(((TypeContext)_localctx).t.ast, LexerHelper.lexemeToInt((((TypeContext)_localctx).il!=null?((TypeContext)_localctx).il.getText():null)), ((TypeContext)_localctx).t.ast.getColumn(), ((TypeContext)_localctx).t.ast.getLine());
+
+					                  	((TypeContext)_localctx).ast =  ArrayType.Factory.create(
+					                  		((TypeContext)_localctx).t.ast,
+					                  		LexerHelper.lexemeToInt((((TypeContext)_localctx).il!=null?((TypeContext)_localctx).il.getText():null)),
+					                  		((TypeContext)_localctx).il.getCharPositionInLine()+1, ((TypeContext)_localctx).il.getLine());
+					          		
 					}
 					} 
 				}
@@ -1515,7 +1518,7 @@ public class CmmParser extends Parser {
 			 _localctx.ast.add(new RecordField(
 			            new Variable((((Record_fieldContext)_localctx).i1!=null?((Record_fieldContext)_localctx).i1.getText():null), ((Record_fieldContext)_localctx).i1.getCharPositionInLine()+1, ((Record_fieldContext)_localctx).i1.getLine()),
 			            ((Record_fieldContext)_localctx).t.ast,
-			            ((Record_fieldContext)_localctx).t.ast.getColumn(), ((Record_fieldContext)_localctx).t.ast.getLine()));
+			            ((Record_fieldContext)_localctx).i1.getCharPositionInLine()+1, ((Record_fieldContext)_localctx).i1.getLine()));
 			        
 			setState(323);
 			_errHandler.sync(this);
@@ -1530,7 +1533,7 @@ public class CmmParser extends Parser {
 				 _localctx.ast.add(new RecordField(
 				            new Variable((((Record_fieldContext)_localctx).i2!=null?((Record_fieldContext)_localctx).i2.getText():null), ((Record_fieldContext)_localctx).i2.getCharPositionInLine()+1, ((Record_fieldContext)_localctx).i2.getLine()),
 				            ((Record_fieldContext)_localctx).t.ast,
-				            ((Record_fieldContext)_localctx).t.ast.getColumn(), ((Record_fieldContext)_localctx).t.ast.getLine()));
+				            ((Record_fieldContext)_localctx).i2.getCharPositionInLine()+1, ((Record_fieldContext)_localctx).i2.getLine()));
 				        
 				}
 				}
@@ -1626,7 +1629,7 @@ public class CmmParser extends Parser {
 			{
 			setState(336);
 			((Void_typeContext)_localctx).t = match(T__32);
-			 ((Void_typeContext)_localctx).ast =  new VoidType(((Void_typeContext)_localctx).t.getCharPositionInLine()+1, ((Void_typeContext)_localctx).t.getLine()); 
+			 ((Void_typeContext)_localctx).ast =  VoidType.get(); 
 			}
 		}
 		catch (RecognitionException re) {
@@ -1661,7 +1664,7 @@ public class CmmParser extends Parser {
 				{
 				setState(339);
 				((Builtin_typeContext)_localctx).t = match(T__33);
-				 ((Builtin_typeContext)_localctx).ast =  new IntType(((Builtin_typeContext)_localctx).t.getCharPositionInLine()+1, ((Builtin_typeContext)_localctx).t.getLine()); 
+				 ((Builtin_typeContext)_localctx).ast =  IntType.get(); 
 				}
 				break;
 			case T__34:
@@ -1669,7 +1672,7 @@ public class CmmParser extends Parser {
 				{
 				setState(341);
 				((Builtin_typeContext)_localctx).t = match(T__34);
-				 ((Builtin_typeContext)_localctx).ast =  new CharType(((Builtin_typeContext)_localctx).t.getCharPositionInLine()+1, ((Builtin_typeContext)_localctx).t.getLine()); 
+				 ((Builtin_typeContext)_localctx).ast =  CharType.get(); 
 				}
 				break;
 			case T__35:
@@ -1677,7 +1680,7 @@ public class CmmParser extends Parser {
 				{
 				setState(343);
 				((Builtin_typeContext)_localctx).t = match(T__35);
-				 ((Builtin_typeContext)_localctx).ast =  new DoubleType(((Builtin_typeContext)_localctx).t.getCharPositionInLine()+1, ((Builtin_typeContext)_localctx).t.getLine()); 
+				 ((Builtin_typeContext)_localctx).ast =  DoubleType.get(); 
 				}
 				break;
 			default:
