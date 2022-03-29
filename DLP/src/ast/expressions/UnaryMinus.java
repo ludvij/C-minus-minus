@@ -5,7 +5,7 @@ import visitor.Visitor;
 
 public class UnaryMinus extends AbstractExpression {
 
-    private Expression expression;
+    private final Expression expression;
 
     public UnaryMinus(Expression expression, int column, int line) {
         super(column, line);

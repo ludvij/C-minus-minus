@@ -5,8 +5,8 @@ import visitor.Visitor;
 
 public class RecordAccesor extends AbstractExpression {
 
-    private Expression expression;
-    private String record;
+    private final Expression expression;
+    private final String record;
 
 
     public RecordAccesor(Expression expression, String record, int column, int line) {

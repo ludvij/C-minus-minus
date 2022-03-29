@@ -9,8 +9,8 @@ import java.util.List;
 
 public class WhileStatement extends AbstractASTNode implements Statement {
 
-    private Expression expression;
-    private List<Statement> body;
+    private final Expression expression;
+    private final List<Statement> body;
 
     public WhileStatement(Expression innerExpression, List<Statement> body, int column, int line) {
         super(column, line);

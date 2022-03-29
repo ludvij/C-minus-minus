@@ -5,9 +5,9 @@ import visitor.Visitor;
 
 public class ArithmeticOperation extends AbstractExpression {
 
-    private String operator;
-    private Expression expressionLeft;
-    private Expression expressionRight;
+    private final String operator;
+    private final Expression expressionLeft;
+    private final Expression expressionRight;
 
 
     public ArithmeticOperation(String operator, Expression expressionLeft, Expression expressionRight, int column, int line) {

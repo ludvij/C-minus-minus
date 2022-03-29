@@ -6,8 +6,8 @@ import visitor.Visitor;
 
 public class Cast extends AbstractExpression {
 
-    private Type castType;
-    private Expression expression;
+    private final Type castType;
+    private final Expression expression;
 
 
     public Cast(Type castType, Expression expression, int column, int line) {

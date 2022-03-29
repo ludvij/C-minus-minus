@@ -13,7 +13,7 @@ public abstract class AbstractExpression extends AbstractASTNode implements Expr
 
     @Override
     public boolean getLvalue() {
-        return lValue;
+        return !lValue;
     }
 
     @Override

@@ -7,7 +7,7 @@ import visitor.Visitor;
 
 public class WriteStatement extends AbstractASTNode implements Statement {
 
-    private Expression expression;
+    private final Expression expression;
 
     public WriteStatement(Expression expression, int column, int line) {
         super(column, line);

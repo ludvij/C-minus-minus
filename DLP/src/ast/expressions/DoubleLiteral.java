@@ -4,7 +4,7 @@ import visitor.Visitor;
 
 public class DoubleLiteral extends AbstractExpression {
 
-    private double value;
+    private final double value;
 
 
     public DoubleLiteral(double value, int column, int line) {

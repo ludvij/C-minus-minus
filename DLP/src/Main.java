@@ -25,9 +25,10 @@ public class Main {
 		CmmParser parser = new CmmParser(tokens);	
 //		parser.program();
 		Program ast = parser.program().ast;
-
-		ast.accept(new IdentificationVisitor(), null);
-		ast.accept(new TypeCheckingVisitor(), null);
+		new IdentificationVisitor().visit(ast, null);
+		new TypeCheckingVisitor().visit(ast, null);
+//		ast.accept(new IdentificationVisitor(), null);
+//		ast.accept(new TypeCheckingVisitor(), null);
 
 
 		if (ErrorHandler.get().anyErrors()) {
@@ -37,6 +38,46 @@ public class Main {
 			new IntrospectorTree("Introspector", model);
 		}
 	}
-	
+
+	/*
+	P: Arithmetic: expression1 -> expression2 expression3
+	R: expression1.type = expression2.type.squareBrackets(expression3.type);
+
+	P: Indexing: expression1 -> expression2 expression3
+	R: expression1.type = expression.type.squareBrackets(expression3.type)
+
+	P: FuncInvocation: expression1 -> expression2 expression3*
+	R: List<Type> argTypes = expression3*.stream()
+		.map(x -> x.type).toList()
+	expression1.type = expression2.type.parenthesis(argTypes)
+
+	P: WhileStmt: statement1 -> expression statement2*
+	R: expression.type.asBoolean()
+
+	P: Cast: expression1 -> type expression2
+	R: expression1.type = expression2.type.castTo(type)
+
+	P: Comparison: expression1 -> expression2 expression3
+	R: expression1.type = expression2.type.squareBrackets(expression3.type)
+
+	P: Logical: expression1 -> expression2 expression2
+	R: expression1.type = expression2.type.squareBrackets(expression2.type)
+
+	P: Negation: expression1 -> expression2
+	R: expression1.type = expression2.type
+
+	P: UnaryMinus: expression1 -> expression2
+	R: expression1.type = expression2.type
+
+	P: CharLitera: expression -> char
+	R: expression.type = char
+
+	P: intLiteral: expression -> int
+	R: expression.type = int
+
+	P: DoubleLiteral: expression -> double
+	R: expression.type = double
+
+	 */
 
 }

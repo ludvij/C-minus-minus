@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class StructType extends AbstractASTNode implements Type {
 
-    private List<RecordField> recordFields;
+    private final List<RecordField> recordFields;
 
     public StructType(List<RecordField> recordFields, int column, int line) {
         super(column, line);

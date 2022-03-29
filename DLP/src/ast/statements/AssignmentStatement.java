@@ -7,8 +7,8 @@ import visitor.Visitor;
 
 public class AssignmentStatement extends AbstractASTNode implements Statement {
 
-    private Expression rightExpression;
-    private Expression leftExpression;
+    private final Expression rightExpression;
+    private final Expression leftExpression;
 
     public AssignmentStatement(Expression leftExpression, Expression rightExpression, int column, int line) {
         super(column, line);

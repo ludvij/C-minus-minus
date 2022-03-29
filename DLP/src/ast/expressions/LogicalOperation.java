@@ -5,9 +5,9 @@ import visitor.Visitor;
 
 public class LogicalOperation extends AbstractExpression {
 
-    private Expression expressionLeft;
-    private Expression expressionRight;
-    private String operator;
+    private final Expression expressionLeft;
+    private final Expression expressionRight;
+    private final String operator;
 
 
     public LogicalOperation(String operator, Expression expressionLeft, Expression expressionRight, int column, int line) {

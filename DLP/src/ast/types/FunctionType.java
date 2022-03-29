@@ -9,8 +9,8 @@ import java.util.List;
 
 public class FunctionType extends AbstractASTNode implements Type {
 
-    private Type type;
-    private List<VariableDefinition> parameters;
+    private final Type type;
+    private final List<VariableDefinition> parameters;
 
     public FunctionType(Type type, List<VariableDefinition> parameters, int column, int line) {
         super(column, line);

@@ -1,7 +1,5 @@
 package ast;
 
-import visitor.Visitor;
-
 public abstract class AbstractASTNode implements  ASTNode{
 
     private final int column;

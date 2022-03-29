@@ -19,20 +19,12 @@ public class LexerTest {
 		int i = 0;
 		while ((token = lexer.nextToken()).getType() != CmmLexer.EOF) {
 			// We get the semantic value of the token
-			Object semanticValue = null;
-			switch (token.getType()) {
-			case CmmLexer.CHAR_CONSTANT:
-				semanticValue = LexerHelper.lexemeToChar(token.getText());
-				break;
-			case CmmLexer.INT_CONSTANT:
-				semanticValue = LexerHelper.lexemeToInt(token.getText());
-				break;
-			case CmmLexer.REAL_CONSTANT:
-				semanticValue = LexerHelper.lexemeToReal(token.getText());
-				break;
-			default:
-				semanticValue = token.getText();
-			}
+			Object semanticValue = switch (token.getType()) {
+				case CmmLexer.CHAR_CONSTANT -> LexerHelper.lexemeToChar(token.getText());
+				case CmmLexer.INT_CONSTANT -> LexerHelper.lexemeToInt(token.getText());
+				case CmmLexer.REAL_CONSTANT -> LexerHelper.lexemeToReal(token.getText());
+				default -> token.getText();
+			};
 			// We test the token
 			expectedTokens[i].assertEquals(token.getLine(), token.getCharPositionInLine() + 1,
 							token.getText(), token.getType(), semanticValue);
@@ -40,7 +32,7 @@ public class LexerTest {
 		}
 	}
 
-	private static LexicalInfo[] expectedTokens = new LexicalInfo[] {
+	private static final LexicalInfo[] expectedTokens = new LexicalInfo[] {
 			new LexicalInfo(7, 2, "0", CmmLexer.INT_CONSTANT, 0),
 			new LexicalInfo(7, 4, "123", CmmLexer.INT_CONSTANT, 123),
 			new LexicalInfo(8, 3, "0", CmmLexer.INT_CONSTANT, 0),

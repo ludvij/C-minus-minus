@@ -9,8 +9,8 @@ import java.util.List;
 
 public class IfStatement extends AbstractASTNode implements Statement {
 
-    private Expression expression;
-    private List<Statement> ifBody;
+    private final Expression expression;
+    private final List<Statement> ifBody;
     private List<Statement> elseBody;
 
     public IfStatement(Expression expression, List<Statement> ifBody, int column, int line)

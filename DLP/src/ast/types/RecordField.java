@@ -7,8 +7,8 @@ import visitor.Visitor;
 
 public class RecordField extends AbstractASTNode {
 
-    private Variable name;
-    private Type type;
+    private final Variable name;
+    private final Type type;
 
     public RecordField(Variable name, Type type, int column, int line) {
         super(column, line);

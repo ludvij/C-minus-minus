@@ -4,7 +4,7 @@ import visitor.Visitor;
 
 public class IntLiteral extends AbstractExpression {
 
-    private int value;
+    private final int value;
 
 
     public IntLiteral(int value, int column, int line) {

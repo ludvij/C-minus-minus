@@ -7,7 +7,7 @@ import visitor.Visitor;
 
 public class ErrorType extends AbstractASTNode implements Type {
 
-    private String message;
+    private final String message;
 
     public ErrorType(String message, int column, int line) {
         super(column, line);

@@ -4,7 +4,7 @@ import visitor.Visitor;
 
 public class CharLiteral extends AbstractExpression {
 
-    private char value;
+    private final char value;
 
 
     public CharLiteral(char value, int column, int line) {

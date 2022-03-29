@@ -7,7 +7,7 @@ public class LexerHelper {
 			return Integer.parseInt(str);
 		}
 		catch(NumberFormatException e) {
-			System.out.println(e);
+			e.printStackTrace();
 		}
 		return -1;
 	}

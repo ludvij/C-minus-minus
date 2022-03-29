@@ -5,7 +5,7 @@ import visitor.Visitor;
 
 public class Negation extends AbstractExpression {
 
-    private Expression expression;
+    private final Expression expression;
 
 
     public Negation(Expression expression, int column, int line) {

@@ -6,7 +6,7 @@ import visitor.Visitor;
 
 public class ArrayType extends AbstractASTNode implements Type {
 
-    private int size;
+    private final int size;
     private Type type;
 
     public ArrayType(Type type, int size, int column, int line) {

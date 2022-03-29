@@ -2,11 +2,13 @@ package test;
 
 class LexicalInfo {
 	
-	private int line, column, tokenKey;
+	private final int line;
+	private final int column;
+	private final int tokenKey;
 	
-	private String lexeme;
+	private final String lexeme;
 
-	public Object semanticValue;
+	public final Object semanticValue;
 	
 	public LexicalInfo(int line, int column, String lexeme, int tokenKey, Object semanticValue) {
 		this.line = line;

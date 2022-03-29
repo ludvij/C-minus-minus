@@ -1,6 +1,5 @@
 package visitor.semantic;
 
-import ast.Definition;
 import ast.Statement;
 import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;

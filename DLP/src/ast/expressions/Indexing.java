@@ -5,8 +5,8 @@ import visitor.Visitor;
 
 public class Indexing extends AbstractExpression {
 
-    private Expression expressionLeft;
-    private Expression expressionRight;
+    private final Expression expressionLeft;
+    private final Expression expressionRight;
 
 
     public Indexing(Expression expressionLeft, Expression expressionRight, int column, int line) {

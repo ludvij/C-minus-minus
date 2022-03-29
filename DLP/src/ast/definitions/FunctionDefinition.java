@@ -2,14 +2,13 @@ package ast.definitions;
 
 import ast.Statement;
 import ast.Type;
-import ast.expressions.Variable;
 import visitor.Visitor;
 
 import java.util.List;
 
 public class FunctionDefinition extends AbstractDefinition {
 
-    private List<Statement> body;
+    private final List<Statement> body;
 
     public FunctionDefinition(String name, Type type, List<Statement> body, int column, int line) {
         super(name, type, column, line);

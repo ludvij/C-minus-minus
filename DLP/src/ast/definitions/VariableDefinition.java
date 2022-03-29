@@ -2,7 +2,6 @@ package ast.definitions;
 
 import ast.Statement;
 import ast.Type;
-import ast.expressions.Variable;
 import visitor.Visitor;
 
 public class VariableDefinition extends AbstractDefinition implements Statement {

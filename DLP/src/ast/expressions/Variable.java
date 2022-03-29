@@ -5,7 +5,7 @@ import visitor.Visitor;
 
 public class Variable extends AbstractExpression {
 
-    private String name;
+    private final String name;
     private Definition definition;
 
     public Variable(String name, int column, int line) {

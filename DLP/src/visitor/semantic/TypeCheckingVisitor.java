@@ -108,7 +108,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(AssignmentStatement e, Void param) {
         e.getLeftExpression().accept(this, null);
         e.getRightExpression().accept(this, null);
-        if (!e.getLeftExpression().getLvalue()) {
+        if (e.getLeftExpression().getLvalue()) {
             new ErrorType("Left expression in assignment must have l-value", e.getColumn(), e.getLine());
         }
         return null;
@@ -117,7 +117,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(ReadStatement e, Void param) {
         e.getExpression().accept(this, null);
-        if (!e.getExpression().getLvalue()) {
+        if (e.getExpression().getLvalue()) {
             new ErrorType("expression in read must have an l-value", e.getColumn(), e.getLine());
         }
         return null;
