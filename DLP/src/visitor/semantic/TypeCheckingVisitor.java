@@ -7,6 +7,96 @@ import ast.expressions.*;
 import ast.statements.*;
 import ast.types.*;
 
+/*
+
+    // Definitions
+
+    P: FuncDefinition: definition -> type ID statement*
+    R: for (Statement st: statement*) {
+           st.returnType = type.returnType;
+       }
+
+    // Expression
+
+	P: Arithmetic: expression1 -> expression2 expression3
+	R: expression1.type = expression2.type.squareBrackets(expression3.type);
+
+	P: Indexing: expression1 -> expression2 expression3
+	R: expression1.type = expression.type.squareBrackets(expression3.type)
+
+	P: FuncInvocation: expression1 -> expression2 expression3*
+	R: List<Type> argTypes = expression3*.stream()
+		.map(x -> x.type).toList()
+	expression1.type = expression2.type.parenthesis(argTypes)
+
+
+	P: Cast: expression1 -> type expression2
+	R: expression1.type = expression2.type.castTo(type)
+
+	P: Comparison: expression1 -> expression2 expression3
+	R: expression1.type = expression2.type.squareBrackets(expression3.type)
+
+	P: Logical: expression1 -> expression2 expression2
+	R: expression1.type = expression2.type.squareBrackets(expression2.type)
+
+	P: RecordAccessor: expression1 -> expression2
+	R: expression1.type = expression2.type
+
+	P: Negation: expression1 -> expression2
+	R: expression1.type = expression2.type.negation()
+
+	P: UnaryMinus: expression1 -> expression2
+	R: expression1.type = expression2.type.minus()
+
+	P: CharLitera: expression -> CHAR_CONSTANT
+	R: expression.type = new CharType()
+
+	P: intLiteral: expression -> INT_CONSTANT
+	R: expression.type = new IntType()
+
+	P: DoubleLiteral: expression -> REAL_CONSTANT
+	R: expression.type = new RealType()
+
+	P: Variable: expression -> ID
+	R: expression.isDefined()
+	   expression.type = expression.definition.type
+
+    // Statements
+
+	P: WhileStmt: statement1 -> expression statement2*
+	R: expression.type.asBoolean()
+	   for(Statement st: statement2*) {
+	       st.returnType = statement1.returnType
+	   }
+
+	P: Assignment: statement -> expression1 expression2
+	R: expression1.squareBrackets(expression2)
+
+	P: IfStmt: statement1 -> expression1 statement2*
+	R: expression1.asBoolean()
+	   for (Statement st : statement2*) {
+	       st.returnType = statement1.returnType;
+	   }
+
+	P: IfElseStmt: statement1 -> expression1 statement2* statement3*
+	R: expression2.asBoolean()
+	   for (Statement st : statement2*) {
+	       st.returnType = statement1.returnType;
+	   }
+	   for (Statement st : statement3*) {
+	       st.returnType = statement1.returnType;
+	   }
+
+	P: ReadStmt: statement -> expression
+	R: expression1.type.isBuiltIn()
+
+	P: WriteStmt: statement -> expression
+	R: expression.type.isBuiltin()
+
+	P: Return: statement -> expression
+	R: statement.returnType.squareBrackets(expression.type)
+	 */
+
 public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 
     @Override
