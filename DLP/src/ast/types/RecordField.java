@@ -1,11 +1,10 @@
 package ast.types;
 
-import ast.AbstractASTNode;
 import ast.Type;
 import ast.expressions.Variable;
 import visitor.Visitor;
 
-public class RecordField extends AbstractASTNode {
+public class RecordField extends AbstractType {
 
     private final Variable name;
     private final Type type;

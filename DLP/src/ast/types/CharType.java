@@ -1,23 +1,32 @@
 package ast.types;
 
-import ast.AbstractASTNode;
 import ast.Type;
 import visitor.Visitor;
 
-public class CharType extends AbstractASTNode implements Type {
+public class CharType extends AbstractType {
 
-    private static CharType instance;
-
-    private CharType() {
-        super(0, 0);
+    public CharType(int column, int line) {
+        super(column, line);
     }
 
-    public static CharType get() {
-        if (instance == null) {
-            instance = new CharType();
+    @Override
+    public Type arithmetic(Type other) {
+        if (this.getClass() != other.getClass()) {
+            new ErrorType("[arithmetic]: required: CharType, provided: " + other.getClass().getSimpleName(),
+                getColumn(), getLine());
         }
-        return instance;
+        return this;
     }
+
+    @Override
+    public Type comparison(Type other) {
+        if (this.getClass() != other.getClass()) {
+            new ErrorType("[comparison]: required: CharType, provided: " + other.getClass().getSimpleName(),
+                getColumn(), getLine());
+        }
+        return this;
+    }
+
 
     @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {

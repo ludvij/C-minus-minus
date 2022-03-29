@@ -1,13 +1,11 @@
 package ast.types;
 
-import ast.AbstractASTNode;
-import ast.Type;
 import visitor.Visitor;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StructType extends AbstractASTNode implements Type {
+public class StructType extends AbstractType {
 
     private final List<RecordField> recordFields;
 

@@ -1,21 +1,9 @@
 // Generated from E:/clase/TERCERO/DLP/DLP-2122/DLP/src/parser\Cmm.g4 by ANTLR 4.9.2
 package parser;
 
-    import ast.*;
-    import ast.types.*;
-    import ast.program.*;
-    import ast.statements.*;
-    import ast.definitions.*;
-    import ast.expressions.*;
-
-import org.antlr.v4.runtime.Lexer;
-import org.antlr.v4.runtime.CharStream;
-import org.antlr.v4.runtime.Token;
-import org.antlr.v4.runtime.TokenStream;
-import org.antlr.v4.runtime.*;
+    import org.antlr.v4.runtime.*;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
-import org.antlr.v4.runtime.misc.*;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class CmmLexer extends Lexer {

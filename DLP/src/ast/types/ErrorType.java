@@ -1,11 +1,9 @@
 package ast.types;
 
-import ast.AbstractASTNode;
-import ast.Type;
 import errorHandler.ErrorHandler;
 import visitor.Visitor;
 
-public class ErrorType extends AbstractASTNode implements Type {
+public class ErrorType extends AbstractType {
 
     private final String message;
 

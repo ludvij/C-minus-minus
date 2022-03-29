@@ -204,16 +204,16 @@ return_type returns [Type ast]
 
 void_type returns [Type ast]
     : t='void'
-        { $ast = VoidType.get(); }
+        { $ast = new VoidType($t.getCharPositionInLine()+1, $t.getLine()); }
     ;
 
 builtin_type returns [Type ast]
     : t='int'     // 1 - int type
-        { $ast = IntType.get(); }
+        { $ast = new IntType($t.getCharPositionInLine()+1, $t.getLine()); }
     | t='char'    // 2 - char type
-        { $ast = CharType.get(); }
+        { $ast = new CharType($t.getCharPositionInLine()+1, $t.getLine()); }
     | t='double'  // 3 - double type
-        { $ast = DoubleType.get(); }
+        { $ast = new DoubleType($t.getCharPositionInLine()+1, $t.getLine()); }
     ;
 
 // lab 3

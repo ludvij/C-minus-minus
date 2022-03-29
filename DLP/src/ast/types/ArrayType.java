@@ -1,10 +1,9 @@
 package ast.types;
 
-import ast.AbstractASTNode;
 import ast.Type;
 import visitor.Visitor;
 
-public class ArrayType extends AbstractASTNode implements Type {
+public class ArrayType extends AbstractType {
 
     private final int size;
     private Type type;

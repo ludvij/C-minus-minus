@@ -11,11 +11,9 @@ package parser;
 import org.antlr.v4.runtime.atn.*;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.*;
-import org.antlr.v4.runtime.misc.*;
-import org.antlr.v4.runtime.tree.*;
+	import org.antlr.v4.runtime.tree.*;
 import java.util.List;
-import java.util.Iterator;
-import java.util.ArrayList;
+	import java.util.ArrayList;
 
 @SuppressWarnings({"all", "warnings", "unchecked", "unused", "cast"})
 public class CmmParser extends Parser {
@@ -1629,7 +1627,7 @@ public class CmmParser extends Parser {
 			{
 			setState(336);
 			((Void_typeContext)_localctx).t = match(T__32);
-			 ((Void_typeContext)_localctx).ast =  VoidType.get(); 
+			 ((Void_typeContext)_localctx).ast =  new VoidType(((Void_typeContext)_localctx).t.getCharPositionInLine()+1, ((Void_typeContext)_localctx).t.getLine()); 
 			}
 		}
 		catch (RecognitionException re) {
@@ -1664,7 +1662,7 @@ public class CmmParser extends Parser {
 				{
 				setState(339);
 				((Builtin_typeContext)_localctx).t = match(T__33);
-				 ((Builtin_typeContext)_localctx).ast =  IntType.get(); 
+				 ((Builtin_typeContext)_localctx).ast =  new IntType(((Builtin_typeContext)_localctx).t.getCharPositionInLine()+1, ((Builtin_typeContext)_localctx).t.getLine()); 
 				}
 				break;
 			case T__34:
@@ -1672,7 +1670,7 @@ public class CmmParser extends Parser {
 				{
 				setState(341);
 				((Builtin_typeContext)_localctx).t = match(T__34);
-				 ((Builtin_typeContext)_localctx).ast =  CharType.get(); 
+				 ((Builtin_typeContext)_localctx).ast =  new CharType(((Builtin_typeContext)_localctx).t.getCharPositionInLine()+1, ((Builtin_typeContext)_localctx).t.getLine()); 
 				}
 				break;
 			case T__35:
@@ -1680,7 +1678,7 @@ public class CmmParser extends Parser {
 				{
 				setState(343);
 				((Builtin_typeContext)_localctx).t = match(T__35);
-				 ((Builtin_typeContext)_localctx).ast =  DoubleType.get(); 
+				 ((Builtin_typeContext)_localctx).ast =  new DoubleType(((Builtin_typeContext)_localctx).t.getCharPositionInLine()+1, ((Builtin_typeContext)_localctx).t.getLine()); 
 				}
 				break;
 			default:

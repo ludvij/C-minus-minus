@@ -1,22 +1,30 @@
 package ast.types;
 
-import ast.AbstractASTNode;
 import ast.Type;
 import visitor.Visitor;
 
-public class IntType extends AbstractASTNode implements Type {
+public class IntType extends AbstractType {
 
-    private static IntType instance;
-
-    private IntType() {
-        super(0, 0);
+    public IntType(int column, int line) {
+        super(column, line);
     }
 
-    public static IntType get() {
-        if (instance == null) {
-            instance = new IntType();
+    @Override
+    public Type arithmetic(Type other) {
+        if (this.getClass() != other.getClass()) {
+            new ErrorType("[arithmetic]: required: IntType, provided: " + other.getClass().getSimpleName(),
+                    getColumn(), getLine());
         }
-        return instance;
+        return this;
+    }
+
+    @Override
+    public Type comparison(Type other) {
+        if (this.getClass() != other.getClass()) {
+            new ErrorType("[comparison]: required: IntType, provided: " + other.getClass().getSimpleName(),
+                    getColumn(), getLine());
+        }
+        return this;
     }
 
     @Override

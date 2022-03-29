@@ -207,5 +207,4 @@ public abstract class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 		e.getExpression().accept(this, param);
 		return null;
 	}
-
 }
