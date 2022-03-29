@@ -9,8 +9,8 @@ public class RecordField extends AbstractType {
     private final Variable name;
     private final Type type;
 
-    public RecordField(Variable name, Type type, int column, int line) {
-        super(column, line);
+    public RecordField(Variable name, Type type, int line, int column) {
+        super(line, column);
         this.name = name;
         this.type = type;
     }

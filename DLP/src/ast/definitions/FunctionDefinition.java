@@ -10,8 +10,8 @@ public class FunctionDefinition extends AbstractDefinition {
 
     private final List<Statement> body;
 
-    public FunctionDefinition(String name, Type type, List<Statement> body, int column, int line) {
-        super(name, type, column, line);
+    public FunctionDefinition(String name, Type type, List<Statement> body, int line, int column) {
+        super(name, type, line, column);
         this.body = body;
     }
 

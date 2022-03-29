@@ -15,7 +15,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 	@Override
 	public Void visit(FunctionDefinition e, Void param) {
 		if (!st.insert(e)) {
-			var err = new ErrorType(this.getClass() + " - Function already defined", e.getColumn(), e.getLine());
+			var err = new ErrorType(this.getClass() + " - Function already defined", e.getLine(), e.getColumn());
 		}
 		st.set();
 		e.getType().accept(this, param);
@@ -29,7 +29,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 	@Override
 	public Void visit(VariableDefinition e, Void param) {
 		if (!st.insert(e)) {
-			new ErrorType(this.getClass() + " - Variable already defined", e.getColumn(), e.getLine());
+			new ErrorType(this.getClass() + " - Variable already defined", e.getLine(), e.getColumn());
 		}
 		e.getType().accept(this, param);
 		return null;
@@ -39,7 +39,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 	public Void visit(Variable e, Void param) {
 		e.setDefinition(st.find(e.getName()));
 		if (e.getDefinition() == null) {
-			new ErrorType(this.getClass() + " - Variable not found", e.getColumn(), e.getLine());
+			new ErrorType(this.getClass() + " - Variable not found", e.getLine(), e.getColumn());
 		}
 		return null;
 	}

@@ -8,8 +8,8 @@ public class ArrayType extends AbstractType {
     private final int size;
     private Type type;
 
-    public ArrayType(Type type, int size, int column, int line) {
-        super(column, line);
+    public ArrayType(Type type, int size, int line, int column) {
+        super(line, column);
         this.type = type;
         this.size = size;
     }
@@ -36,23 +36,23 @@ public class ArrayType extends AbstractType {
     public static class Factory {
 
 
-        public static ArrayType create(Type type, int size, int column, int line) {
+        public static ArrayType create(Type type, int size, int line, int column) {
             if (type instanceof ArrayType) {
-                return arrayOfArray(type, size, column, line);
+                return arrayOfArray(type, size, line, column);
             } else {
-                return normalArray(type, size, column, line);
+                return normalArray(type, size, line, column);
             }
         }
 
-        private static ArrayType normalArray(Type type, int size, int column, int line) {
-            return new ArrayType(type, size, column, line);
+        private static ArrayType normalArray(Type type, int size, int line, int column) {
+            return new ArrayType(type, size, line, column);
         }
 
-        private static ArrayType arrayOfArray(Type type, int size, int column, int line) {
+        private static ArrayType arrayOfArray(Type type, int size, int line, int column) {
 
             // we have to swap the arrayTypes
             Type swap = ((ArrayType)type).getType();
-            ((ArrayType) type).setType(create(swap, size, column, line));
+            ((ArrayType) type).setType(create(swap, size, line, column));
 
             return (ArrayType) type;
         }

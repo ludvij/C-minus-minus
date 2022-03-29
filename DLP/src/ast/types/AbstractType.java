@@ -7,8 +7,8 @@ import java.util.List;
 
 public abstract class AbstractType extends AbstractASTNode implements Type {
 
-	public AbstractType(int column, int line) {
-		super(column, line);
+	public AbstractType(int line, int column) {
+		super(line, column);
 	}
 
 	@Override

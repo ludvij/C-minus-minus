@@ -9,8 +9,8 @@ public class RecordAccesor extends AbstractExpression {
     private final String record;
 
 
-    public RecordAccesor(Expression expression, String record, int column, int line) {
-        super(column, line);
+    public RecordAccesor(Expression expression, String record, int line, int column) {
+        super(line, column);
         this.expression = expression;
         this.record = record;
     }

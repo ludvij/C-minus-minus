@@ -10,8 +10,8 @@ public class ArithmeticOperation extends AbstractExpression {
     private final Expression expressionRight;
 
 
-    public ArithmeticOperation(String operator, Expression expressionLeft, Expression expressionRight, int column, int line) {
-        super(column, line);
+    public ArithmeticOperation(String operator, Expression expressionLeft, Expression expressionRight, int line, int column) {
+        super(line, column);
         this.expressionLeft = expressionLeft;
         this.expressionRight = expressionRight;
         this.operator = operator;

@@ -12,8 +12,8 @@ public class WhileStatement extends AbstractASTNode implements Statement {
     private final Expression expression;
     private final List<Statement> body;
 
-    public WhileStatement(Expression innerExpression, List<Statement> body, int column, int line) {
-        super(column, line);
+    public WhileStatement(Expression innerExpression, List<Statement> body, int line, int column) {
+        super(line, column);
         this.expression = innerExpression;
         this.body = body;
     }

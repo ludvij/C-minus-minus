@@ -7,8 +7,8 @@ import visitor.Visitor;
 public class VariableDefinition extends AbstractDefinition implements Statement {
 
 
-    public VariableDefinition(String name, Type type, int column, int line) {
-        super(name, type, column, line);
+    public VariableDefinition(String name, Type type, int line, int column) {
+        super(name, type, line, column);
     }
 
     @Override

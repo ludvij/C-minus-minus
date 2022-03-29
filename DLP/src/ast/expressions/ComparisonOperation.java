@@ -10,8 +10,8 @@ public class ComparisonOperation extends AbstractExpression {
     private final Expression expressionRight;
 
 
-    public ComparisonOperation(String operator, Expression expressionLeft, Expression expressionRight, int column, int line) {
-        super(column, line);
+    public ComparisonOperation(String operator, Expression expressionLeft, Expression expressionRight, int line, int column) {
+        super(line, column);
         this.operator = operator;
         this.expressionLeft = expressionLeft;
         this.expressionRight = expressionRight;

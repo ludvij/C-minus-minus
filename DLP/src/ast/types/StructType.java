@@ -9,8 +9,8 @@ public class StructType extends AbstractType {
 
     private final List<RecordField> recordFields;
 
-    public StructType(List<RecordField> recordFields, int column, int line) {
-        super(column, line);
+    public StructType(List<RecordField> recordFields, int line, int column) {
+        super(line, column);
         checkDuplicates(recordFields);
         this.recordFields = recordFields;
     }

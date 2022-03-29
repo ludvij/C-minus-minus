@@ -9,8 +9,8 @@ public class ReturnStatement extends AbstractASTNode implements Statement {
 
     private final Expression expression;
 
-    public ReturnStatement(Expression expression, int column, int line) {
-        super(column, line);
+    public ReturnStatement(Expression expression, int line, int column) {
+        super(line, column);
         this.expression = expression;
     }
 

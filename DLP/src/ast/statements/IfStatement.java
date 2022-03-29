@@ -13,15 +13,15 @@ public class IfStatement extends AbstractASTNode implements Statement {
     private final List<Statement> ifBody;
     private List<Statement> elseBody;
 
-    public IfStatement(Expression expression, List<Statement> ifBody, int column, int line)
+    public IfStatement(Expression expression, List<Statement> ifBody, int line, int column)
     {
-        super(column, line);
+        super(line, column);
         this.expression = expression;
         this.ifBody = ifBody;
     }
 
-    public IfStatement(Expression expression, List<Statement> ifBody, List<Statement> elseBody, int column, int line) {
-        this(expression, ifBody, column, line);
+    public IfStatement(Expression expression, List<Statement> ifBody, List<Statement> elseBody, int line, int column) {
+        this(expression, ifBody, line, column);
         this.elseBody = elseBody;
     }
 

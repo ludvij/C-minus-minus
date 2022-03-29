@@ -9,8 +9,8 @@ public class Indexing extends AbstractExpression {
     private final Expression expressionRight;
 
 
-    public Indexing(Expression expressionLeft, Expression expressionRight, int column, int line) {
-        super(column, line);
+    public Indexing(Expression expressionLeft, Expression expressionRight, int line, int column) {
+        super(line, column);
         this.expressionLeft = expressionLeft;
         this.expressionRight = expressionRight;
     }

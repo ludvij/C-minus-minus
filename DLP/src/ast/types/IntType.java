@@ -5,8 +5,8 @@ import visitor.Visitor;
 
 public class IntType extends AbstractType {
 
-    public IntType(int column, int line) {
-        super(column, line);
+    public IntType(int line, int column) {
+        super(line, column);
     }
 
     @Override

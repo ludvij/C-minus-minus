@@ -29,9 +29,9 @@ main returns [FunctionDefinition ast]
     : vt=void_type m='main' '(' ')' '{' fb=function_body '}'
         { $ast = new FunctionDefinition(
             $m.getText(),
-            new FunctionType($vt.ast, new ArrayList<VariableDefinition>(), $m.getCharPositionInLine()+1, $m.getLine()),
+            new FunctionType($vt.ast, new ArrayList<VariableDefinition>(), $m.getLine(), $m.getCharPositionInLine()+1),
             $fb.ast,
-            $m.getCharPositionInLine()+1, $m.getLine()
+            $m.getLine(), $m.getCharPositionInLine()+1
         ); }
     ;
 
@@ -39,9 +39,9 @@ function_definition returns [Definition ast]
     : rt=return_type id=ID '(' tp=parameters ')' '{' fb=function_body '}'
          { $ast = new FunctionDefinition(
              $id.text,
-             new FunctionType($rt.ast, $tp.ast, $id.getCharPositionInLine()+1, $id.getLine()),
+             new FunctionType($rt.ast, $tp.ast, $id.getLine(), $id.getCharPositionInLine()+1),
              $fb.ast,
-             $id.getCharPositionInLine()+1, $id.getLine()
+             $id.getLine(), $id.getCharPositionInLine()+1
          ); }
     ;
 
@@ -55,12 +55,12 @@ variable_definition returns [List<VariableDefinition> ast = new ArrayList<>()]
         { $ast.add(new VariableDefinition(
             $i1.text,
             $t.ast,
-            $i1.getCharPositionInLine()+1, $i1.getLine())); }
+            $i1.getLine(), $i1.getCharPositionInLine()+1)); }
       (',' i2=ID
         { $ast.add(new VariableDefinition(
             $i2.text,
             $t.ast,
-            $i2.getCharPositionInLine()+1, $i2.getLine())); }
+            $i2.getLine(), $i2.getCharPositionInLine()+1)); }
       )* ';'
     ;
 
@@ -73,44 +73,43 @@ typed_param returns [VariableDefinition ast]
     : t=type ID
         { $ast = new VariableDefinition(
             $ID.text,
-            $t.ast, $t.ast.getColumn(),
-            $t.ast.getLine());}
+            $t.ast, $t.ast.getLine(), $t.ast.getColumn());}
     ;
 
 expression returns [Expression ast]
     : '(' e1=expression ')'                                         // 1  - Parenthesis
         { $ast = $e1.ast; }
     | e1=expression '[' e2=expression ']'                           // 2  - Indexing
-        { $ast = new Indexing($e1.ast, $e2.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast = new Indexing($e1.ast, $e2.ast, $e1.ast.getLine(), $e1.ast.getColumn()); }
     | e1=expression '.' ID                                          // 3  - Record accessor
-        { $ast = new RecordAccesor($e1.ast, $ID.text, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast = new RecordAccesor($e1.ast, $ID.text, $e1.ast.getLine(), $e1.ast.getColumn()); }
     | '(' t1=builtin_type ')' e1=expression                         // 4  - Cast
-        { $ast = new Cast($t1.ast, $e1.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast = new Cast($t1.ast, $e1.ast, $e1.ast.getLine(), $e1.ast.getColumn()); }
     | '-' e1=expression                                             // 5  - Unary minus
-        { $ast = new UnaryMinus($e1.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast = new UnaryMinus($e1.ast, $e1.ast.getLine(), $e1.ast.getColumn()); }
     | '!' e1=expression                                             // 6  - Negation
-        { $ast = new Negation($e1.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast = new Negation($e1.ast, $e1.ast.getLine(), $e1.ast.getColumn()); }
     | e1=expression op=( '*' | '/' | '%' ) e2=expression            // 7  - Multiplication division and modulus
-        { $ast = new ArithmeticOperation($op.text,  $e1.ast, $e2.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast = new ArithmeticOperation($op.text,  $e1.ast, $e2.ast, $e1.ast.getLine(), $e1.ast.getColumn()); }
     | e1=expression op=( '+' | '-' ) e2=expression                  // 8  - Addition and sbustraction
-        { $ast = new ArithmeticOperation($op.text,  $e1.ast, $e2.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast = new ArithmeticOperation($op.text,  $e1.ast, $e2.ast, $e1.ast.getLine(), $e1.ast.getColumn()); }
     | e1=expression op=('<' | '>' | '>=' | '<=' | '==' | '!=') e2=expression  // 9  - Comparison
-        { $ast = new ComparisonOperation($op.text,  $e1.ast, $e2.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast = new ComparisonOperation($op.text,  $e1.ast, $e2.ast, $e1.ast.getLine(), $e1.ast.getColumn()); }
     | e1=expression op=('&&' | '||') e2=expression                  // 10 - Logic operations
-        { $ast = new LogicalOperation($op.text,  $e1.ast, $e2.ast, $e1.ast.getColumn(), $e1.ast.getLine()); }
+        { $ast = new LogicalOperation($op.text,  $e1.ast, $e2.ast, $e1.ast.getLine(), $e1.ast.getColumn()); }
     | ID '(' a=arguments ')'                                        // 11 - Function
         { $ast = new FunctionInvocation(
-            new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()),
+            new Variable($ID.text, $ID.getLine(), $ID.getCharPositionInLine()+1),
             $a.ast,
-            $ID.getCharPositionInLine()+1, $ID.getLine()); }
+            $ID.getLine(), $ID.getCharPositionInLine()+1); }
     | ID                                                            // 12 - ID
-        { $ast = new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine());}
+        { $ast = new Variable($ID.text, $ID.getLine(), $ID.getCharPositionInLine()+1);}
     | il=INT_CONSTANT                                               // 13 - Constants
-        { $ast = new IntLiteral(LexerHelper.lexemeToInt($il.text), $il.getCharPositionInLine()+1, $il.getLine());}
+        { $ast = new IntLiteral(LexerHelper.lexemeToInt($il.text), $il.getLine(), $il.getCharPositionInLine()+1);}
     | cl=CHAR_CONSTANT                                              // 14
-        { $ast = new CharLiteral(LexerHelper.lexemeToChar($cl.text), $cl.getCharPositionInLine()+1, $cl.getLine());}
+        { $ast = new CharLiteral(LexerHelper.lexemeToChar($cl.text), $cl.getLine(), $cl.getCharPositionInLine()+1);}
     | dl=REAL_CONSTANT                                              // 15
-        { $ast = new DoubleLiteral(LexerHelper.lexemeToReal($dl.text), $dl.getCharPositionInLine()+1, $dl.getLine());}
+        { $ast = new DoubleLiteral(LexerHelper.lexemeToReal($dl.text), $dl.getLine(), $dl.getCharPositionInLine()+1);}
     ;
 
 arguments returns [List<Expression> ast = new ArrayList<Expression>()]
@@ -122,31 +121,31 @@ statement returns [List<Statement> ast = new ArrayList<>()]
     : r='read' el=expression_list ';'                             // 1 - Read
         {
             for (Expression i : $el.ast) {
-                $ast.add(new ReadStatement(i, $r.getCharPositionInLine()+1, $r.getLine()));
+                $ast.add(new ReadStatement(i, $r.getLine(), $r.getCharPositionInLine()+1));
             }
         }
     | w='write' el=expression_list ';'                            // 2 - Write
         {
             for (Expression i : $el.ast) {
-                $ast.add(new WriteStatement(i, $w.getCharPositionInLine()+1, $w.getLine()));
+                $ast.add(new WriteStatement(i, $w.getLine(), $w.getCharPositionInLine()+1));
             }
         }
     | 'while' '(' e1=expression ')' cb=code_block               // 3 - While
-        { $ast.add(new WhileStatement($e1.ast, $cb.ast, $e1.ast.getColumn(), $e1.ast.getLine())); }
+        { $ast.add(new WhileStatement($e1.ast, $cb.ast, $e1.ast.getLine(), $e1.ast.getColumn())); }
     | 'if' '(' e1=expression ')' cb=code_block                  // 4 - If
-        { $ast.add(new IfStatement($e1.ast, $cb.ast, $e1.ast.getColumn(), $e1.ast.getLine())); }
+        { $ast.add(new IfStatement($e1.ast, $cb.ast, $e1.ast.getLine(), $e1.ast.getColumn())); }
     | 'if' '(' e1=expression ')' cb1=code_block 'else' cb2=code_block      // 5 - If Else
-        { $ast.add(new IfStatement($e1.ast, $cb1.ast, $cb2.ast, $e1.ast.getColumn(), $e1.ast.getLine())); }
+        { $ast.add(new IfStatement($e1.ast, $cb1.ast, $cb2.ast, $e1.ast.getLine(), $e1.ast.getColumn())); }
     | e1=expression '=' e2=expression ';'                       // 6 - Assignment
-        { $ast.add(new AssignmentStatement($e1.ast, $e2.ast, $e1.ast.getColumn(), $e1.ast.getLine())); }
+        { $ast.add(new AssignmentStatement($e1.ast, $e2.ast, $e1.ast.getLine(), $e1.ast.getColumn())); }
     | 'return' e1=expression ';'                                // 7 - Return
-        { $ast.add(new ReturnStatement($e1.ast, $e1.ast.getColumn(), $e1.ast.getLine())); }
+        { $ast.add(new ReturnStatement($e1.ast, $e1.ast.getLine(), $e1.ast.getColumn())); }
     | ID '(' el=expression_list ')' ';'                         // 8 - Function Invocation
         {
             $ast.add(new FunctionInvocation(
-                new Variable($ID.text, $ID.getCharPositionInLine()+1, $ID.getLine()),
+                new Variable($ID.text, $ID.getLine(), $ID.getCharPositionInLine()+1),
                 $el.ast,
-                $ID.getCharPositionInLine()+1, $ID.getLine())
+                $ID.getLine(), $ID.getCharPositionInLine()+1)
             );
         }
     ;
@@ -170,10 +169,10 @@ type returns [Type ast]
         	$ast = ArrayType.Factory.create(
         		$t.ast,
         		LexerHelper.lexemeToInt($il.text),
-        		$il.getCharPositionInLine()+1, $il.getLine());
+        		$il.getLine(), $il.getCharPositionInLine()+1);
 		}
     | s='struct' '{' rf=record_fields '}'                 // 3 - struct type
-        { $ast = new StructType($rf.ast, $s.getCharPositionInLine()+1, $s.getLine()); }
+        { $ast = new StructType($rf.ast, $s.getLine(), $s.getCharPositionInLine()+1); }
     ;
 
 record_fields returns [List<RecordField> ast = new ArrayList<RecordField>()]
@@ -183,15 +182,15 @@ record_fields returns [List<RecordField> ast = new ArrayList<RecordField>()]
 record_field returns [List<RecordField> ast = new ArrayList<RecordField>()]
     : t=type i1=ID
         { $ast.add(new RecordField(
-            new Variable($i1.text, $i1.getCharPositionInLine()+1, $i1.getLine()),
+            new Variable($i1.text, $i1.getLine(), $i1.getCharPositionInLine()+1),
             $t.ast,
-            $i1.getCharPositionInLine()+1, $i1.getLine()));
+            $i1.getLine(), $i1.getCharPositionInLine()+1));
         }
       (',' i2=ID
         { $ast.add(new RecordField(
-            new Variable($i2.text, $i2.getCharPositionInLine()+1, $i2.getLine()),
+            new Variable($i2.text, $i2.getLine(), $i2.getCharPositionInLine()+1),
             $t.ast,
-            $i2.getCharPositionInLine()+1, $i2.getLine()));
+            $i2.getLine(), $i2.getCharPositionInLine()+1));
         })* ';'
     ;
 
@@ -204,16 +203,16 @@ return_type returns [Type ast]
 
 void_type returns [Type ast]
     : t='void'
-        { $ast = new VoidType($t.getCharPositionInLine()+1, $t.getLine()); }
+        { $ast = new VoidType($t.getLine(), $t.getCharPositionInLine()+1); }
     ;
 
 builtin_type returns [Type ast]
     : t='int'     // 1 - int type
-        { $ast = new IntType($t.getCharPositionInLine()+1, $t.getLine()); }
+        { $ast = new IntType($t.getLine(), $t.getCharPositionInLine()+1); }
     | t='char'    // 2 - char type
-        { $ast = new CharType($t.getCharPositionInLine()+1, $t.getLine()); }
+        { $ast = new CharType($t.getLine(), $t.getCharPositionInLine()+1); }
     | t='double'  // 3 - double type
-        { $ast = new DoubleType($t.getCharPositionInLine()+1, $t.getLine()); }
+        { $ast = new DoubleType($t.getLine(), $t.getCharPositionInLine()+1); }
     ;
 
 // lab 3

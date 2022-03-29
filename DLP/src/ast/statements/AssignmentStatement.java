@@ -10,8 +10,8 @@ public class AssignmentStatement extends AbstractASTNode implements Statement {
     private final Expression rightExpression;
     private final Expression leftExpression;
 
-    public AssignmentStatement(Expression leftExpression, Expression rightExpression, int column, int line) {
-        super(column, line);
+    public AssignmentStatement(Expression leftExpression, Expression rightExpression, int line, int column) {
+        super(line, column);
         this.rightExpression = rightExpression;
         this.leftExpression = leftExpression;
     }

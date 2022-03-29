@@ -8,8 +8,8 @@ public class Negation extends AbstractExpression {
     private final Expression expression;
 
 
-    public Negation(Expression expression, int column, int line) {
-        super(column, line);
+    public Negation(Expression expression, int line, int column) {
+        super(line, column);
         this.expression = expression;
     }
 

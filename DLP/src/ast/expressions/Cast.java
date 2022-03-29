@@ -10,8 +10,8 @@ public class Cast extends AbstractExpression {
     private final Expression expression;
 
 
-    public Cast(Type castType, Expression expression, int column, int line) {
-        super(column, line);
+    public Cast(Type castType, Expression expression, int line, int column) {
+        super(line, column);
         this.castType = castType;
         this.expression = expression;
     }

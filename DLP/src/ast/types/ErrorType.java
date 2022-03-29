@@ -7,8 +7,8 @@ public class ErrorType extends AbstractType {
 
     private final String message;
 
-    public ErrorType(String message, int column, int line) {
-        super(column, line);
+    public ErrorType(String message, int line, int column) {
+        super(line, column);
         this.message = message;
 
         ErrorHandler.get().addError(this);

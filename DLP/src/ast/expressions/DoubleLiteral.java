@@ -7,8 +7,8 @@ public class DoubleLiteral extends AbstractExpression {
     private final double value;
 
 
-    public DoubleLiteral(double value, int column, int line) {
-        super(column, line);
+    public DoubleLiteral(double value, int line, int column) {
+        super(line, column);
         this.value = value;
     }
 

@@ -118,7 +118,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
         e.getExpressionRight().accept(this, null);
 
         e.setLvalue(false);
-        e.getExpressionLeft().getType().arithmetic(e.getExpressionRight().getType());
+//        e.getExpressionLeft().getType().arithmetic(e.getExpressionRight().getType());
         return null;
     }
 
@@ -162,19 +162,19 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     @Override
     public Void visit(DoubleLiteral e, Void param) {
         e.setLvalue(false);
-        new DoubleType(e.getColumn(), e.getLine());
+        new DoubleType(e.getLine(), e.getColumn());
         return null;
     }
     @Override
     public Void visit(CharLiteral e, Void param) {
         e.setLvalue(false);
-        new CharType(e.getColumn(), e.getLine());
+        new CharType(e.getLine(), e.getColumn());
         return null;
     }
     @Override
     public Void visit(IntLiteral e, Void param) {
         e.setLvalue(false);
-        new IntType(e.getColumn(), e.getLine());
+        new IntType(e.getLine(), e.getColumn());
         return null;
     }
 
@@ -212,7 +212,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
         e.getLeftExpression().accept(this, null);
         e.getRightExpression().accept(this, null);
         if (!e.getLeftExpression().getLvalue()) {
-            new ErrorType("Left expression in assignment must have l-value", e.getColumn(), e.getLine());
+            new ErrorType("Left expression in assignment must have l-value", e.getLine(), e.getColumn());
         }
         return null;
     }
@@ -221,7 +221,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(ReadStatement e, Void param) {
         e.getExpression().accept(this, null);
         if (!e.getExpression().getLvalue()) {
-            new ErrorType("expression in read must have an l-value", e.getColumn(), e.getLine());
+            new ErrorType("expression in read must have an l-value", e.getLine(), e.getColumn());
         }
         return null;
     }

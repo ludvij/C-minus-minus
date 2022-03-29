@@ -5,8 +5,8 @@ import visitor.Visitor;
 
 public class CharType extends AbstractType {
 
-    public CharType(int column, int line) {
-        super(column, line);
+    public CharType(int line, int column) {
+        super(line, column);
     }
 
     @Override

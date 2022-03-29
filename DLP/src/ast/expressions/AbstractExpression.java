@@ -10,8 +10,8 @@ public abstract class AbstractExpression extends AbstractASTNode implements Expr
 
     private Type Type;
 
-    public AbstractExpression(int column, int line) {
-        super(column, line);
+    public AbstractExpression(int line, int column) {
+        super(line, column);
     }
 
     @Override

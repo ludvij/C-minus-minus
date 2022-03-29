@@ -5,8 +5,8 @@ import visitor.Visitor;
 
 public class DoubleType extends AbstractType {
 
-    public DoubleType(int column, int line) {
-        super(column, line);
+    public DoubleType(int line, int column) {
+        super(line, column);
     }
 
     @Override
