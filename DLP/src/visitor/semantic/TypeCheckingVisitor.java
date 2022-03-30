@@ -149,7 +149,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 
         e.setLvalue(false);
 
-        e.setType(e.getName().getDefinition().getType().parenthesis(params, e.getLine(), e.getColumn()));
+        e.setType(e.getName().getType().parenthesis(params, e.getLine(), e.getColumn()));
         return null;
     }
 
@@ -228,7 +228,10 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     @Override
     public Void visit(Variable e, Type param) {
         e.setLvalue(true);
-        e.setType(e.getDefinition().getType());
+        if (e.getDefinition() != null)
+            e.setType(e.getDefinition().getType());
+        else
+            e.setType(VoidType.get());
         return null;
     }
 
