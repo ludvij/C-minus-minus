@@ -21,7 +21,7 @@ public class DoubleType extends AbstractType {
     @Override
     public Type arithmetic(Type other, int line, int column) {
         if (this.getClass() != other.getClass()) {
-            new ErrorType("[arithmetic]: required: DoubleType, provided: " + other,
+            new ErrorType("Required: DoubleType, provided: " + other,
                 line, column);
         }
         return get();
@@ -30,7 +30,7 @@ public class DoubleType extends AbstractType {
     @Override
     public Type comparison(Type other, int line, int column) {
         if (this.getClass() != other.getClass()) {
-            new ErrorType("[comparison]: required: DoubleType, provided: " + other,
+            new ErrorType("Required: DoubleType, provided: " + other,
                 line, column);
         }
         return get();
@@ -38,11 +38,17 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type castTo(Type other, int line, int column) {
-        if (!(other == IntType.get() || other == CharType.get() || other == DoubleType.get())) {
-            new ErrorType("[cast]: Invalid cast: for " + this + " and " + other , line, column);
+        if (!(other.isBuiltin())) {
+            new ErrorType("Invalid cast: for " + this + " and " + other , line, column);
         }
         return other;
     }
+    @Override
+    public boolean isBuiltin() {
+        return true;
+    }
+
+
 
 
     @Override

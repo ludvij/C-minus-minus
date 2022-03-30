@@ -61,8 +61,10 @@ public abstract class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 		for (Statement stmt : e.getIfBody()) {
 			stmt.accept(this, param);
 		}
-		for (Statement stmt : e.getElseBody()) {
-			stmt.accept(this, param);
+		if (e.getElseBody() != null) {
+			for (Statement stmt : e.getElseBody()) {
+				stmt.accept(this, param);
+			}
 		}
 		return null;
 	}

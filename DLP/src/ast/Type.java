@@ -15,6 +15,7 @@ public interface Type extends ASTNode
 	Type unaryMinus(int line, int column);
 	Type negation(int line, int column);
 	Type castTo(Type other, int line, int column);
+	Type asBoolean(int line, int column);
 
-
+	boolean isBuiltin();
 }

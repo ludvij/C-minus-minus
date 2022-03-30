@@ -1,5 +1,6 @@
 package visitor.semantic;
 
+import ast.Statement;
 import ast.Type;
 import visitor.AbstractVisitor;
 
@@ -208,6 +209,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
         e.getExpression().accept(this, null);
 
         e.setLvalue(false);
+
+        e.setType(e.getExpression().getType().negation(e.getLine(), e.getColumn()));
         return null;
     }
 
@@ -253,6 +256,15 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     }
 
     @Override
+    public Void visit(WriteStatement e, Void param) {
+        e.getExpression().accept(this, null);
+        if (!e.getExpression().getType().isBuiltin()) {
+            new ErrorType("Expected built-in type, Given: " + e.getExpression().getType() + " type", e.getLine(), e.getColumn());
+        }
+        return null;
+    }
+
+    @Override
     public Void visit(RecordType e, Void param) {
         Set<String> duplicateChecker = new HashSet<>();
         for (RecordField rf : e.getRecordFields()) {
@@ -262,4 +274,32 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
         }
         return null;
     }
+
+    @Override
+    public Void visit(WhileStatement e, Void param) {
+        e.getExpression().accept(this, null);
+        e.getExpression().getType().asBoolean(e.getLine(), e.getColumn());
+        for (Statement stmt : e.getBody()) {
+            stmt.accept(this, param);
+        }
+        return null;
+    }
+
+    @Override
+    public Void visit(IfStatement e, Void param) {
+        e.getExpression().accept(this, null);
+        e.getExpression().getType().asBoolean(e.getLine(), e.getColumn());
+
+        for (Statement stmt : e.getIfBody()) {
+            stmt.accept(this, null);
+        }
+        if (e.getElseBody() != null) {
+            for (Statement stmt : e.getElseBody()) {
+                stmt.accept(this, null);
+            }
+        }
+        return null;
+    }
+
+
 }

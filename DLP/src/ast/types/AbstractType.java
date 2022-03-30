@@ -20,7 +20,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 	@Override
 	public Type comparison(Type other, int line, int column) {
 		new ErrorType("Invalid comparison operation for: " + this + " and " + other, line, column);
-		return this;
+		return IntType.get();
 	}
 
 	@Override
@@ -50,18 +50,29 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 	@Override
 	public Type negation(int line, int column) {
 		new ErrorType("Invalid negation operation", line, column);
-		return this;
+		return IntType.get();
 	}
 
 	@Override
 	public Type logical(Type other, int line, int column) {
 		new ErrorType("Invalid logical operation for: " + this + " and " + other, line, column);
-		return this;
+		return IntType.get();
 	}
 
 	@Override
 	public Type castTo(Type other, int line, int column) {
 		new ErrorType("Invalid cast for type: " + other, line, column);
 		return this;
+	}
+
+	@Override
+	public Type asBoolean(int line, int column) {
+		new ErrorType("Invalid conversion to boolean for type " + this, line, column);
+		return IntType.get();
+	}
+
+	@Override
+	public boolean isBuiltin() {
+		return false;
 	}
 }

@@ -21,8 +21,8 @@ public class IntType extends AbstractType {
     @Override
     public Type arithmetic(Type other, int line, int column) {
         if (this.getClass() != other.getClass()) {
-            new ErrorType("[arithmetic]: required: IntType, provided: " + other,
-                getColumn(), getLine());
+            new ErrorType("Required: IntType, provided: " + other,
+                line, column);
         }
         return get();
     }
@@ -30,8 +30,8 @@ public class IntType extends AbstractType {
     @Override
     public Type comparison(Type other, int line, int column) {
         if (this.getClass() != other.getClass()) {
-            new ErrorType("[comparison]: required: IntType, provided: " + other,
-                getColumn(), getLine());
+            new ErrorType("Required: IntType, provided: " + other,
+                line, column);
         }
         return get();
     }
@@ -39,18 +39,28 @@ public class IntType extends AbstractType {
     @Override
     public Type logical(Type other, int line, int column) {
         if (this.getClass() != other.getClass()) {
-            new ErrorType("[logical]: required: IntType, provided: " + other,
-                getColumn(), getLine());
+            new ErrorType("Required: IntType, provided: " + other,
+                line, column);
         }
         return get();
     }
 
     @Override
+    public Type negation(int line, int column) {
+        return asBoolean(line, column);
+    }
+
+    @Override
     public Type castTo(Type other, int line, int column) {
-        if (!(other == IntType.get() || other == CharType.get() || other == DoubleType.get())) {
-            new ErrorType("[cast]: Invalid cast: for " + this + " and " + other , line, column);
+        if (!(other.isBuiltin())) {
+            new ErrorType("Invalid cast: for " + this + " and " + other , line, column);
         }
         return other;
+    }
+
+    @Override
+    public boolean isBuiltin() {
+        return true;
     }
 
     @Override

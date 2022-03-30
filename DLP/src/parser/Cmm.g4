@@ -130,16 +130,16 @@ statement returns [List<Statement> ast = new ArrayList<>()]
                 $ast.add(new WriteStatement(i, $w.getLine(), $w.getCharPositionInLine()+1));
             }
         }
-    | 'while' '(' e1=expression ')' cb=code_block               // 3 - While
-        { $ast.add(new WhileStatement($e1.ast, $cb.ast, $e1.ast.getLine(), $e1.ast.getColumn())); }
-    | 'if' '(' e1=expression ')' cb=code_block                  // 4 - If
-        { $ast.add(new IfStatement($e1.ast, $cb.ast, $e1.ast.getLine(), $e1.ast.getColumn())); }
-    | 'if' '(' e1=expression ')' cb1=code_block 'else' cb2=code_block      // 5 - If Else
-        { $ast.add(new IfStatement($e1.ast, $cb1.ast, $cb2.ast, $e1.ast.getLine(), $e1.ast.getColumn())); }
+    | w='while' '(' e1=expression ')' cb=code_block               // 3 - While
+        { $ast.add(new WhileStatement($e1.ast, $cb.ast, $w.getLine(), $w.getCharPositionInLine()+1)); }
+    | i='if' '(' e1=expression ')' cb=code_block                  // 4 - If
+        { $ast.add(new IfStatement($e1.ast, $cb.ast, $i.getLine(), $i.getCharPositionInLine()+1)); }
+    | i='if' '(' e1=expression ')' cb1=code_block 'else' cb2=code_block      // 5 - If Else
+        { $ast.add(new IfStatement($e1.ast, $cb1.ast, $cb2.ast, $i.getLine(), $i.getCharPositionInLine()+1)); }
     | e1=expression '=' e2=expression ';'                       // 6 - Assignment
         { $ast.add(new AssignmentStatement($e1.ast, $e2.ast, $e1.ast.getLine(), $e1.ast.getColumn())); }
-    | 'return' e1=expression ';'                                // 7 - Return
-        { $ast.add(new ReturnStatement($e1.ast, $e1.ast.getLine(), $e1.ast.getColumn())); }
+    | r='return' e1=expression ';'                                // 7 - Return
+        { $ast.add(new ReturnStatement($e1.ast, $r.getLine(), $r.getCharPositionInLine()+1)); }
     | ID '(' el=expression_list ')' ';'                         // 8 - Function Invocation
         {
             $ast.add(new FunctionInvocation(

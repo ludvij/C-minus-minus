@@ -25,12 +25,12 @@ public class FunctionType extends AbstractType {
     @Override
     public Type parenthesis(List<Type> params, int line, int column) {
         if (parameters.size() != params.size()) {
-            new ErrorType("[Function]: Expected " + parameters.size() + " arguments, Given: " + params.size(), line, column);
+            new ErrorType("Expected " + parameters.size() + " arguments, Given: " + params.size(), line, column);
         }
         if (params.size() > 0 && parameters.size() > 0) {
             for (int i = 0; i < params.size(); i++) {
                 if (params.get(i) != parameters.get(i).getType()){
-                    new ErrorType("[Function]: Expected type: " + parameters.get(i).getType() + " , Given type: " + params.get(i), line, column);
+                    new ErrorType("Expected type: " + parameters.get(i).getType() + " , Given type: " + params.get(i), line, column);
                 }
             }
         }
