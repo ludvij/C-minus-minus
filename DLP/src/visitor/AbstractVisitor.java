@@ -9,6 +9,7 @@ import ast.expressions.*;
 import ast.program.Program;
 import ast.statements.*;
 import ast.types.*;
+import ast.types.error.ErrorType;
 
 public abstract class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 
@@ -58,13 +59,9 @@ public abstract class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 	@Override
 	public TR visit(IfStatement e, TP param) {
 		e.getExpression().accept(this, param);
-		for (Statement stmt : e.getIfBody()) {
-			stmt.accept(this, param);
-		}
+		e.getIfBody().forEach(stmt -> stmt.accept(this, param));
 		if (e.getElseBody() != null) {
-			for (Statement stmt : e.getElseBody()) {
-				stmt.accept(this, param);
-			}
+			e.getElseBody().forEach(stmt -> stmt.accept(this, param));
 		}
 		return null;
 	}

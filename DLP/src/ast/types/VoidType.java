@@ -26,4 +26,5 @@ public class VoidType extends AbstractType {
     public String toString() {
         return "void";
     }
+
 }

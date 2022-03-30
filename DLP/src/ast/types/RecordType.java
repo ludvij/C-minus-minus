@@ -1,11 +1,10 @@
 package ast.types;
 
 import ast.Type;
+import ast.types.error.ErrorType;
 import visitor.Visitor;
 
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class RecordType extends AbstractType {

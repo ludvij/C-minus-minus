@@ -588,9 +588,7 @@ public class CmmParser extends Parser {
 			((Typed_paramContext)_localctx).t = type(0);
 			setState(116);
 			((Typed_paramContext)_localctx).ID = match(ID);
-			 ((Typed_paramContext)_localctx).ast =  new VariableDefinition(
-			            (((Typed_paramContext)_localctx).ID!=null?((Typed_paramContext)_localctx).ID.getText():null),
-			            ((Typed_paramContext)_localctx).t.ast, ((Typed_paramContext)_localctx).t.ast.getLine(), ((Typed_paramContext)_localctx).t.ast.getColumn());
+			 ((Typed_paramContext)_localctx).ast =  new VariableDefinition((((Typed_paramContext)_localctx).ID!=null?((Typed_paramContext)_localctx).ID.getText():null), ((Typed_paramContext)_localctx).t.ast, ((Typed_paramContext)_localctx).ID.getLine(), ((Typed_paramContext)_localctx).ID.getCharPositionInLine()+1);
 			}
 		}
 		catch (RecognitionException re) {

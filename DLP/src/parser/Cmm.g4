@@ -71,9 +71,7 @@ parameters returns [List<VariableDefinition> ast = new ArrayList<>()]
 
 typed_param returns [VariableDefinition ast]
     : t=type ID
-        { $ast = new VariableDefinition(
-            $ID.text,
-            $t.ast, $t.ast.getLine(), $t.ast.getColumn());}
+        { $ast = new VariableDefinition($ID.text, $t.ast, $ID.getLine(), $ID.getCharPositionInLine()+1);}
     ;
 
 expression returns [Expression ast]

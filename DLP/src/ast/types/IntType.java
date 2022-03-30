@@ -1,6 +1,7 @@
 package ast.types;
 
 import ast.Type;
+import ast.types.error.ErrorType;
 import visitor.Visitor;
 
 public class IntType extends AbstractType {

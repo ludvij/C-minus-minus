@@ -2,6 +2,7 @@ package ast.types;
 
 import ast.Type;
 import ast.definitions.VariableDefinition;
+import ast.types.error.ErrorType;
 import visitor.Visitor;
 
 import java.util.List;

@@ -2,6 +2,7 @@ package ast.definitions;
 
 import ast.Statement;
 import ast.Type;
+import ast.types.FunctionType;
 import visitor.Visitor;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public class FunctionDefinition extends AbstractDefinition {
 
     private final List<Statement> body;
 
-    public FunctionDefinition(String name, Type type, List<Statement> body, int line, int column) {
+    public FunctionDefinition(String name, FunctionType type, List<Statement> body, int line, int column) {
         super(name, type, line, column);
         this.body = body;
     }
@@ -26,10 +27,11 @@ public class FunctionDefinition extends AbstractDefinition {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder(String.format(getType().toString(), getName()) + "{\n");
-        for (Statement s : body) {
-            res.append(s).append("\n");
-        }
-        return  res.append("}").toString();
+        return getType() + " " + getName();
+    }
+
+    @Override
+    public FunctionType getType() {
+        return (FunctionType) super.getType();
     }
 }

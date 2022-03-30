@@ -1,5 +1,6 @@
-package ast.types;
+package ast.types.error;
 
+import ast.types.AbstractType;
 import errorHandler.ErrorHandler;
 import visitor.Visitor;
 

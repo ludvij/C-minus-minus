@@ -2,6 +2,7 @@ package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;
+import ast.types.error.ErrorType;
 
 import java.util.List;
 
