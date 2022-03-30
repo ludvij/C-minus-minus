@@ -26,31 +26,31 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
 	@Override
 	public Type squareBrackets(Type other, int line, int column) {
-		new ErrorType("Invalid indexing operation for: "  + this + " and " + other, line, column);
+		new ErrorType("Expected: array, Given: " + this , line, column);
 		return this;
 	}
 
 	@Override
 	public Type parenthesis(List<Type> params, int line, int column) {
-		new ErrorType("Invalid function call", line, column);
+		new ErrorType("Expected: function, Given: " + this, line, column);
 		return this;
 	}
 
 	@Override
 	public Type dot(String field, int line, int column) {
-		new ErrorType("Invalid record access", line, column);
+		new ErrorType("Expected: struct, Given: " + this, line, column);
 		return this;
 	}
 
 	@Override
 	public Type unaryMinus(int line, int column) {
-		new ErrorType("Invalid minus operation", line, column);
-		return this;
+		new ErrorType("- cannot be applied to " + this, line, column);
+		return IntType.get();
 	}
 
 	@Override
 	public Type negation(int line, int column) {
-		new ErrorType("Invalid negation operation", line, column);
+		new ErrorType("! cannot be applied to " + this, line, column);
 		return IntType.get();
 	}
 
@@ -62,13 +62,14 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
 	@Override
 	public Type castTo(Type other, int line, int column) {
-		new ErrorType("Invalid cast for type: " + other, line, column);
-		return this;
+		if (!other.isBuiltin())
+			new ErrorType(this + " cannot be casted" , line, column);
+		return other;
 	}
 
 	@Override
 	public Type asBoolean(int line, int column) {
-		new ErrorType("Invalid conversion to boolean for type " + this, line, column);
+		new ErrorType(this + " cannot be converted to boolean", line, column);
 		return IntType.get();
 	}
 

@@ -1,7 +1,10 @@
 package ast.types;
 
 import ast.Type;
+import ast.types.error.ErrorType;
 import visitor.Visitor;
+
+import java.util.Objects;
 
 public class ArrayType extends AbstractType {
 
@@ -29,8 +32,29 @@ public class ArrayType extends AbstractType {
     }
 
     @Override
+    public Type squareBrackets(Type other, int line, int column) {
+        if (other != IntType.get()) {
+            new ErrorType("Expected: int, Given: " + other, line, column);
+        }
+        return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArrayType arrayType = (ArrayType) o;
+        return size == arrayType.size && Objects.equals(type, arrayType.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(size, type);
+    }
+
+    @Override
     public String toString() {
-        return type + "[" + size + "]";
+        return "array of " + type;
     }
 
     public static class Factory {
@@ -47,6 +71,7 @@ public class ArrayType extends AbstractType {
         private static ArrayType normalArray(Type type, int size, int line, int column) {
             return new ArrayType(type, size, line, column);
         }
+
 
         private static ArrayType arrayOfArray(Type type, int size, int line, int column) {
 

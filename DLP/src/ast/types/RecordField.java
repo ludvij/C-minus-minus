@@ -3,6 +3,8 @@ package ast.types;
 import ast.Type;
 import visitor.Visitor;
 
+import java.util.Objects;
+
 public class RecordField extends AbstractType {
 
     private final String name;
@@ -25,5 +27,18 @@ public class RecordField extends AbstractType {
     @Override
     public String toString() {
         return type + " " + name;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecordField that = (RecordField) o;
+        return Objects.equals(name, that.name) && Objects.equals(type, that.type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, type);
     }
 }

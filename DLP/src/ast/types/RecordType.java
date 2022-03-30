@@ -5,6 +5,7 @@ import ast.types.error.ErrorType;
 import visitor.Visitor;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class RecordType extends AbstractType {
@@ -43,4 +44,16 @@ public class RecordType extends AbstractType {
         return "struct [" + recordFields.stream().map(RecordField::toString).collect(Collectors.joining(", ")) + "]";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        RecordType that = (RecordType) o;
+        return Objects.equals(recordFields, that.recordFields);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(recordFields);
+    }
 }

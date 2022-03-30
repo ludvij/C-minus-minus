@@ -22,28 +22,28 @@ public class IntType extends AbstractType {
     @Override
     public Type arithmetic(Type other, int line, int column) {
         if (this.getClass() != other.getClass()) {
-            new ErrorType("Required: IntType, provided: " + other,
+            new ErrorType("Expected: int, Given: " + other,
                 line, column);
         }
-        return get();
+        return IntType.get();
     }
 
     @Override
     public Type comparison(Type other, int line, int column) {
         if (this.getClass() != other.getClass()) {
-            new ErrorType("Required: IntType, provided: " + other,
+            new ErrorType("Expected: int, Given: " + other,
                 line, column);
         }
-        return get();
+        return IntType.get();
     }
 
     @Override
     public Type logical(Type other, int line, int column) {
         if (this.getClass() != other.getClass()) {
-            new ErrorType("Required: IntType, provided: " + other,
+            new ErrorType("Expected: int, Given: " + other,
                 line, column);
         }
-        return get();
+        return IntType.get();
     }
 
     @Override
@@ -52,16 +52,13 @@ public class IntType extends AbstractType {
     }
 
     @Override
-    public Type castTo(Type other, int line, int column) {
-        if (!(other.isBuiltin())) {
-            new ErrorType("Invalid cast: for " + this + " and " + other , line, column);
-        }
-        return other;
+    public boolean isBuiltin() {
+        return true;
     }
 
     @Override
-    public boolean isBuiltin() {
-        return true;
+    public Type unaryMinus(int line, int column) {
+        return this;
     }
 
     @Override

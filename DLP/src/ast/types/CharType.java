@@ -22,7 +22,7 @@ public class CharType extends AbstractType {
     @Override
     public Type arithmetic(Type other, int line, int column) {
         if (this != other) {
-            new ErrorType("Required: CharType, provided: " + other,
+            new ErrorType("Expected: char, Given: " + other,
                 line, column);
         }
         return get();
@@ -31,18 +31,10 @@ public class CharType extends AbstractType {
     @Override
     public Type comparison(Type other, int line, int column) {
         if (this != other) {
-            new ErrorType("Required: CharType, provided: " + other,
+            new ErrorType("Expected: char, Given: " + other,
                 line, column);
         }
-        return get();
-    }
-
-    @Override
-    public Type castTo(Type other, int line, int column) {
-        if (!(other.isBuiltin())) {
-            new ErrorType("Invalid cast: for " + this + " and " + other , line, column);
-        }
-        return other;
+        return IntType.get();
     }
 
     @Override

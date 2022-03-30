@@ -6,6 +6,7 @@ import ast.types.error.ErrorType;
 import visitor.Visitor;
 
 import java.util.List;
+import java.util.Objects;
 
 public class FunctionType extends AbstractType {
 
@@ -36,6 +37,19 @@ public class FunctionType extends AbstractType {
             }
         }
         return type;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FunctionType that = (FunctionType) o;
+        return Objects.equals(type, that.type) && Objects.equals(parameters, that.parameters);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, parameters);
     }
 
     public Type getType() { return type; }

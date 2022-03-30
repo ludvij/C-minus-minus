@@ -148,8 +148,10 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         List<Type> params = e.getParameters().stream().map(Expression::getType).toList();
 
         e.setLvalue(false);
-
-        e.setType(e.getName().getType().parenthesis(params, e.getLine(), e.getColumn()));
+        if (e.getName().getDefinition() != null)
+            e.setType(e.getName().getType().parenthesis(params, e.getLine(), e.getColumn()));
+        else
+            e.setType(null);
         return null;
     }
 
@@ -181,6 +183,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         e.getExpression().accept(this, param);
 
         e.setLvalue(false);
+
+        e.setType(e.getExpression().getType().unaryMinus(e.getLine(), e.getColumn()));
         return null;
     }
 
@@ -212,6 +216,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         e.getExpressionRight().accept(this, param);
 
         e.setLvalue(true);
+
+        e.setType(e.getExpressionLeft().getType().squareBrackets(e.getExpressionRight().getType(), e.getLine(), e.getColumn()));
         return null;
     }
 
@@ -220,6 +226,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         e.getExpression().accept(this, param);
 
         e.setLvalue(false);
+        int[] a = new int[10];
 
         e.setType(e.getExpression().getType().negation(e.getLine(), e.getColumn()));
         return null;
@@ -231,7 +238,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         if (e.getDefinition() != null)
             e.setType(e.getDefinition().getType());
         else
-            e.setType(VoidType.get());
+            e.setType(null);
         return null;
     }
 
@@ -253,7 +260,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         if (!e.getLeftExpression().getLvalue()) {
             new ErrorType("Left expression in assignment must have l-value", e.getLine(), e.getColumn());
         }
-        else if (e.getLeftExpression().getType() != e.getRightExpression().getType()) {
+        else if (!e.getLeftExpression().getType().equals( e.getRightExpression().getType()) ){
             new ErrorType("Expected: "+e.getLeftExpression().getType()
                     +", Given: " + e.getRightExpression().getType(), e.getLine(), e.getColumn());
         }
@@ -318,7 +325,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         else if (param == VoidType.get()) {
             new ErrorType("Can't return type " + e.getExpression().getType() + " in void function", e.getLine(), e.getColumn());
         }
-        else if (e.getExpression().getType() != param) {
+        else if (e.getExpression().getType().equals(param)) {
             new ErrorType("Expected return type: " + param + ", Given: " + e.getExpression().getType(), e.getLine(), e.getColumn());
         }
         return null;
