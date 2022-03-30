@@ -249,7 +249,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 
         e.setLvalue(false);
 
-        e.setType(e.getType().castTo(e.getType(), e.getLine(), e.getColumn()));
+        e.setType(e.getExpression().getType().castTo(e.getCastType(), e.getLine(), e.getColumn()));
         return null;
     }
 
@@ -257,6 +257,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     public Void visit(AssignmentStatement e, Type param) {
         e.getLeftExpression().accept(this, param);
         e.getRightExpression().accept(this, param);
+
         if (!e.getLeftExpression().getLvalue()) {
             new ErrorType("Left expression in assignment must have l-value", e.getLine(), e.getColumn());
         }
@@ -322,10 +323,10 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         if (!e.getExpression().getType().isBuiltin()) {
             new ErrorType("Can't return type " + e.getExpression().getType(), e.getLine(), e.getColumn());
         }
-        else if (param == VoidType.get()) {
+        else if (param.equals(VoidType.get())) {
             new ErrorType("Can't return type " + e.getExpression().getType() + " in void function", e.getLine(), e.getColumn());
         }
-        else if (e.getExpression().getType().equals(param)) {
+        else if (!e.getExpression().getType().equals(param)) {
             new ErrorType("Expected return type: " + param + ", Given: " + e.getExpression().getType(), e.getLine(), e.getColumn());
         }
         return null;

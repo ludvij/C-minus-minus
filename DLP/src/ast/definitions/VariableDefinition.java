@@ -18,6 +18,6 @@ public class VariableDefinition extends AbstractDefinition implements Statement 
 
     @Override
     public String toString() {
-        return getType() + " " + getName() + ";";
+        return getType() + " " + getName();
     }
 }

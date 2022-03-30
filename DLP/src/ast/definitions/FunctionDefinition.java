@@ -27,7 +27,7 @@ public class FunctionDefinition extends AbstractDefinition {
 
     @Override
     public String toString() {
-        return getType() + " " + getName();
+        return "Function " + getName() + " type: " + getType();
     }
 
     @Override

@@ -7,6 +7,7 @@ import visitor.Visitor;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class FunctionType extends AbstractType {
 
@@ -57,13 +58,6 @@ public class FunctionType extends AbstractType {
 
     @Override
     public String toString() {
-        StringBuilder res = new StringBuilder(type + " %s(");
-        for (VariableDefinition p : parameters) {
-            res.append(p).setLength(res.length()-1);
-            res.append(", ");
-        }
-        if (!parameters.isEmpty())
-            res.setLength(res.length()-2);
-        return res.append(")").toString();
+        return type + " ["+parameters.stream().map(VariableDefinition::toString).collect(Collectors.joining(", "))+"]";
     }
 }

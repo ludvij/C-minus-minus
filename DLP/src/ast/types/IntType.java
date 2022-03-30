@@ -47,6 +47,11 @@ public class IntType extends AbstractType {
     }
 
     @Override
+    public Type asBoolean(int line, int column) {
+        return IntType.get();
+    }
+
+    @Override
     public Type negation(int line, int column) {
         return asBoolean(line, column);
     }
