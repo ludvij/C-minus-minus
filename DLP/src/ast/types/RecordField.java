@@ -1,7 +1,6 @@
 package ast.types;
 
 import ast.Type;
-import ast.expressions.Variable;
 import visitor.Visitor;
 
 public class RecordField extends AbstractType {
@@ -24,12 +23,7 @@ public class RecordField extends AbstractType {
     public Type getType() { return type; }
 
     @Override
-    public Type dot(String field, int line, int column) {
-        return type;
-    }
-
-    @Override
     public String toString() {
-        return type + "." + name;
+        return type + " " + name;
     }
 }

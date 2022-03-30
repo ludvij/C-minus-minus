@@ -172,7 +172,7 @@ type returns [Type ast]
         		$il.getLine(), $il.getCharPositionInLine()+1);
 		}
     | s='struct' '{' rf=record_fields '}'                 // 3 - struct type
-        { $ast = new StructType($rf.ast, $s.getLine(), $s.getCharPositionInLine()+1); }
+        { $ast = new RecordType($rf.ast, $s.getLine(), $s.getCharPositionInLine()+1); }
     ;
 
 record_fields returns [List<RecordField> ast = new ArrayList<RecordField>()]

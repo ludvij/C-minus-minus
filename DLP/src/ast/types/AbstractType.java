@@ -13,19 +13,19 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
 	@Override
 	public Type arithmetic(Type other, int line, int column) {
-		new ErrorType("Invalid arithmetic operation for: " + this + " " + other, line, column);
+		new ErrorType("Invalid arithmetic operation for: " + this + " and " + other, line, column);
 		return this;
 	}
 
 	@Override
 	public Type comparison(Type other, int line, int column) {
-		new ErrorType("Invalid comparison operation for: " + this + " " + other, line, column);
+		new ErrorType("Invalid comparison operation for: " + this + " and " + other, line, column);
 		return this;
 	}
 
 	@Override
 	public Type squareBrackets(Type other, int line, int column) {
-		new ErrorType("Invalid indexing operation for: "  + this + " " + other, line, column);
+		new ErrorType("Invalid indexing operation for: "  + this + " and " + other, line, column);
 		return this;
 	}
 
@@ -55,7 +55,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
 	@Override
 	public Type logical(Type other, int line, int column) {
-		new ErrorType("Invalid logical operation for: " + this + " " + other, line, column);
+		new ErrorType("Invalid logical operation for: " + this + " and " + other, line, column);
 		return this;
 	}
 

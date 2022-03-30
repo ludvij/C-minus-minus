@@ -8,7 +8,10 @@ import ast.expressions.*;
 import ast.statements.*;
 import ast.types.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /*
 
@@ -156,7 +159,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
 
         e.setLvalue(true);
 
-        e.setType(e.getType().dot(e.getRecord(), e.getLine(), e.getColumn()));
+        e.setType(e.getExpression().getType().dot(e.getRecord(), e.getLine(), e.getColumn()));
         return null;
     }
 
@@ -234,7 +237,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
             new ErrorType("Left expression in assignment must have l-value", e.getLine(), e.getColumn());
         }
         else if (e.getLeftExpression().getType() != e.getRightExpression().getType()) {
-            new ErrorType("[Assignment]: Expected: "+e.getLeftExpression().getType()
+            new ErrorType("Expected: "+e.getLeftExpression().getType()
                     +", Given: " + e.getRightExpression().getType(), e.getLine(), e.getColumn());
         }
         return null;
@@ -244,7 +247,18 @@ public class TypeCheckingVisitor extends AbstractVisitor<Void, Void> {
     public Void visit(ReadStatement e, Void param) {
         e.getExpression().accept(this, null);
         if (!e.getExpression().getLvalue()) {
-            new ErrorType("expression in read must have an l-value", e.getLine(), e.getColumn());
+            new ErrorType("expression must have an l-value", e.getLine(), e.getColumn());
+        }
+        return null;
+    }
+
+    @Override
+    public Void visit(RecordType e, Void param) {
+        Set<String> duplicateChecker = new HashSet<>();
+        for (RecordField rf : e.getRecordFields()) {
+            if (!duplicateChecker.add(rf.getName())) {
+                new ErrorType("Field <" + rf.getName() + "> is already defined in Record", rf.getLine(), rf.getColumn());
+            }
         }
         return null;
     }

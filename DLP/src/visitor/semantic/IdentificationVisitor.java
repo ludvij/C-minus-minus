@@ -5,6 +5,8 @@ import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.expressions.*;
 import ast.types.ErrorType;
+import ast.types.RecordField;
+import ast.types.RecordType;
 import visitor.AbstractVisitor;
 import visitor.semantic.symboltable.SymbolTable;
 

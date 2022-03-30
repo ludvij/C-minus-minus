@@ -1381,7 +1381,7 @@ public class CmmParser extends Parser {
 				((TypeContext)_localctx).rf = record_fields();
 				setState(293);
 				match(T__4);
-				 ((TypeContext)_localctx).ast =  new StructType(((TypeContext)_localctx).rf.ast, ((TypeContext)_localctx).s.getLine(), ((TypeContext)_localctx).s.getCharPositionInLine()+1); 
+				 ((TypeContext)_localctx).ast =  new RecordType(((TypeContext)_localctx).rf.ast, ((TypeContext)_localctx).s.getLine(), ((TypeContext)_localctx).s.getCharPositionInLine()+1); 
 				}
 				break;
 			default:

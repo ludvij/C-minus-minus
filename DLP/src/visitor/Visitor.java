@@ -38,7 +38,7 @@ public interface Visitor<TP, TR> {
     TR visit(FunctionType e, TP param);
     TR visit(RecordField e, TP param);
     TR visit(DoubleType e, TP param);
-    TR visit(StructType e, TP param);
+    TR visit(RecordType e, TP param);
     TR visit(ArrayType e, TP param);
     TR visit(CharType e, TP param);
     TR visit(VoidType e, TP param);

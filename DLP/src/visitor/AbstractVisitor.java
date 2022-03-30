@@ -90,7 +90,7 @@ public abstract class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 	}
 
 	@Override
-	public TR visit(StructType e, TP param) {
+	public TR visit(RecordType e, TP param) {
 		for (RecordField recordField : e.getRecordFields()) {
 			recordField.accept(this, param);
 		}
