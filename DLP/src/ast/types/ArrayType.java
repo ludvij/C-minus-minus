@@ -1,7 +1,6 @@
 package ast.types;
 
 import ast.Type;
-import ast.types.error.ErrorType;
 import visitor.Visitor;
 
 import java.util.Objects;
@@ -33,8 +32,9 @@ public class ArrayType extends AbstractType {
 
     @Override
     public Type squareBrackets(Type other, int line, int column) {
+        if (other instanceof ErrorType) return other;
         if (other != IntType.get()) {
-            new ErrorType("Expected: int, Given: " + other, line, column);
+            new ErrorType("int type expected, found: " + other, line, column);
         }
         return type;
     }

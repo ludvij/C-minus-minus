@@ -1,7 +1,6 @@
 package ast.types;
 
 import ast.Type;
-import ast.types.error.ErrorType;
 import visitor.Visitor;
 
 public class DoubleType extends AbstractType {
@@ -21,20 +20,20 @@ public class DoubleType extends AbstractType {
 
     @Override
     public Type arithmetic(Type other, int line, int column) {
-        if (this.getClass() != other.getClass()) {
-            new ErrorType("Expected: double, Given: " + other,
-                line, column);
+        if (this.equals(other) || other instanceof ErrorType) {
+            return other;
         }
-        return get();
+        return new ErrorType("double type expected, found: " + other, line, column);
     }
 
     @Override
     public Type comparison(Type other, int line, int column) {
-        if (this.getClass() != other.getClass()) {
-            new ErrorType("Expected: double, Given: " + other,
-                line, column);
+        if (this.equals(other)){
+            return IntType.get();
+        } else if (other instanceof ErrorType) {
+            return other;
         }
-        return IntType.get();
+        return new ErrorType("double type expected, found: " + other, line, column);
     }
 
     @Override

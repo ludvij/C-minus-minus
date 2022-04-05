@@ -1,6 +1,6 @@
 package errorHandler;
 
-import ast.types.error.ErrorType;
+import ast.types.ErrorType;
 
 import java.io.PrintStream;
 import java.util.LinkedList;

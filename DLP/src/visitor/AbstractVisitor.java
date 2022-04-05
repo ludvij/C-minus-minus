@@ -9,7 +9,7 @@ import ast.expressions.*;
 import ast.program.Program;
 import ast.statements.*;
 import ast.types.*;
-import ast.types.error.ErrorType;
+import ast.types.ErrorType;
 
 public abstract class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 

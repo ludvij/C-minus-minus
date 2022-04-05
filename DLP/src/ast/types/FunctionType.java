@@ -2,7 +2,6 @@ package ast.types;
 
 import ast.Type;
 import ast.definitions.VariableDefinition;
-import ast.types.error.ErrorType;
 import visitor.Visitor;
 
 import java.util.List;
@@ -28,12 +27,12 @@ public class FunctionType extends AbstractType {
     @Override
     public Type parenthesis(List<Type> params, int line, int column) {
         if (parameters.size() != params.size()) {
-            new ErrorType("Expected " + parameters.size() + " arguments, Given: " + params.size(), line, column);
+            return new ErrorType("Expected " + parameters.size() + " arguments, Given: " + params.size(), line, column);
         }
         if (params.size() > 0) {
             for (int i = 0; i < params.size(); i++) {
                 if (params.get(i) != parameters.get(i).getType()){
-                    new ErrorType("Expected type: " + parameters.get(i).getType() + " , Given type: " + params.get(i), line, column);
+                    return new ErrorType(parameters.get(i).getType() +" type expected, found: " + params.get(i), line, column);
                 }
             }
         }
@@ -58,6 +57,6 @@ public class FunctionType extends AbstractType {
 
     @Override
     public String toString() {
-        return type + " ["+parameters.stream().map(VariableDefinition::toString).collect(Collectors.joining(", "))+"]";
+        return type + " ("+parameters.stream().map(VariableDefinition::toString).collect(Collectors.joining(", "))+")";
     }
 }

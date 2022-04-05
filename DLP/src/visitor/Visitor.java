@@ -6,7 +6,7 @@ import ast.expressions.*;
 import ast.program.Program;
 import ast.statements.*;
 import ast.types.*;
-import ast.types.error.ErrorType;
+import ast.types.ErrorType;
 
 public interface Visitor<TP, TR> {
 
