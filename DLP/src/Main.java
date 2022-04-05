@@ -5,6 +5,7 @@ import introspector.view.IntrospectorTree;
 import parser.*;
 
 import org.antlr.v4.runtime.*;
+import visitor.codeGeneration.OffsetVisitor;
 import visitor.semantic.*;
 
 public class Main {
@@ -24,8 +25,11 @@ public class Main {
 		CmmParser parser = new CmmParser(tokens);
 //		parser.program();
 		Program ast = parser.program().ast;
+		// semantic phase
 		new IdentificationVisitor().visit(ast, null);
 		new TypeCheckingVisitor().visit(ast, null);
+		// code generation phase
+		new OffsetVisitor().visit(ast, null);
 
 
 
