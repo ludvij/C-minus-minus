@@ -45,6 +45,13 @@ public class RecordType extends AbstractType {
     }
 
     @Override
+    public int numberOfBytes() {
+        return recordFields.stream()
+                .mapToInt(RecordField::numberOfBytes)
+                .sum();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

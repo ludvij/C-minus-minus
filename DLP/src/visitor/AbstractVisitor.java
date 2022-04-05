@@ -177,6 +177,11 @@ public abstract class AbstractVisitor<TP, TR> implements Visitor<TP, TR> {
 	}
 
 	@Override
+	public TR visit(Variable e, TP param) {
+		return e.accept(this, param);
+	}
+
+	@Override
 	public TR visit(CharLiteral e, TP param) {
 		return null;
 	}

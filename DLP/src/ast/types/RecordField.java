@@ -30,6 +30,11 @@ public class RecordField extends AbstractType {
     }
 
     @Override
+    public int numberOfBytes() {
+        return type.numberOfBytes();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;

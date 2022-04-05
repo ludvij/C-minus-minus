@@ -77,4 +77,8 @@ public class IntType extends AbstractType {
         return "int";
     }
 
+    @Override
+    public int numberOfBytes() {
+        return 2;
+    }
 }

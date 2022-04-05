@@ -26,19 +26,19 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
 	@Override
 	public Type squareBrackets(Type other, int line, int column) {
-		new ErrorType("Expected: array, Given: " + this , line, column);
+		new ErrorType("Array type expected, Found: " + this , line, column);
 		return this;
 	}
 
 	@Override
 	public Type parenthesis(List<Type> params, int line, int column) {
-		new ErrorType("Expected: function, Given: " + this, line, column);
+		new ErrorType(this + " cannot be called", line, column);
 		return this;
 	}
 
 	@Override
 	public Type dot(String field, int line, int column) {
-		new ErrorType("Expected: struct, Given: " + this, line, column);
+		new ErrorType("Struct type expected, Found: " + this, line, column);
 		return this;
 	}
 
@@ -74,7 +74,26 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 	}
 
 	@Override
+	public void read(int line, int column) {
+		if (!this.isBuiltin()) {
+			new ErrorType(this + "type cannot be read", line, column);
+		}
+	}
+
+	@Override
+	public void write(int line, int column) {
+		if (!this.isBuiltin()) {
+			new ErrorType(this + " type cannot be written", line, column);
+		}
+	}
+
+	@Override
 	public boolean isBuiltin() {
 		return false;
+	}
+
+	@Override
+	public int numberOfBytes() {
+		return 0;
 	}
 }

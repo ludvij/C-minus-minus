@@ -16,6 +16,10 @@ public interface Type extends ASTNode
 	Type negation(int line, int column);
 	Type castTo(Type other, int line, int column);
 	Type asBoolean(int line, int column);
+	void read(int line, int column);
+	void write(int line, int column);
 
 	boolean isBuiltin();
+
+	int numberOfBytes();
 }

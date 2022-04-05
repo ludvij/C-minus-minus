@@ -57,6 +57,11 @@ public class ArrayType extends AbstractType {
         return "array of " + type;
     }
 
+    @Override
+    public int numberOfBytes() {
+        return size * type.numberOfBytes();
+    }
+
     public static class Factory {
 
 
