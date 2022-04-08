@@ -5,6 +5,7 @@ import introspector.view.IntrospectorTree;
 import parser.*;
 
 import org.antlr.v4.runtime.*;
+import visitor.codeGeneration.OffsetVisitor;
 import visitor.semantic.*;
 
 public class Main {
@@ -26,8 +27,7 @@ public class Main {
 		Program ast = parser.program().ast;
 		ast.accept(new IdentificationVisitor(), null);
 		ast.accept(new TypeCheckingVisitor(), null);
-
-
+		ast.accept(new OffsetVisitor(), null);
 
 		if (ErrorHandler.get().anyErrors()) {
 			ErrorHandler.get().showErrors(System.err);

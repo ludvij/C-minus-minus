@@ -1,7 +1,6 @@
 package ast.types;
 
 import ast.Type;
-import ast.types.error.ErrorType;
 import visitor.Visitor;
 
 import java.util.List;
@@ -25,7 +24,7 @@ public class RecordType extends AbstractType {
                 .findAny()
                 .orElse(null);
         if (res == null) {
-            new ErrorType("Field " + field + " is not defined for struct", getLine(), getColumn());
+            return new ErrorType("Field <" + field + "> is not defined in struct", getLine(), getColumn());
         }
         return res;
     }

@@ -9,6 +9,7 @@ public class RecordField extends AbstractType {
 
     private final String name;
     private final Type type;
+    private int offset;
 
     public RecordField(String name, Type type, int line, int column) {
         super(line, column);
@@ -23,6 +24,14 @@ public class RecordField extends AbstractType {
 
     public String getName() { return name; }
     public Type getType() { return type; }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
 
     @Override
     public String toString() {

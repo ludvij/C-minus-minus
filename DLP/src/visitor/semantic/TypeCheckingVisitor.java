@@ -3,7 +3,7 @@ package visitor.semantic;
 import ast.Statement;
 import ast.Type;
 import ast.definitions.FunctionDefinition;
-import ast.types.error.ErrorType;
+import ast.types.ErrorType;
 import visitor.AbstractVisitor;
 
 import ast.Expression;
@@ -237,7 +237,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
             e.setType(e.getDefinition().getType());
         }
         else
-            e.setType(new ErrorType("Variable is not defined", e.getLine(), e.getColumn()));
+            e.setType(new ErrorType("Variable <"+e.getName()+"> is not defined", e.getLine(), e.getColumn()));
 
         return null;
     }
@@ -258,14 +258,20 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         e.getLeftExpression().accept(this, param);
         e.getRightExpression().accept(this, param);
 
+
         if (!e.getLeftExpression().getLvalue()) {
             new ErrorType("Left expression in assignment must have l-value", e.getLine(), e.getColumn());
         }
-        else if (!e.getLeftExpression().getType().equals( e.getRightExpression().getType()) ){
-            new ErrorType(e.getLeftExpression().getType() + " type expected, found: "
-                    + e.getRightExpression().getType(), e.getLine(), e.getColumn());
+        else if (e.getLeftExpression() instanceof Variable v && v.getDefinition() instanceof FunctionDefinition) {
+            new ErrorType("Functions cannot be reassigned", e.getLine(), e.getColumn());
         }
-
+        else {
+            Type left = e.getLeftExpression().getType();
+            Type right = e.getRightExpression().getType();
+            if (!(left instanceof ErrorType || right instanceof ErrorType || left.equals( right ))) {
+                new ErrorType(left + " type expected, found: " + right, e.getLine(), e.getColumn());
+            }
+        }
         return null;
     }
 
@@ -273,19 +279,24 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     public Void visit(ReadStatement e, Type param) {
         e.getExpression().accept(this, param);
         if (!e.getExpression().getLvalue()) {
-            new ErrorType("expression must have an l-value", e.getLine(), e.getColumn());
+            new ErrorType("expression must have lvalue", e.getLine(), e.getColumn());
+        } else {
+            Type type = e.getExpression().getType();
+            if (!(type instanceof ErrorType) && !type.isBuiltin()) {
+                new ErrorType(type + " type cannot be read", e.getLine(), e.getLine());
+            }
         }
-        e.getExpression().getType().read(e.getLine(), e.getColumn());
         return null;
     }
 
     @Override
     public Void visit(WriteStatement e, Type param) {
         e.getExpression().accept(this, param);
-        if (!e.getExpression().getType().isBuiltin()) {
-            new ErrorType("Expected built-in type, Given: " + e.getExpression().getType() + " type", e.getLine(), e.getColumn());
+
+        Type type = e.getExpression().getType();
+        if (!(type instanceof ErrorType) && !type.isBuiltin()) {
+            new ErrorType(type + " type cannot be written", e.getLine(), e.getLine());
         }
-        e.getExpression().getType().write(e.getLine(), e.getColumn());
         return null;
     }
 
@@ -294,7 +305,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         Set<String> duplicateChecker = new HashSet<>();
         for (RecordField rf : e.getRecordFields()) {
             if (!duplicateChecker.add(rf.getName())) {
-                new ErrorType("Field <" + rf.getName() + "> is already defined in Record", rf.getLine(), rf.getColumn());
+                new ErrorType("Field <" + rf.getName() + "> is already defined in struct", rf.getLine(), rf.getColumn());
             }
         }
         return null;
@@ -323,6 +334,8 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     }
     public Void visit(ReturnStatement e, Type param) {
         e.getExpression().accept(this, param);
+        if (e.getExpression().getType() instanceof ErrorType) return null;
+
         if (!e.getExpression().getType().isBuiltin()) {
             new ErrorType("Can't return type " + e.getExpression().getType(), e.getLine(), e.getColumn());
         }
@@ -330,7 +343,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
             new ErrorType("Can't return type " + e.getExpression().getType() + " in void function", e.getLine(), e.getColumn());
         }
         else if (!e.getExpression().getType().equals(param)) {
-            new ErrorType("Expected return type: " + param + ", Given: " + e.getExpression().getType(), e.getLine(), e.getColumn());
+            new ErrorType( param + " type expected, found: " + e.getExpression().getType(), e.getLine(), e.getColumn());
         }
         return null;
     }
