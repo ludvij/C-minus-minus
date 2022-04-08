@@ -24,8 +24,8 @@ public class Main {
 		CmmParser parser = new CmmParser(tokens);
 //		parser.program();
 		Program ast = parser.program().ast;
-		new IdentificationVisitor().visit(ast, null);
-		new TypeCheckingVisitor().visit(ast, null);
+		ast.accept(new IdentificationVisitor(), null);
+		ast.accept(new TypeCheckingVisitor(), null);
 
 
 
