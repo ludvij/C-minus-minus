@@ -151,7 +151,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         if (e.getName().getDefinition() != null)
             e.setType(e.getName().getType().parenthesis(params, e.getLine(), e.getColumn()));
         else
-            e.setType(null);
+            e.setType(new ErrorType("Function <"+e.getName()+"> is not defined", e.getLine(), e.getColumn()));
         return null;
     }
 
