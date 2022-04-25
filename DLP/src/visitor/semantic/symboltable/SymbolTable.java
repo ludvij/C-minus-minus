@@ -43,4 +43,8 @@ public class SymbolTable {
 	public Definition findInCurrentScope(String id) {
 		return table.get(scope).get(id);
 	}
+
+	public int getScope() {
+		return scope;
+	}
 }

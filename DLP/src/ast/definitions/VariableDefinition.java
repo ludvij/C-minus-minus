@@ -6,7 +6,8 @@ import visitor.Visitor;
 
 public class VariableDefinition extends AbstractDefinition implements Statement {
 
-    int offset;
+    private int offset;
+    private int scope;
 
     public VariableDefinition(String name, Type type, int line, int column) {
         super(name, type, line, column);
@@ -17,12 +18,22 @@ public class VariableDefinition extends AbstractDefinition implements Statement 
         return v.visit(this, param);
     }
 
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+
     public int getOffset() {
         return offset;
     }
 
-    public void setOffset(int offset) {
-        this.offset = offset;
+    @Override
+    public void setScope(int scope) {
+        this.scope = scope;
+    }
+
+    @Override
+    public int getScope() {
+        return scope;
     }
 
     @Override

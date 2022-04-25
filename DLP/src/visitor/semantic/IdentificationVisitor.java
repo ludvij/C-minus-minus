@@ -31,6 +31,7 @@ public class IdentificationVisitor extends AbstractVisitor<Void, Void> {
 		if (!st.insert(e)) {
 			new ErrorType("Variable <"+e.getName()+"> already defined" ,e.getLine(), e.getColumn());
 		}
+		e.setScope(st.getScope());
 		e.getType().accept(this, param);
 		return null;
 	}

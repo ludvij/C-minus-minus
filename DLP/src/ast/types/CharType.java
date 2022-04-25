@@ -20,18 +20,20 @@ public class CharType extends AbstractType {
 
     @Override
     public Type arithmetic(Type other, int line, int column) {
-        if (this.equals(other) || other instanceof ErrorType) {
+        if (other instanceof ErrorType) {
             return other;
+        } else if (this.equals(other)) {
+            return IntType.get();
         }
         return new ErrorType("char type expected, found: " + other, line, column);
     }
 
     @Override
     public Type comparison(Type other, int line, int column) {
-        if (this.equals(other)){
-            return IntType.get();
-        } else if (other instanceof ErrorType) {
+        if (other instanceof ErrorType) {
             return other;
+        } else if (this.equals(other)){
+            return IntType.get();
         }
         return new ErrorType("char type expected, found: " + other, line, column);
     }
