@@ -95,7 +95,7 @@ public class IntType extends AbstractType {
     @Override
     public String convert(Type other) {
         if (other instanceof DoubleType) {
-            return "\ti2g\n";
+            return "\ti2f\n";
         } else if (other instanceof CharType) {
             return  "\ti2b\n";
         } else {

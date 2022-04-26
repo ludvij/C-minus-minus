@@ -8,6 +8,7 @@ import ast.definitions.FunctionDefinition;
 import ast.definitions.VariableDefinition;
 import ast.expressions.*;
 import ast.types.CharType;
+import ast.types.RecordType;
 
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -27,17 +28,24 @@ public class CodeGenerator {
 			{"&&", "and"},
 			{"<", "lt"  },
 			{">", "gt"  },
-			{"<=", "lte"},
-			{">=", "gte"},
+			{"<=", "le"},
+			{">=", "ge"},
 			{"==", "eq" },
 			{"!=", "ne" }
 	}).collect(Collectors.toMap(x -> x[0], x -> x[1]));
 
 	private final OutFileSingleton file = OutFileSingleton.getInstance();
 
+	private int labels = 1;
+
 
 	public CodeGenerator(String filename) {
 		file.open(filename);
+		file.write("#source \""+filename+"\"");
+	}
+
+	public String nextLabel() {
+		return "lbl" + labels++;
 	}
 
 	public void printLine(int line) {
@@ -189,13 +197,43 @@ public class CodeGenerator {
 	public void createComment(int tabLevel, String... lines){
 		String tabs = "";
 		for (int i = 0; i < tabLevel; i++) tabs += "\t";
-		String comment = tabs + "' *";
+		String comment = tabs + "' * ";
 		String res = Stream.of(lines).map(x -> comment + x).collect(Collectors.joining("\n")) + "\n";
 		file.write(res);
 	}
 
-	public void loadVariable(Definition def) {
-		String res = "\t"+"load" + def.getType().getSuffix() + "\n";
+	public void load(Type type) {
+		String res = "\t"+"load" + type.getSuffix() + "\n";
 		file.write(res);
+	}
+
+	public void recordAccessorAddress(RecordAccesor e) {
+		RecordType rt = (RecordType)e.getExpression().getType();
+		String res = "\t" + "pushi " + rt.getField(e.getId()).getOffset() + "\n";
+		res += "\taddi";
+		file.write(res);
+
+	}
+
+	public void indexingAddress(Indexing e) {
+		String res = "\t"+"pushi "+ e.getType().numberOfBytes() + "\n";
+		res += "\tmuli\n\taddi\n";
+		file.write(res);
+	}
+
+	public void pushLabel(String label) {
+		file.write(label + ":\n");
+	}
+
+	public void jnz(String label) {
+		file.write("\tjnz " + label + "\n");
+	}
+
+	public void jmp(String label) {
+		file.write("\tjmp " + label + "\n");
+	}
+
+	public void jz(String label) {
+		file.write("\tjz " + label + "\n");
 	}
 }

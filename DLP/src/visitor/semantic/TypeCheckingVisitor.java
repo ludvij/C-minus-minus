@@ -173,7 +173,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
 
         e.setLvalue(true);
 
-        e.setType(e.getExpression().getType().dot(e.getRecord(), e.getLine(), e.getColumn()));
+        e.setType(e.getExpression().getType().dot(e.getId(), e.getLine(), e.getColumn()));
         return null;
     }
 

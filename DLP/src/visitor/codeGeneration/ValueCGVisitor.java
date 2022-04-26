@@ -107,11 +107,13 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 
 	private AddressCGVisitor acg;
 
-	public ValueCGVisitor(CodeGenerator cg, AddressCGVisitor acg) {
+	public ValueCGVisitor(CodeGenerator cg) {
 		this.cg = cg;
-		this.acg = acg;
 	}
 
+	public void setAcg(AddressCGVisitor acg) {
+		this.acg = acg;
+	}
 
 	@Override
 	public Void visit(IntLiteral e, Void param) {
@@ -131,15 +133,6 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 		return null;
 	}
 
-	@Override
-	public Void visit(Variable e, Void param) {
-		if (e.getDefinition() instanceof VariableDefinition) {
-			e.accept(acg, param);
-
-			cg.loadVariable(e.getDefinition());
-		}
-		return null;
-	}
 
 	public Void visit(ArithmeticOperation e, Void param) {
 		e.getExpressionLeft().accept(this, param);
@@ -189,6 +182,30 @@ public class ValueCGVisitor extends AbstractCGVisitor<Void, Void> {
 	public Void visit(Cast e, Void param) {
 		e.getExpression().accept(this, param);
 		cg.convert(e.getType(), e.getExpression().getType());
+		return null;
+	}
+
+	@Override
+	public Void visit(Variable e, Void param) {
+		if (e.getDefinition() instanceof VariableDefinition) {
+			e.accept(acg, param);
+
+			cg.load(e.getDefinition().getType());
+		}
+		return null;
+	}
+
+	@Override
+	public Void visit(Indexing e, Void param) {
+		e.accept(acg, null);
+		cg.load(e.getType());
+		return null;
+	}
+
+	@Override
+	public Void visit(RecordAccesor e, Void param) {
+		e.accept(acg, null);
+		cg.load(e.getType());
 		return null;
 	}
 }

@@ -3,12 +3,8 @@ package visitor.codeGeneration;
 import ast.Definition;
 import ast.Statement;
 import ast.definitions.FunctionDefinition;
-import ast.definitions.VariableDefinition;
-import ast.expressions.Variable;
 import ast.program.Program;
-import ast.statements.AssignmentStatement;
-import ast.statements.ReadStatement;
-import ast.statements.WriteStatement;
+import ast.statements.*;
 import visitor.codeGeneration.cg.CodeGenerator;
 
 /**
@@ -72,7 +68,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	public ExecuteCGVisitor(String filename) {
 		cg = new CodeGenerator(filename);
 		acg = new AddressCGVisitor(cg);
-		vcg = new ValueCGVisitor(cg, acg);
+		vcg = new ValueCGVisitor(cg);
+		vcg.setAcg(acg);
+		acg.setVcg(vcg);
 	}
 
 	@Override
@@ -125,8 +123,32 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	@Override
-	public Void visit(VariableDefinition e, FunctionDefinition param) {
-		e.accept(acg, null);
+	public Void visit(WhileStatement e, FunctionDefinition param) {
+		String condLabel = cg.nextLabel();
+		String exitLabel = cg.nextLabel();
+		cg.createComment(0, "while");
+		cg.pushLabel(condLabel);
+		e.getExpression().accept(vcg, null);
+		cg.jnz(exitLabel);
+
+		e.getBody().forEach(stmt -> stmt.accept(this, param));
+		cg.jmp(condLabel);
+		cg.pushLabel(exitLabel);
+		return null;
+	}
+
+	@Override
+	public Void visit(IfStatement e, FunctionDefinition param) {
+		String elseCondLabel = cg.nextLabel();
+		String exitLabel = cg.nextLabel();
+
+		e.getExpression().accept(vcg, null);
+		cg.jz(exitLabel);
+		e.getIfBody().forEach(stmt -> stmt.accept(this, param));
+		cg.jmp(exitLabel);
+		cg.pushLabel(elseCondLabel);
+		e.getElseBody().forEach(stmt -> stmt.accept(this, param));
+		cg.pushLabel(exitLabel);
 		return null;
 	}
 }

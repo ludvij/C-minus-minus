@@ -16,6 +16,13 @@ public class RecordType extends AbstractType {
         this.recordFields = recordFields;
     }
 
+    public RecordField getField(String field) {
+        return recordFields.stream()
+                .filter(x -> x.getName().equals(field))
+                .findFirst()
+                .orElse(null);
+    }
+
     @Override
     public Type dot(String field, int line, int column) {
         Type res = recordFields.stream()

@@ -6,13 +6,13 @@ import visitor.Visitor;
 public class RecordAccesor extends AbstractExpression {
 
     private final Expression expression;
-    private final String record;
+    private final String id;
 
 
-    public RecordAccesor(Expression expression, String record, int line, int column) {
+    public RecordAccesor(Expression expression, String id, int line, int column) {
         super(line, column);
         this.expression = expression;
-        this.record = record;
+        this.id = id;
     }
 
     @Override
@@ -20,8 +20,8 @@ public class RecordAccesor extends AbstractExpression {
         return v.visit(this, param);
     }
 
-    public String getRecord() {
-        return record;
+    public String getId() {
+        return id;
     }
 
     public Expression getExpression() {
@@ -30,6 +30,6 @@ public class RecordAccesor extends AbstractExpression {
 
     @Override
     public String toString() {
-        return expression + "." + record;
+        return expression + "." + id;
     }
 }
