@@ -2,8 +2,7 @@ package ast.types;
 
 import ast.AbstractASTNode;
 import ast.Type;
-import ast.definitions.FunctionDefinition;
-import ast.expressions.Variable;
+
 
 import java.util.List;
 
@@ -70,6 +69,27 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 	}
 
 	@Override
+	public void assign(Type other, int line, int column) {
+		if (!(this instanceof ErrorType || other instanceof ErrorType || this.equals( other ))) {
+			new ErrorType(this + " type expected, found: " + other, line, column);
+		}
+	}
+
+	@Override
+	public void read(int line, int column) {
+		if (!(this instanceof ErrorType)) {
+			new ErrorType(this + " type cannot be read", line, column);
+		}
+	}
+
+	@Override
+	public void write(int line, int column) {
+		if (!(this instanceof ErrorType)) {
+			new ErrorType(this + " type cannot be written", line, column);
+		}
+	}
+
+	@Override
 	public Type asBoolean(int line, int column) {
 		if (this instanceof ErrorType) return this;
 		return new ErrorType(this + " cannot be converted to boolean", line, column);
@@ -83,5 +103,20 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 	@Override
 	public int numberOfBytes() {
 		return 0;
+	}
+
+	@Override
+	public String getSuffix() {
+		return "?";
+	}
+
+	@Override
+	public String convert(Type other) {
+		throw new RuntimeException("Not implemented");
+	}
+
+	@Override
+	public String promote(Type other) {
+		throw new RuntimeException("Not implemented");
 	}
 }

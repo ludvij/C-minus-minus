@@ -258,7 +258,6 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         e.getLeftExpression().accept(this, param);
         e.getRightExpression().accept(this, param);
 
-
         if (!e.getLeftExpression().getLvalue()) {
             new ErrorType("Left expression in assignment must have l-value", e.getLine(), e.getColumn());
         }
@@ -266,11 +265,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
             new ErrorType("Functions cannot be reassigned", e.getLine(), e.getColumn());
         }
         else {
-            Type left = e.getLeftExpression().getType();
-            Type right = e.getRightExpression().getType();
-            if (!(left instanceof ErrorType || right instanceof ErrorType || left.equals( right ))) {
-                new ErrorType(left + " type expected, found: " + right, e.getLine(), e.getColumn());
-            }
+            e.getLeftExpression().getType().assign(e.getRightExpression().getType(), e.getLine(), e.getColumn());
         }
         return null;
     }
@@ -281,10 +276,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
         if (!e.getExpression().getLvalue()) {
             new ErrorType("expression must have lvalue", e.getLine(), e.getColumn());
         } else {
-            Type type = e.getExpression().getType();
-            if (!(type instanceof ErrorType) && !type.isBuiltin()) {
-                new ErrorType(type + " type cannot be read", e.getLine(), e.getLine());
-            }
+            e.getExpression().getType().read(e.getLine(), e.getColumn());
         }
         return null;
     }
@@ -293,10 +285,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Void> {
     public Void visit(WriteStatement e, Type param) {
         e.getExpression().accept(this, param);
 
-        Type type = e.getExpression().getType();
-        if (!(type instanceof ErrorType) && !type.isBuiltin()) {
-            new ErrorType(type + " type cannot be written", e.getLine(), e.getLine());
-        }
+        e.getExpression().getType().write(e.getLine(), e.getColumn());
         return null;
     }
 

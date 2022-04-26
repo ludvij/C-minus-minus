@@ -31,6 +31,6 @@ public class Cast extends AbstractExpression {
 
     @Override
     public String toString() {
-        return "("+castType+")" + expression +  " " +"["+getLine()+","+getColumn()+"]";
+        return "("+castType+")" + expression;
     }
 }

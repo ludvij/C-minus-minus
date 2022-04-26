@@ -67,6 +67,12 @@ public class IntType extends AbstractType {
     }
 
     @Override
+    public void read(int line, int column) {}
+
+    @Override
+    public void write(int line, int column) {}
+
+    @Override
     public <TP, TR> TR accept(Visitor<TP, TR> v, TP param) {
         return v.visit(this, param);
     }
@@ -80,5 +86,29 @@ public class IntType extends AbstractType {
     @Override
     public int numberOfBytes() {
         return 2;
+    }
+
+    public String getSuffix() {
+        return "i";
+    }
+
+    @Override
+    public String convert(Type other) {
+        if (other instanceof DoubleType) {
+            return "\ti2g\n";
+        } else if (other instanceof CharType) {
+            return  "\ti2b\n";
+        } else {
+            return "";
+        }
+    }
+
+    @Override
+    public String promote(Type other) {
+        if (other instanceof DoubleType) {
+            return "\ti2f\n";
+        } else {
+            return "";
+        }
     }
 }

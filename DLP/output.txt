@@ -1,0 +1,170 @@
+call main
+halt
+
+#line	5
+	' * Parameters
+	' * Local variables
+	' * int a(offset -2)
+	' * int i(offset -4)
+main:
+	enter 4
+
+#line	8
+	pusha 0
+	pushb 97
+	storeb
+
+#line	9
+	' * write
+	pusha 0
+	loadb
+	outb
+	' * write
+	pushb 10
+	outb
+
+#line	11
+	push bp
+	pushi -2
+	addi
+	pushi 1
+	storei
+
+#line	12
+	push bp
+	pushi -4
+	addi
+	pushb 48
+	b2i
+	pushi 3
+	muli
+	storei
+
+#line	13
+	' * write
+	push bp
+	pushi -2
+	addi
+	loadi
+	outi
+	' * write
+	pushb 32
+	outb
+	' * write
+	push bp
+	pushi -4
+	addi
+	loadi
+	outi
+	' * write
+	pushb 10
+	outb
+
+#line	15
+	' * read
+	pusha 3
+	inf
+	storef
+
+#line	16
+	' * write
+	pushi 2
+	i2g
+	pusha 3
+	loadf
+	mulf
+	outf
+	' * write
+	pushb 10
+	outb
+
+#line	18
+	' * write
+	pushi 3
+	i2g
+	pushf 4.5
+	subf
+	outf
+	' * write
+	pushb 32
+	outb
+	' * write
+	pushb 48
+	b2i
+	i2f
+	pushf 48.0
+	divf
+	outf
+	' * write
+	pushb 32
+	outb
+	' * write
+	pushb 48
+	b2i
+	pushb 49
+	b2i
+	modi
+	outi
+	' * write
+	pushb 32
+	outb
+	' * write
+	pushb 48
+	b2i
+	pushb 49
+	b2i
+	addi
+	outi
+	' * write
+	pushb 10
+	outb
+
+#line	22
+	' * write
+	pushi 1
+	pushi 2
+	lti
+	outi
+	' * write
+	pushb 32
+	outb
+	' * write
+	pushi 4
+	pushi 3
+	gtei
+	outi
+	' * write
+	pushb 32
+	outb
+	' * write
+	pushi 5
+	pushi 5
+	eqi
+	outi
+	' * write
+	pushb 32
+	outb
+	' * write
+	pushi 1
+	pushi 2
+	and
+	outi
+	' * write
+	pushb 32
+	outb
+	' * write
+	pushi 0
+	pushi 3
+	or
+	outi
+	' * write
+	pushb 32
+	outb
+	' * write
+	pushi 0
+	not
+	outi
+	' * write
+	pushb 10
+	outb
+	ret 0, 4, 0
