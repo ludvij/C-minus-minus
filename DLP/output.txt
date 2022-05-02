@@ -155,7 +155,7 @@ lbl1:
 	loadi
 	pushi 2
 	modi
-	jz lbl4
+	jz lbl3
 
 #line	25
 	' * write

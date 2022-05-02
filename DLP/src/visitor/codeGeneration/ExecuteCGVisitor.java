@@ -143,7 +143,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 		String exitLabel = cg.nextLabel();
 
 		e.getExpression().accept(vcg, null);
-		cg.jz(exitLabel);
+		cg.jz(elseCondLabel);
 		e.getIfBody().forEach(stmt -> stmt.accept(this, param));
 		cg.jmp(exitLabel);
 		cg.pushLabel(elseCondLabel);
