@@ -2,10 +2,15 @@ package visitor.codeGeneration;
 
 import ast.Definition;
 import ast.Statement;
+import ast.Type;
 import ast.definitions.FunctionDefinition;
+import ast.expressions.FunctionInvocation;
 import ast.program.Program;
 import ast.statements.*;
+import ast.types.FunctionType;
+import ast.types.VoidType;
 import visitor.codeGeneration.cg.CodeGenerator;
+import visitor.codeGeneration.cg.FunctionBytesDTO;
 
 /**
  * Program:
@@ -58,7 +63,7 @@ import visitor.codeGeneration.cg.CodeGenerator;
  * value[[expression2]]
  * <store> expression1.type.suffix
  */
-public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void> {
+public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionBytesDTO, Void> {
 
 	private final CodeGenerator cg;
 
@@ -74,7 +79,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	@Override
-	public Void visit(Program e, FunctionDefinition param) {
+	public Void visit(Program e, FunctionBytesDTO param) {
 		cg.program();
 		for (Definition def : e.getDefinitions()) {
 			def.accept(this, null);
@@ -85,18 +90,24 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	@Override
-	public Void visit(FunctionDefinition e, FunctionDefinition param) {
+	public Void visit(FunctionDefinition e, FunctionBytesDTO param) {
 		cg.printLine(e.getLine());
 		cg.createFunctionFrame(e);
+		FunctionBytesDTO dto = new FunctionBytesDTO(
+				e.getBytesReturn(),
+				e.getBytesLocals(),
+				e.getBytesParam()
+		);
 		for (Statement stmt : e.getBody()) {
-			stmt.accept(this, e);
+			stmt.accept(this, dto);
 		}
-		cg.createReturnSequence(e);
+		if (e.getType().getType() instanceof VoidType)
+			cg.createReturnSequence(dto);
 		return null;
 	}
 
 	@Override
-	public Void visit(WriteStatement e, FunctionDefinition param) {
+	public Void visit(WriteStatement e, FunctionBytesDTO param) {
 		cg.printLine(e.getLine());
 		cg.createComment(1,"write");
 		e.getExpression().accept(vcg, null);
@@ -105,7 +116,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	@Override
-	public Void visit(ReadStatement e, FunctionDefinition param) {
+	public Void visit(ReadStatement e, FunctionBytesDTO param) {
 		cg.printLine(e.getLine());
 		cg.createComment(1,"read");
 		e.getExpression().accept(acg, null);
@@ -114,7 +125,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	@Override
-	public Void visit(AssignmentStatement e, FunctionDefinition param) {
+	public Void visit(AssignmentStatement e, FunctionBytesDTO param) {
 		cg.printLine(e.getLine());
 		e.getLeftExpression().accept(acg, null);
 		e.getRightExpression().accept(vcg, null);
@@ -123,7 +134,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	@Override
-	public Void visit(WhileStatement e, FunctionDefinition param) {
+	public Void visit(WhileStatement e, FunctionBytesDTO param) {
+		cg.printLine(e.getLine());
 		String condLabel = cg.nextLabel();
 		String exitLabel = cg.nextLabel();
 		cg.createComment(0, "while");
@@ -138,7 +150,9 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 	}
 
 	@Override
-	public Void visit(IfStatement e, FunctionDefinition param) {
+	public Void visit(IfStatement e, FunctionBytesDTO param) {
+		cg.printLine(e.getLine());
+
 		String elseCondLabel = cg.nextLabel();
 		String exitLabel = cg.nextLabel();
 
@@ -149,6 +163,28 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionDefinition, Void
 		cg.pushLabel(elseCondLabel);
 		e.getElseBody().forEach(stmt -> stmt.accept(this, param));
 		cg.pushLabel(exitLabel);
+		return null;
+	}
+
+	@Override
+	public Void visit(FunctionInvocation e, FunctionBytesDTO param) {
+		cg.printLine(e.getLine());
+		e.getParameters().forEach(exp -> exp.accept(vcg, null));
+		cg.call(e.getName().getName());
+		Type returnType = ((FunctionType)e.getName().getType()).getType();
+
+		if (!(returnType instanceof VoidType)) {
+			cg.pop(returnType.getSuffix());
+		}
+		return null;
+	}
+
+	@Override
+	public Void visit(ReturnStatement e, FunctionBytesDTO param) {
+		cg.printLine(e.getLine());
+
+		e.getExpression().accept(vcg, null);
+		cg.createReturnSequence(param);
 		return null;
 	}
 }

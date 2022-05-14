@@ -11,6 +11,7 @@ import ast.types.CharType;
 import ast.types.RecordType;
 
 import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -179,8 +180,8 @@ public class CodeGenerator {
 
 	}
 
-	public void createReturnSequence(FunctionDefinition e) {
-		String res = "\t"+"ret " + e.getBytesReturn() + ", " + e.getBytesLocals() + ", " + e.getBytesParam() + "\n";
+	public void createReturnSequence(FunctionBytesDTO e) {
+		String res = "\t"+"ret "+e.bytesReturn()+", "+e.bytesLocals()+", "+e.bytesParams()+"\n";
 		file.write(res);
 	}
 
@@ -210,14 +211,15 @@ public class CodeGenerator {
 	public void recordAccessorAddress(RecordAccesor e) {
 		RecordType rt = (RecordType)e.getExpression().getType();
 		String res = "\t" + "pushi " + rt.getField(e.getId()).getOffset() + "\n";
-		res += "\taddi";
+		res += "\t"+"addi"+"\n";
 		file.write(res);
 
 	}
 
 	public void indexingAddress(Indexing e) {
 		String res = "\t"+"pushi "+ e.getType().numberOfBytes() + "\n";
-		res += "\tmuli\n\taddi\n";
+		res += "\t"+"muli"+"\n";
+		res += "\t"+"addi"+"\n";
 		file.write(res);
 	}
 
@@ -226,14 +228,22 @@ public class CodeGenerator {
 	}
 
 	public void jnz(String label) {
-		file.write("\tjnz " + label + "\n");
+		file.write("\t"+"jnz " + label + "\n");
 	}
 
 	public void jmp(String label) {
-		file.write("\tjmp " + label + "\n");
+		file.write("\t"+"jmp " + label + "\n");
 	}
 
 	public void jz(String label) {
-		file.write("\tjz " + label + "\n");
+		file.write("\t"+"jz " + label + "\n");
+	}
+
+	public void call(String name) {
+		file.write("\t"+"call " + name + "\n");
+	}
+
+	public void pop(String suffix) {
+		file.write("\t"+"pop" + suffix + "\n");
 	}
 }
