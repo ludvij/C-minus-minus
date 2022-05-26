@@ -70,8 +70,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionBytesDTO, Void> 
 	private final ValueCGVisitor vcg;
 	private final AddressCGVisitor acg;
 
-	public ExecuteCGVisitor(String filename) {
-		cg = new CodeGenerator(filename);
+	public ExecuteCGVisitor(String inFilename, String outFilename) {
+		cg = new CodeGenerator(inFilename, outFilename);
 		acg = new AddressCGVisitor(cg);
 		vcg = new ValueCGVisitor(cg);
 		vcg.setAcg(acg);
@@ -141,7 +141,7 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionBytesDTO, Void> 
 		cg.createComment(0, "while");
 		cg.pushLabel(condLabel);
 		e.getExpression().accept(vcg, null);
-		cg.jnz(exitLabel);
+		cg.jz(exitLabel);
 
 		e.getBody().forEach(stmt -> stmt.accept(this, param));
 		cg.jmp(condLabel);
@@ -169,8 +169,8 @@ public class ExecuteCGVisitor extends AbstractCGVisitor<FunctionBytesDTO, Void> 
 	@Override
 	public Void visit(FunctionInvocation e, FunctionBytesDTO param) {
 		cg.printLine(e.getLine());
-		e.getParameters().forEach(exp -> exp.accept(vcg, null));
-		cg.call(e.getName().getName());
+
+		e.accept(vcg, null);
 		Type returnType = ((FunctionType)e.getName().getType()).getType();
 
 		if (!(returnType instanceof VoidType)) {

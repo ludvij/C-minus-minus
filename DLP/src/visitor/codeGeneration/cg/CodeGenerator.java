@@ -40,9 +40,9 @@ public class CodeGenerator {
 	private int labels = 1;
 
 
-	public CodeGenerator(String filename) {
-		file.open(filename);
-		file.write("#source \""+filename+"\"");
+	public CodeGenerator(String inFilename, String outFilename) {
+		file.open(outFilename);
+		file.write("#source \""+inFilename+"\"\n");
 	}
 
 	public String nextLabel() {
@@ -161,10 +161,13 @@ public class CodeGenerator {
 		e.setBytesParam(bytesParams);
 		e.setBytesReturn(bytesReturn);
 
-		String res = e.getName() + ":\n";
+		pushLabel(e.getName());
 		commentFnFrame(e);
-		res += "\t"+"enter " + bytesLocals + "\n";
-		file.write(res);
+		enter(bytesLocals);
+	}
+
+	public void enter(int bytes) {
+		file.write("\t" + "enter " + bytes);
 	}
 
 	private void commentFnFrame(FunctionDefinition e) {

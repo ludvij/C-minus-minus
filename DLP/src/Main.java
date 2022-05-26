@@ -30,7 +30,7 @@ public class Main {
 		ast.accept(new TypeCheckingVisitor(), null);
 
 		ast.accept(new OffsetVisitor(), null);
-		ast.accept(new ExecuteCGVisitor("output.txt"), null);
+		ast.accept(new ExecuteCGVisitor(args[0], "output.txt"), null);
 
 		if (ErrorHandler.get().anyErrors()) {
 			ErrorHandler.get().showErrors(System.err);
